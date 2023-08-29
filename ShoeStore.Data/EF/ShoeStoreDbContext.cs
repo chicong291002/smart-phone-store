@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShoeStore.Data.Configurations;
 using ShoeStore.Data.Entities;
+using ShoeStore.Data.Extentions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace ShoeStore.Data.EF
 {
-    public class ShoeStoreDbContext : DbContext
+    public class ShoeStoreDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
-        public ShoeStoreDbContext(DbContextOptions<ShoeStoreDbContext> options) : base(options) { }
+        public ShoeStoreDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configure khi sử dụng Fluent API
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 
@@ -25,10 +29,25 @@ namespace ShoeStore.Data.EF
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
             modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
-            //base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+            modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
 
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
+
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
+
+            //Data Seeding
+            modelBuilder.Seed();
+            //base.OnModelCreating(modelBuilder);
         }
 
+        public DbSet<AppConfig> AppConfigs { get; set; }
+        public DbSet<AppRole> AppRoles { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Carts> Carts { get; set; }
