@@ -53,7 +53,7 @@ namespace ShoeStore.Data.EF
         public DbSet<Carts> Carts { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<Product> Product { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Slide> Slides { get; set; }
     }
 }
