@@ -9,5 +9,7 @@
         public Guid UserId { get; set; }
         public DateTime DateCreated { get; set; }
         public Product Product { get; set; }
+
+        public AppUser AppUser { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoeStore.Data.EF;
 
@@ -11,9 +12,11 @@ using ShoeStore.Data.EF;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(ShoeStoreDbContext))]
-    partial class ShoeStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230829071508_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,15 +170,6 @@ namespace ShoeStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            Description = "Administrator role",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.AppUser", b =>
@@ -242,27 +236,6 @@ namespace ShoeStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5ba539c2-b91c-405e-a538-3ecc21e0fff1",
-                            Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "congkhpro291002@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Chi",
-                            LastName = "Cong",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "congkhpro291002@gmail.com",
-                            NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL4ojkAi/rqqZgA1Tpv6555DmnqIXN3EOGvMx4QvMz0ybo7k2FOdKNGb94FaEhFb9A==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Carts", b =>
@@ -351,6 +324,9 @@ namespace ShoeStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<Guid?>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -383,7 +359,7 @@ namespace ShoeStore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Orders", (string)null);
                 });
@@ -444,7 +420,7 @@ namespace ShoeStore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 8, 29, 15, 13, 23, 959, DateTimeKind.Local).AddTicks(3687),
+                            DateCreated = new DateTime(2023, 8, 29, 14, 15, 8, 716, DateTimeKind.Local).AddTicks(2245),
                             Description = "So Good",
                             Name = "Test",
                             OriginalPrice = 100000m,
@@ -454,7 +430,7 @@ namespace ShoeStore.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2023, 8, 29, 15, 13, 23, 959, DateTimeKind.Local).AddTicks(3700),
+                            DateCreated = new DateTime(2023, 8, 29, 14, 15, 8, 716, DateTimeKind.Local).AddTicks(2262),
                             Description = "So Good 2",
                             Name = "Test 2",
                             OriginalPrice = 200000m,
@@ -632,7 +608,7 @@ namespace ShoeStore.Data.Migrations
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Carts", b =>
                 {
-                    b.HasOne("ShoeStore.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("ShoeStore.Data.Entities.AppUser", null)
                         .WithMany("Carts")
                         .HasForeignKey("AppUserId");
 
@@ -642,20 +618,14 @@ namespace ShoeStore.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
-
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Order", b =>
                 {
-                    b.HasOne("ShoeStore.Data.Entities.AppUser", "AppUser")
+                    b.HasOne("ShoeStore.Data.Entities.AppUser", null)
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.OrderDetail", b =>
