@@ -20,7 +20,7 @@ namespace ShoeStore.Data.Configurations
 
 
             builder.HasOne(x => x.Product).WithMany(x => x.Carts).HasForeignKey(x => x.ProductId);
-            builder.HasOne(x => x.AppUser).WithMany(x => x.Carts).HasForeignKey(x => x.AppUser);
+            builder.HasOne(x => x.AppUser).WithMany(x => x.Carts).HasForeignKey(x => x.UserId);
         }
     }
 }

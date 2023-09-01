@@ -24,7 +24,7 @@ namespace ShoeStore.Data.EF
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
-
+            modelBuilder.ApplyConfiguration(new CartConfiguration()); 
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
             modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
@@ -55,5 +55,7 @@ namespace ShoeStore.Data.EF
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Slide> Slides { get; set; }
+
+        public DbSet<ProductInCategory> ProductInCategories { get; set; }   
     }
 }
