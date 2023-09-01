@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShoeStore.Application.DTOS
 {
-    public class PagedViewModel<T>
+    public class PagedResult<T>
     {
-        List<T> Items { get; set; } //generic
+        public List<T> Items { get; set; } //generic
         public int TotalRecord { set;get; }
 
     }
