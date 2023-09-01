@@ -19,6 +19,28 @@ namespace ShoeStore.Application.Catalog.Products.Public
             _context = context;
         }
 
+        public async Task<List<ProductViewModel>> GetAll()
+        {
+            // 1.Select join
+            var query = from p in _context.Products
+                        join
+                             pic in _context.ProductInCategories on p.Id equals pic.ProductId
+                        join
+                             c in _context.Categories on pic.CategoryId equals c.Id
+                        select new { p, pic };
+
+            var data = await query.Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.p.Name,
+                    Description = x.p.Description,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                }).ToListAsync();
+            
+            return data;
+        }
+
         public async Task<PagedResult<ProductViewModel>> getAllByCategoryId(GetProductPagingRequest request)
         {
             // 1.Select join
