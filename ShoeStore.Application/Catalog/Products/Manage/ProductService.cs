@@ -11,13 +11,13 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ShoeStore.Application.Catalog.Products.Manage
 {
-    public class ManageProductService : IManageProductService
+    public class ProductService : IProductService
     {
         private readonly ShoeStoreDbContext _context; //readonly la chi gan 1 lan
         private readonly IStorageService _storageService;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
-        public ManageProductService(ShoeStoreDbContext context, IStorageService storageService)
+        public ProductService(ShoeStoreDbContext context, IStorageService storageService)
         {
             _context = context;
             _storageService = storageService;
@@ -52,7 +52,8 @@ namespace ShoeStore.Application.Catalog.Products.Manage
                 };
             }
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync(); // ko can cho thread va phuc vu duoc request khac 
+            await _context.SaveChangesAsync(); // ko can cho thread va phuc vu duoc request khac 
+            return product.Id;
             //chay background ko can cho` 
         }
 
@@ -130,10 +131,11 @@ namespace ShoeStore.Application.Catalog.Products.Manage
         {
             return await _context.Products.Select(i => new ProductViewModel()
             {
+                Id = i.Id,
+                Name = i.Name,
                 Price = i.Price,
                 OriginalPrice = i.OriginalPrice,
                 DateCreated = i.DateCreated,
-                Name = i.Name,
                 Description = i.Description,
                 ThumbnailImage = i.Thumbnail,
             }).ToListAsync();
@@ -248,6 +250,25 @@ namespace ShoeStore.Application.Catalog.Products.Manage
             }
             _context.ProductImages.Update(image);
             return await _context.SaveChangesAsync();
+        }
+
+        public async Task<ProductViewModel> getByProductId(int productId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+
+            var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
+            var productViewModel = new ProductViewModel()
+            {
+                Id = product.Id,
+                DateCreated = product.DateCreated,
+                Price = product.Price,
+                OriginalPrice = product.OriginalPrice,
+                Name = product.Name,
+                Description = product.Description,
+                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
+            };
+
+            return productViewModel;
         }
     }
 }

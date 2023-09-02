@@ -13,7 +13,6 @@ namespace ShoeStore.Application.Catalog.Products.Manage
         public string Name { get; set; }
         public string Description { get; set; }
         public string Thumbnail { get; set; }
-        public DateTime DateCreated { set; get; }
         public IFormFile Image { get; set; }
     }
 }

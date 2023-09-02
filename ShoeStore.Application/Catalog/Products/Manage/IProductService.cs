@@ -4,7 +4,7 @@ using ShoeStore.Application.DTOS;
 
 namespace ShoeStore.Application.Catalog.Products.Manage
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         Task<int> Create(ProductCreateRequest request);
         Task<int> Update(ProductUpdateRequest request);
@@ -17,5 +17,6 @@ namespace ShoeStore.Application.Catalog.Products.Manage
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
         Task<List<ProductImageViewModel>> GetListImage(int productId);
+        Task<ProductViewModel> getByProductId(int productId);
     }
 }
