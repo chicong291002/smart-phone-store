@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using ShoeStore.Application.Catalog.Products.Manage;
 using ShoeStore.Application.Catalog.Products.Public;
+using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 //Declare DI
-builder.Services.AddTransient<IPublicProductService, PublicProductService>();
+builder.Services.AddTransient<IProductService ,ProductService>();
+builder.Services.AddTransient<IStorageService,FileStorageService>();
 
 builder.Services.AddSwaggerGen(c =>
  {

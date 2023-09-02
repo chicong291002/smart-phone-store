@@ -10,7 +10,7 @@
         public string Name { set; get; }
         public string Description { set; get; }
 
-        public string ThumbnailImage { get; set; }
+        public string ThumbnailImage { get; set; }  
 
         public List<string> Categories { get; set; } = new List<string>();
     }

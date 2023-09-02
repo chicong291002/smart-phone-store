@@ -14,7 +14,6 @@ namespace ShoeStore.Application.Catalog.Products.Manage
         public string Thumbnail { get; set; }
         public decimal Price { set; get; }
         public decimal OriginalPrice { set; get; }
-        public DateTime DateCreated { set; get; }
         public IFormFile Image { get; set; }
     }
 }
