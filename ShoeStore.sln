@@ -3,18 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeStore.WebApp", "ShoeStore.WebApp\ShoeStore.WebApp.csproj", "{AFC1E458-56B2-40D0-B764-00AB87A04EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.WebApp", "ShoeStore.WebApp\ShoeStore.WebApp.csproj", "{AFC1E458-56B2-40D0-B764-00AB87A04EB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeStore.BackendAPI", "ShoeStore.BackendAPI\ShoeStore.BackendAPI.csproj", "{F9D5BAE8-3CCD-4A7E-BAE4-C3186B4222AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.BackendAPI", "ShoeStore.BackendAPI\ShoeStore.BackendAPI.csproj", "{F9D5BAE8-3CCD-4A7E-BAE4-C3186B4222AB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B59B49C5-E26A-4AE9-8706-F1EE2BC76506}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{B59B49C5-E26A-4AE9-8706-F1EE2BC76506}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeStore.Data", "ShoeStore.Data\ShoeStore.Data.csproj", "{E871D603-9286-4C4F-9DBA-4825212EBEAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.Data", "ShoeStore.Data\ShoeStore.Data.csproj", "{E871D603-9286-4C4F-9DBA-4825212EBEAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeStore.Application", "ShoeStore.Application\ShoeStore.Application.csproj", "{97262F1C-8BF5-4E71-A606-4737739EAFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.Application", "ShoeStore.Application\ShoeStore.Application.csproj", "{97262F1C-8BF5-4E71-A606-4737739EAFBF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Domain", "1.Domain", "{1BE972BF-49F2-4101-8639-230A0C594A7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Hosts", "2.Hosts", "{6C1F0009-B642-4412-8A96-C1186AD6383E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AFC1E458-56B2-40D0-B764-00AB87A04EB4} = {6C1F0009-B642-4412-8A96-C1186AD6383E}
+		{F9D5BAE8-3CCD-4A7E-BAE4-C3186B4222AB} = {6C1F0009-B642-4412-8A96-C1186AD6383E}
+		{E871D603-9286-4C4F-9DBA-4825212EBEAD} = {1BE972BF-49F2-4101-8639-230A0C594A7C}
+		{97262F1C-8BF5-4E71-A606-4737739EAFBF} = {1BE972BF-49F2-4101-8639-230A0C594A7C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E01B9BB6-58DB-4EDC-89F8-4D041E51122D}

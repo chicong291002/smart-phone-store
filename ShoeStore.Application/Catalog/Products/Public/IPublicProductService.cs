@@ -5,7 +5,7 @@ namespace ShoeStore.Application.Catalog.Products.Public
 {
     public interface IPublicProductService
     {
-        Task<PagedResult<ProductViewModel>> getAllByCategoryId(GetProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> getAllByCategoryId(GetPublicProductPagingRequest request);
 
         Task<List<ProductViewModel>> GetAll();
     }

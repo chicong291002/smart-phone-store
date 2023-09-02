@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShoeStore.Application.Catalog.Products.Manage;
 using ShoeStore.Application.Catalog.Products.Public;
 
 namespace ShoeStore.BackendAPI.Controllers
@@ -16,9 +17,16 @@ namespace ShoeStore.BackendAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAllProducts()
         {
             var products = await _publicProductService.GetAll();
+            return Ok(products);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllByCategory([FromQuery]GetPublicProductPagingRequest request)
+        {
+            var products = await _publicProductService.getAllByCategoryId(request);
             return Ok(products);
         }
     }

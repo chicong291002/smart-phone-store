@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Catalog.Products.Public
 {
-    public class GetProductPagingRequest : PagingRequestBase
+    public class GetPublicProductPagingRequest : PagingRequestBase
     {
         // thuoc tinh rieng
         public int? CategoryIds { get; set; }

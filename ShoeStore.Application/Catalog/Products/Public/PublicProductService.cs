@@ -41,7 +41,7 @@ namespace ShoeStore.Application.Catalog.Products.Public
             return data;
         }
 
-        public async Task<PagedResult<ProductViewModel>> getAllByCategoryId(GetProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> getAllByCategoryId(GetPublicProductPagingRequest request)
         {
             // 1.Select join
             var query = from p in _context.Products
