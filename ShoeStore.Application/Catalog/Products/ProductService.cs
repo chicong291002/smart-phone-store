@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.IISIntegration;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
@@ -9,7 +13,7 @@ using System;
 using System.Net.Http.Headers;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace ShoeStore.Application.Catalog.Products.Manage
+namespace ShoeStore.Application.Catalog.Products
 {
     public class ProductService : IProductService
     {
@@ -45,7 +49,7 @@ namespace ShoeStore.Application.Catalog.Products.Manage
                         Caption = "Image",
                         DateCreated  = DateTime.Now,
                         FileSize = request.Image.Length,
-                        ImagePath = await this.SaveFile(request.Image),
+                        ImagePath = await SaveFile(request.Image),
                         IsDefault = true,
                         SortOrder = 1
                     }
@@ -68,6 +72,7 @@ namespace ShoeStore.Application.Catalog.Products.Manage
         public async Task<int> Delete(ProductDeleteRequest request)
         {
             var product = await _context.Products.FindAsync(request.Id);
+
             if (product == null)
             {
                 throw new Exception($"Cannot find a product: {request.Id}");
@@ -160,7 +165,7 @@ namespace ShoeStore.Application.Catalog.Products.Manage
                 if (Image != null)
                 {
                     Image.FileSize = request.Image.Length;
-                    Image.ImagePath = await this.SaveFile(request.Image);
+                    Image.ImagePath = await SaveFile(request.Image);
                     _context.ProductImages.Update(Image);
                 }
             }
@@ -186,14 +191,14 @@ namespace ShoeStore.Application.Catalog.Products.Manage
             return await _context.ProductImages.Where(x => x.ProductId == productId).
                 Select(i => new ProductImageViewModel()
                 {
-                    Caption = i.Caption,
-                    DateCreated = i.DateCreated,
-                    FileSize = i.FileSize,
                     Id = i.Id,
-                    ImagePath = i.ImagePath,
-                    IsDefault = i.IsDefault,
                     ProductId = i.ProductId,
-                    SortOrder = i.SortOrder
+                    ImagePath = i.ImagePath,
+                    Caption = i.Caption,
+                    IsDefault = i.IsDefault,
+                    DateCreated = i.DateCreated,
+                    SortOrder = i.SortOrder,
+                    FileSize = i.FileSize
                 }).ToListAsync();
         }
 
@@ -214,7 +219,7 @@ namespace ShoeStore.Application.Catalog.Products.Manage
 
             if (request.ImageFile != null)
             {
-                productImage.ImagePath = await this.SaveFile(request.ImageFile);
+                productImage.ImagePath = await SaveFile(request.ImageFile);
                 productImage.FileSize = request.ImageFile.Length;
             }
             _context.ProductImages.Add(productImage);
@@ -224,13 +229,19 @@ namespace ShoeStore.Application.Catalog.Products.Manage
 
         public async Task<int> RemoveImage(int imageId)
         {
-            var image = await _context.ProductImages.FindAsync(imageId);
-            if (image == null)
+            var Image = await _context.ProductImages.FindAsync(imageId);
+            if (Image == null)
             {
-                throw new Exception($"Cannot find a product: {image}");
+                throw new Exception($"Cannot find a product: {Image}");
             }
 
-            _context.ProductImages.Remove(image);
+            var productImages = _context.ProductImages.Where(i => i.Id == imageId);
+
+            foreach (var image in productImages)
+            {
+                await _storageService.DeleteFileAsync(image.ImagePath);
+            }
+            _context.ProductImages.Remove(Image);
             return await _context.SaveChangesAsync();
         }
 
@@ -245,11 +256,12 @@ namespace ShoeStore.Application.Catalog.Products.Manage
             //Save Image
             if (request.ImageFile != null)
             {
-                image.ImagePath = await this.SaveFile(request.ImageFile);
+                image.ImagePath = await SaveFile(request.ImageFile);
                 image.FileSize = request.ImageFile.Length;
             }
             _context.ProductImages.Update(image);
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return image.Id;
         }
 
         public async Task<ProductViewModel> getByProductId(int productId)
@@ -269,6 +281,29 @@ namespace ShoeStore.Application.Catalog.Products.Manage
             };
 
             return productViewModel;
+        }
+
+        public async Task<ProductImageViewModel> GetImageById(int imageId)
+        {
+            var image = await _context.ProductImages.FindAsync(imageId);
+           /* if (image != null)
+            {
+                throw new Exception($"Cannot find an image with id {imageId}");
+            }*/
+
+            var productImageViewModel = new ProductImageViewModel()
+            {
+                Id = image.Id,
+                ProductId = image.Id,
+                ImagePath = image.ImagePath,
+                Caption = image.Caption,
+                IsDefault = image.IsDefault,
+                DateCreated = image.DateCreated,
+                SortOrder = image.SortOrder,
+                FileSize = image.FileSize,
+            };
+
+            return productImageViewModel;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Products.Manage
+namespace ShoeStore.Application.Catalog.Products.DTOS
 {
     public class ProductDeleteRequest
     {

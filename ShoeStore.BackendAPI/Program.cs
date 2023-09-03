@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using ShoeStore.Application.Catalog.Products.Manage;
-using ShoeStore.Application.Catalog.Products.Public;
+using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
 
