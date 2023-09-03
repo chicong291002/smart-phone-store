@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Products.Manage
+namespace ShoeStore.Application.Catalog.ProductImages
 {
-    public class ProductImageUpdateRequest
+    public class ProductImageCreateRequest
     {
-        public int Id { get; set; }
         public string Caption { get; set; }
         public bool IsDefault { get; set; }
         public int SortOrder { get; set; }

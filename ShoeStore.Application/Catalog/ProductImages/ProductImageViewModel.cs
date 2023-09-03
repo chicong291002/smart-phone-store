@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Products.DTOS
+namespace ShoeStore.Application.Catalog.ProductImages
 {
     public class ProductImageViewModel
     {

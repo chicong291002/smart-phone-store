@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
+using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.DTOS;
 
-namespace ShoeStore.Application.Catalog.Products.Manage
+namespace ShoeStore.Application.Catalog.Products
 {
     public interface IProductService
     {
@@ -18,5 +19,7 @@ namespace ShoeStore.Application.Catalog.Products.Manage
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
         Task<List<ProductImageViewModel>> GetListImage(int productId);
         Task<ProductViewModel> getByProductId(int productId);
+
+        Task<ProductImageViewModel> GetImageById(int imageId);
     }
 }
