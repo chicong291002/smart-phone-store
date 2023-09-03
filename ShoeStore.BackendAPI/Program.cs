@@ -1,17 +1,23 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
+using ShoeStore.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 //Declare DI
-builder.Services.AddTransient<IProductService ,ProductService>();
-builder.Services.AddTransient<IStorageService,FileStorageService>();
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IStorageService, FileStorageService>();
+builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
+builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
+builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+builder.Services.AddTransient<AppUser, AppUser>();
 
 builder.Services.AddSwaggerGen(c =>
  {
