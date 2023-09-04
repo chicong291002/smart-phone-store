@@ -70,6 +70,7 @@ namespace ShoeStore.Application.System.Users
         {
             var user = new AppUser()
             {
+                UserName = request.userName,
                 FirstName = request.firstName,
                 LastName = request.lastName,
                 Dob = request.Dob,
