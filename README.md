@@ -9,3 +9,4 @@
   {
       "ShoeStoreDb": "Server=YourServer;Database=YourNameDatabase;Trusted_Connection=True;TrustServerCertificate=True"
   }
+

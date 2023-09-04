@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products;
@@ -8,6 +9,7 @@ namespace ShoeStore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] //bat buoc phai login moi vao dc  
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _manageProductService;
