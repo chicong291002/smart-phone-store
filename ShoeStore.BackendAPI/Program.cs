@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,13 +9,13 @@ using Microsoft.OpenApi.Models;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Users;
+using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ShoeStoreDbContext>().AddDefaultTokenProviders();
 //Declare DI
@@ -24,8 +26,12 @@ builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<AppUser, AppUser>();
+builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
+builder.Services.AddControllers().AddFluentValidation(
+    fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+//dang ky tat ca Validator cung cai asssembly (cung cai DOE) cung vs thang Application 
 
-builder.Services.AddControllers(); 
 builder.Services.AddSwaggerGen(c =>
  {
      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger Shoe Store", Version = "v1" });
