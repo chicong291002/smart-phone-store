@@ -31,7 +31,7 @@ namespace ShoeStore.BackendAPI.Controllers
                 return BadRequest("Username or password is incorrect");
             }
 
-            return Ok(new { token = resultToken });
+            return Ok(resultToken); //tra ve 1 chuoi token 
         }
 
         [HttpPost("register")]
