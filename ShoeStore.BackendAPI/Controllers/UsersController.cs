@@ -30,6 +30,10 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest("Username or password is incorrect");
             }
+            else
+            {
+                HttpContext.Session.SetString("Token", resultToken); //add Token vao Backend API
+            }
 
             return Ok(resultToken); //tra ve 1 chuoi token 
         }
