@@ -1,9 +1,18 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.System.Users.DTOS;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/User/Login"; // neu chua login thi Redirect ve day 
+        options.AccessDeniedPath = "/User/Forbidden/";
+    });
+
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddFluentValidation(
@@ -33,6 +42,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseRouting();
 
 app.UseAuthorization();

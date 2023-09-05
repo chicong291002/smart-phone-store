@@ -1,16 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.System.Users.DTOS;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ShoeStore.AdminApp.Controllers
 {
+    //dang nhap moi dc vao`
     public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserApiClient userApiClient)
+        public UserController(IUserApiClient userApiClient, IConfiguration configuration)
         {
             _userApiClient = userApiClient;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -19,9 +30,19 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            //da login roi => chua kip logout ma vao trang login 
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            //da login roi => chua kip logout ma vao trang login 
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "User");
         }
 
         [HttpPost]
@@ -33,7 +54,38 @@ namespace ShoeStore.AdminApp.Controllers
             }
 
             var token = await _userApiClient.Authenticate(request);
-            return View(token);
+
+            var userPrincipal = this.ValidateToken(token);
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
+                IsPersistent = false
+            };
+            await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        userPrincipal,
+                        authProperties);
+            return RedirectToAction("Index", "Home");// TenFeature :  TenController     
+        }
+
+
+        // giai  ma~ Token ( chua thong tin ve dang nhap ) 
+        private ClaimsPrincipal ValidateToken(string jwtToken)
+        {
+            IdentityModelEventSource.ShowPII = true;
+
+            SecurityToken validatedToken;
+            TokenValidationParameters validationParameters = new TokenValidationParameters();
+
+            validationParameters.ValidateLifetime = true;
+
+            validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
+            validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
+            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+
+            ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validatedToken);
+
+            return principal;
         }
     }
 }
