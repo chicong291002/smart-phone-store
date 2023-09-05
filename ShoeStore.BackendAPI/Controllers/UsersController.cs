@@ -19,7 +19,7 @@ namespace ShoeStore.BackendAPI.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous] //chua login van goi duoc 
-        public async Task<IActionResult> Authenticate([FromForm] LoginRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -36,7 +36,7 @@ namespace ShoeStore.BackendAPI.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous] //chua login van goi duoc 
-        public async Task<IActionResult> Register([FromForm] RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
             {

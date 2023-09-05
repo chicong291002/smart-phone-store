@@ -1,10 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.System.Users.DTOS;
 
 namespace ShoeStore.AdminApp.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IUserApiClient _userApiClient;
+
+        public UserController(IUserApiClient userApiClient)
+        {
+            _userApiClient = userApiClient;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -17,15 +25,15 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginRequest request)
+        public async Task<IActionResult> Login(LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View(ModelState);
             }
 
-
-            return View();
+            var token = await _userApiClient.Authenticate(request);
+            return View(token);
         }
     }
 }

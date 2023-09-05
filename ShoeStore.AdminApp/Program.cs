@@ -1,8 +1,10 @@
 using FluentValidation.AspNetCore;
+using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.System.Users.DTOS;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpClient();
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddFluentValidation(
     fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

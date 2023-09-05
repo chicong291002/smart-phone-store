@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Users;
@@ -17,7 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddHttpClient();
 builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ShoeStoreDbContext>().AddDefaultTokenProviders();
 //Declare DI
 builder.Services.AddTransient<IProductService, ProductService>();
@@ -27,8 +27,10 @@ builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<AppUser, AppUser>();
+
 builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
 builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
+
 builder.Services.AddControllers().AddFluentValidation(
     fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 //dang ky tat ca Validator cung cai asssembly (cung cai DOE) cung vs thang Application 
