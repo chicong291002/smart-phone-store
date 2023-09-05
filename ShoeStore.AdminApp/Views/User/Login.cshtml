@@ -1,4 +1,7 @@
-﻿@{
+﻿@using ShoeStore.Application.System.Users.DTOS;
+@model LoginRequest
+
+@{
     Layout = null;
 }
 
@@ -47,19 +50,19 @@
                                     </div>
                                     <form asp-action="Login" asp-controller="User" method="post" class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                   id="exampleInputEmail" aria-describedby="emailHelp"
-                                                   placeholder="Tài Khoản...">
+                                            <input type="text" class="form-control form-control-user"
+                                                   asp-for="UserName" ia-describedby="emailHelp"
+                                                   placeholder="Tài Khoản..."> 
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Mật Khẩu...">
+                                                   asp-for="Password" placeholder="Mật Khẩu...">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">
-                                                    Nhớ mật khẩu
+                                                <input class="custom-control-input" type="checkbox" asp-for="RememberMe" />
+                                                <label class="custom-control-label">
+                                                    Nhớ mật khẩu    
                                                 </label>
                                             </div>
                                         </div>
@@ -76,10 +79,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Quên Mật Khẩu?</a>
+                                        <a class="small" href="/User/ForgotPassword">Quên Mật Khẩu?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Tạo Tài Khoản Mới !</a>
+                                        <a class="small" href="/User/Register">Tạo Tài Khoản Mới !</a>
                                     </div>
                                 </div>
                             </div>
