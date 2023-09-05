@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ShoeStore.Application.Catalog.Products.DTOS;
+using ShoeStore.Application.DTOS;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.Entities;
 using System;
@@ -67,6 +70,38 @@ namespace ShoeStore.Application.System.Users
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
+        {
+            var query = _userManager.Users;
+
+            if (!string.IsNullOrEmpty(request.keyword))
+            {
+                query = query.Where(x=>x.UserName.Contains(request.keyword) 
+                || x.PhoneNumber.Contains(request.keyword)); 
+            }
+
+            // 3 Paging
+
+            int totalRow = await query.CountAsync();
+            var data = await query.Skip(request.pageIndex - 1).Take(request.pageSize).
+                Select(x => new UserViewModel()
+                {
+                   Id = x.Id,
+                    firstName = x.FirstName,
+                    lastName = x.LastName,
+                    email = x.Email,
+                    phoneNumber = x.PhoneNumber,
+                    userName = x.UserName,
+                }).ToListAsync();
+            //4 Select and projection
+            var pageResult = new PagedResult<UserViewModel>()
+            {
+                TotalRecord = totalRow,
+                Items = data
+            };
+            return pageResult;
+        }
+
         public async Task<bool> Register(RegisterRequest request)
         {
             var user = new AppUser()
@@ -86,5 +121,7 @@ namespace ShoeStore.Application.System.Users
             }
             return false;
         }
+
+
     }
 }

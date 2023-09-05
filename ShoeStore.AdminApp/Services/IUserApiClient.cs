@@ -1,4 +1,5 @@
-﻿using ShoeStore.Application.System.Users.DTOS;
+﻿using ShoeStore.Application.DTOS;
+using ShoeStore.Application.System.Users.DTOS;
 
 namespace ShoeStore.AdminApp.Services
 {
@@ -7,5 +8,7 @@ namespace ShoeStore.AdminApp.Services
         Task<string> Authenticate(LoginRequest request);
 
         Task<bool> Rigister(RegisterRequest request);
+
+        Task<PagedResult<UserViewModel>> GetAllUsersPaging(GetUserPagingRequest request);
     }
 }
