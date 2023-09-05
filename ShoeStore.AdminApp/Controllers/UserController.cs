@@ -19,6 +19,12 @@ namespace ShoeStore.AdminApp.Controllers
         [HttpPost]
         public IActionResult Login(LoginRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(ModelState);
+            }
+
+
             return View();
         }
     }
