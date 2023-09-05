@@ -24,9 +24,19 @@ namespace ShoeStore.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string keyword ,int pageIndex = 1,int pageSize = 10)
         {
-            return View();
+            //default parameters
+            var session = HttpContext.Session.GetString("Token");
+            var request = new GetUserPagingRequest()
+            {
+                BearerToken = session,
+                keyword = keyword,
+                pageIndex = pageIndex,
+                pageSize = pageSize
+            };
+            var data = await _userApiClient.GetAllUsersPaging(request);
+            return View(data);
         }
 
         [HttpGet]
@@ -42,6 +52,7 @@ namespace ShoeStore.AdminApp.Controllers
         {
             //da login roi => chua kip logout ma vao trang login 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
             return RedirectToAction("Login", "User");
         }
 
@@ -61,6 +72,9 @@ namespace ShoeStore.AdminApp.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
+            HttpContext.Session.SetString("Token", token);
+            //khi Login thanh cong lay token ra 
+
             await HttpContext.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
                         userPrincipal,

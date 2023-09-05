@@ -50,5 +50,13 @@ namespace ShoeStore.BackendAPI.Controllers
 
             return Ok();
         }
+
+        //https://localhost:7204/api/paging?pageIndex=1&pageSize=10&keyword=""
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllUsersPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var products = await _userService.GetUsersPaging(request);
+            return Ok(products);
+        }
     }
 }
