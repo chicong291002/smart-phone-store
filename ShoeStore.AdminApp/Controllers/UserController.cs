@@ -10,11 +10,13 @@ namespace ShoeStore.AdminApp.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [HttpPost]
         public IActionResult Login(LoginRequest request)
         {
             return View();
