@@ -1,7 +1,24 @@
-var builder = WebApplication.CreateBuilder(args);
+using FluentValidation.AspNetCore;
+using ShoeStore.AdminApp.Services;
+using ShoeStore.Application.System.Users.DTOS;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpClient();
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(
+    fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+
+var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIROMENT");
+
+#if DEBUG
+if (enviroment == Environments.Development)
+{
+    builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+}
+
+#endif
+//when update information code => system automatic update 
 
 var app = builder.Build();
 
