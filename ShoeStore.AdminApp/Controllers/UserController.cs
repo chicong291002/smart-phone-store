@@ -13,7 +13,7 @@ using System.Text;
 namespace ShoeStore.AdminApp.Controllers
 {
     //dang nhap moi dc vao`
-    public class UserController : BaseController
+    public class UserController : Controller
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
@@ -40,7 +40,7 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -50,7 +50,7 @@ namespace ShoeStore.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                return View();
             }
 
             var result = await _userApiClient.Register(request);

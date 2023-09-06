@@ -16,7 +16,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/User/Login"; // neu chua login thi Redirect ve day 
+        options.LoginPath = "/Login/Index"; // neu chua login thi Redirect ve day 
         options.AccessDeniedPath = "/User/Forbidden/";
     });
 

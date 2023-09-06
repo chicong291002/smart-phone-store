@@ -21,13 +21,9 @@ namespace ShoeStore.AdminApp.Controllers
             _userApiClient = userApiClient;
             _configuration = configuration;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Index()
         {
             //da login roi => chua kip logout ma vao trang login 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -35,16 +31,7 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Logout()
-        {
-            //da login roi => chua kip logout ma vao trang login 
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            HttpContext.Session.Remove("Token");
-            return RedirectToAction("Login", "User");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest request)
+        public async Task<IActionResult> Index(LoginRequest request)
         {
             if (!ModelState.IsValid)
             {
