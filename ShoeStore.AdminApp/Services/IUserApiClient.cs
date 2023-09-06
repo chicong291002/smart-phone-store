@@ -7,7 +7,7 @@ namespace ShoeStore.AdminApp.Services
     {
         Task<string> Authenticate(LoginRequest request);
 
-        Task<bool> Rigister(RegisterRequest request);
+        Task<bool> Register(RegisterRequest request);
 
         Task<PagedResult<UserViewModel>> GetAllUsersPaging(GetUserPagingRequest request);
     }

@@ -48,11 +48,11 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form asp-action="Login" asp-controller="User" method="post" class="user">
+                                    <form asp-action="Index" asp-controller="Login" method="post" class="user">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                    asp-for="UserName" ia-describedby="emailHelp"
-                                                   placeholder="Tài Khoản..."> 
+                                                   placeholder="Tài Khoản...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
@@ -63,7 +63,7 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input class="custom-control-input" asp-for="RememberMe" type="checkbox" />
                                                 <label class="custom-control-label">
-                                                    Nhớ mật khẩu    
+                                                    Nhớ mật khẩu
                                                 </label>
                                             </div>
                                         </div>
