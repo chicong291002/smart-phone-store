@@ -24,7 +24,7 @@ namespace ShoeStore.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(string keyword ,int pageIndex = 1,int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
             //default parameters
             var session = HttpContext.Session.GetString("Token");
@@ -100,6 +100,29 @@ namespace ShoeStore.AdminApp.Controllers
             ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validatedToken);
 
             return principal;
+        }
+
+        [HttpGet]
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(ModelState);
+            }
+
+            var result = await _userApiClient.Register(request);
+            if (result)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(request); // ko co thi tra ve view voi du~ lieu co san
         }
     }
 }

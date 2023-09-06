@@ -2,6 +2,7 @@
 {
     public class RegisterRequest
     {
+
         public string firstName { get; set; }
         public string lastName { get; set; }
         public DateTime Dob { get; set; }

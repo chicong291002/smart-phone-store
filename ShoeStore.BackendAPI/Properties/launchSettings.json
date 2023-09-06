@@ -20,7 +20,7 @@
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true, //chay ngam ko show trinh duyet = false
+      "launchBrowser": false, //chay ngam ko show trinh duyet = false
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7204",
       "environmentVariables": {
