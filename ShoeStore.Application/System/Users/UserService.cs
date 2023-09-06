@@ -76,8 +76,8 @@ namespace ShoeStore.Application.System.Users
 
             if (!string.IsNullOrEmpty(request.keyword))
             {
-                query = query.Where(x=>x.UserName.Contains(request.keyword) 
-                || x.PhoneNumber.Contains(request.keyword)); 
+                query = query.Where(x => x.UserName.Contains(request.keyword)
+                || x.PhoneNumber.Contains(request.keyword));
             }
 
             // 3 Paging
@@ -86,7 +86,7 @@ namespace ShoeStore.Application.System.Users
             var data = await query.Skip(request.pageIndex - 1).Take(request.pageSize).
                 Select(x => new UserViewModel()
                 {
-                   Id = x.Id,
+                    Id = x.Id,
                     firstName = x.FirstName,
                     lastName = x.LastName,
                     email = x.Email,
@@ -104,7 +104,19 @@ namespace ShoeStore.Application.System.Users
 
         public async Task<bool> Register(RegisterRequest request)
         {
-            var user = new AppUser()
+            var user = await _userManager.FindByNameAsync(request.userName);
+
+            if (user != null)
+            {
+                return false;
+            }
+
+            if (await _userManager.FindByEmailAsync(request.email) != null)
+            {
+                return false;
+            }
+
+            user = new AppUser()
             {
                 UserName = request.userName,
                 FirstName = request.firstName,
