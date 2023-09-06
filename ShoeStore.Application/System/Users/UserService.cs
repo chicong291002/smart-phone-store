@@ -69,7 +69,7 @@ namespace ShoeStore.Application.System.Users
                 signingCredentials: creds);
 
             var token =  new JwtSecurityTokenHandler().WriteToken(token);
-            return new ApiResult<string> 
+            return new ApiSuccessResult<string>(token);
         }
 
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
@@ -110,12 +110,12 @@ namespace ShoeStore.Application.System.Users
 
             if (user != null)
             {
-                return false;
+                return new ApiErrorResult<bool>("Tài khoản đã tồn tại ");
             }
 
             if (await _userManager.FindByEmailAsync(request.email) != null)
             {
-                return false;
+                return new ApiErrorResult<bool>("Email đã tồn tại");
             }
 
             user = new AppUser()
@@ -131,9 +131,9 @@ namespace ShoeStore.Application.System.Users
             var result = await _userManager.CreateAsync(user, request.passWord);
             if (result.Succeeded)
             {
-                return true;
+                return new ApiSuccessResult<bool>();
             }
-            return false;
+            return new ApiErrorResult<bool>("Đăng ký không thành công");
         }
 
 

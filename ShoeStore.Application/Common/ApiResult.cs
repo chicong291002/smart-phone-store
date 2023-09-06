@@ -10,13 +10,12 @@ namespace ShoeStore.Application.Common
     {
         public ApiResult(string isSuccessed, string message)
         {
-            IsSuccessed = IsSuccessed; Message = message;
+            IsSuccessed = IsSuccessed; Message = message;   
             //case : false
         }
 
-        public ApiResult(string isSuccessed, string message , T ResultObj)
+        public ApiResult()
         {
-            IsSuccessed = IsSuccessed; Message = message;
             // case : true
         }
 
