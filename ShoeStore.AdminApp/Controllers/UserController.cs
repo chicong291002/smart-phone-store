@@ -36,7 +36,7 @@ namespace ShoeStore.AdminApp.Controllers
                 pageSize = pageSize
             };
             var data = await _userApiClient.GetAllUsersPaging(request);
-            return View(data);
+            return View(data.ResultObj); // ra duoc pageUser
         }
 
         [HttpGet]
@@ -54,7 +54,32 @@ namespace ShoeStore.AdminApp.Controllers
             }
 
             var result = await _userApiClient.Register(request);
-            if (result)
+            if (result.IsSuccessed)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", result.Message); //message tu api truyen vao
+            return View(request); // ko co thi tra ve view voi du~ lieu co san
+        }
+
+
+        [HttpGet]
+        public IActionResult Update()
+        {
+            var user = _userApiClient.
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(Guid id, UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var result = await _userApiClient.Update(id,request);
+            if (result.IsSuccessed)
             {
                 return RedirectToAction("Index");
             }

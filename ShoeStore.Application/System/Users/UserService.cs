@@ -67,9 +67,24 @@ namespace ShoeStore.Application.System.Users
                 claims,
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
+            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+        }
 
-            var token =  new JwtSecurityTokenHandler().WriteToken(token);
-            return new ApiSuccessResult<string>(token);
+        public async Task<ApiResult<UserViewModel>> GetById(Guid id)
+        {
+            var user =await _userManager.FindByIdAsync(id.ToString());
+            if(user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
+
+            var userVm = new UserViewModel()
+            {
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                email = user.Email,
+                phoneNumber = user.PhoneNumber,
+                userName = user.UserName,
+                Dob = user.Dob,
+            };
+            return new ApiSuccessResult<UserViewModel>(userVm);
         }
 
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
@@ -89,11 +104,13 @@ namespace ShoeStore.Application.System.Users
                 Select(x => new UserViewModel()
                 {
                     Id = x.Id,
+                    Dob = x.Dob,
                     firstName = x.FirstName,
                     lastName = x.LastName,
                     email = x.Email,
                     phoneNumber = x.PhoneNumber,
                     userName = x.UserName,
+                    
                 }).ToListAsync();
             //4 Select and projection
             var pageResult = new PagedResult<UserViewModel>()
@@ -101,7 +118,7 @@ namespace ShoeStore.Application.System.Users
                 TotalRecord = totalRow,
                 Items = data
             };
-            return pageResult;
+            return new ApiSuccessResult<PagedResult<UserViewModel>>(pageResult);
         }
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
@@ -136,6 +153,26 @@ namespace ShoeStore.Application.System.Users
             return new ApiErrorResult<bool>("Đăng ký không thành công");
         }
 
+        public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
+        {
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.email && x.Id != id))
+            {
+                return new ApiErrorResult<bool>("Email đã tồn tại");
+            }
 
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            user.Dob = request.Dob;
+            user.Email = request.email;
+            user.FirstName = request.firstName;
+            user.LastName = request.lastName;
+            user.PhoneNumber = request.phoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<bool>();
+            }
+            return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
     }
 }

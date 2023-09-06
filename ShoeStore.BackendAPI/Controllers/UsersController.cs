@@ -26,7 +26,7 @@ namespace ShoeStore.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
             var resultToken = await _userService.Authenticate(request);
-            if (string.IsNullOrEmpty(resultToken))
+            if (string.IsNullOrEmpty(resultToken.ResultObj))
             {
                 return BadRequest("Username or password is incorrect");
             }
@@ -34,8 +34,8 @@ namespace ShoeStore.BackendAPI.Controllers
             return Ok(resultToken); //tra ve 1 chuoi token 
         }
 
-        [HttpPost("register")]
-        [AllowAnonymous] //chua login van goi duoc 
+        [HttpPost]
+        [AllowAnonymous]    
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
@@ -43,12 +43,30 @@ namespace ShoeStore.BackendAPI.Controllers
                 return BadRequest(ModelState);
             }
             var result = await _userService.Register(request);
-            if (!result)
+            if (!result.ResultObj)
             {
                 return BadRequest("Register not successful");
             }
 
             return Ok();
+        }
+
+        //Put : https://localhost:7204/api/Users/id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
+        {
+            //Guid la kieu unit identity 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _userService.Update(id, request);
+            if (!result.ResultObj)
+            {
+                return BadRequest("Update not successful");
+            }
+
+            return Ok();    
         }
 
         //https://localhost:7204/api/paging?pageIndex=1&pageSize=10&keyword=""
@@ -57,6 +75,13 @@ namespace ShoeStore.BackendAPI.Controllers
         {
             var products = await _userService.GetUsersPaging(request);
             return Ok(products);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var users = await _userService.GetById(id);
+            return Ok(users);
         }
     }
 }

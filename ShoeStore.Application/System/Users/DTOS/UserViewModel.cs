@@ -16,5 +16,7 @@ namespace ShoeStore.Application.System.Users.DTOS
 
         public string userName { get; set; }    
         public string email { get; set; }
+
+        public string Dob { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ShoeStore.AdminApp.Services;
-using ShoeStore.Application.System.Users.DTOS;
+using ShoeStore.Application.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();

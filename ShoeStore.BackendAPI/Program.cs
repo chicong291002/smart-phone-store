@@ -10,6 +10,7 @@ using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Users;
+using ShoeStore.Application.System.Users.CheckUserValidator;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
@@ -101,6 +102,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ShoeStoreDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("ShoeStoreDb")));
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
