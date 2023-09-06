@@ -24,15 +24,15 @@ namespace ShoeStore.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
         {
             //default parameters
             /*            var session = HttpContext.Session.GetString("Token");*/
             var request = new GetUserPagingRequest()
             {
                 keyword = keyword,
-                pageIndex = pageIndex,
-                pageSize = pageSize
+                PageIndex = pageIndex,
+                PageSize = pageSize
             };
             var data = await _userApiClient.GetAllUsersPaging(request);
             return View(data.ResultObj); // ra duoc pageUser

@@ -101,7 +101,7 @@ namespace ShoeStore.Application.System.Users
             // 3 Paging
 
             int totalRow = await query.CountAsync();
-            var data = await query.Skip(request.pageIndex - 1).Take(request.pageSize).
+            var data = await query.Skip(request.PageIndex - 1).Take(request.PageSize).
                 Select(x => new UserViewModel()
                 {
                     Id = x.Id,
@@ -117,6 +117,8 @@ namespace ShoeStore.Application.System.Users
             var pageResult = new PagedResult<UserViewModel>()
             {
                 TotalRecord = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
             return new ApiSuccessResult<PagedResult<UserViewModel>>(pageResult);
