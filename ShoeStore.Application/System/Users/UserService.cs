@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShoeStore.Application.Catalog.Products.DTOS;
+using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.Entities;
@@ -35,7 +36,7 @@ namespace ShoeStore.Application.System.Users
             _config = config;
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
+        public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
 
@@ -67,10 +68,11 @@ namespace ShoeStore.Application.System.Users
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var token =  new JwtSecurityTokenHandler().WriteToken(token);
+            return new ApiResult<string> 
         }
 
-        public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
+        public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
 
@@ -102,7 +104,7 @@ namespace ShoeStore.Application.System.Users
             return pageResult;
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.userName);
 
