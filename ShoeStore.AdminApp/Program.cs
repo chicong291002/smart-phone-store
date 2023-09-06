@@ -1,7 +1,8 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using ShoeStore.AdminApp.Services;
-using ShoeStore.Application.System.Users.DTOS;
+using ShoeStore.Application.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
@@ -13,6 +14,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -20,11 +22,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/User/Forbidden/";
     });
 
-builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.AddHttpContextAccessor();
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddFluentValidation(
     fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIROMENT");
 
 #if DEBUG

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShoeStore.Application.Catalog.Products.DTOS;
+using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.Entities;
@@ -35,7 +37,7 @@ namespace ShoeStore.Application.System.Users
             _config = config;
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
+        public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
 
@@ -66,18 +68,34 @@ namespace ShoeStore.Application.System.Users
                 claims,
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
         }
 
-        public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
+        public async Task<ApiResult<UserViewModel>> GetById(Guid id)
+        {
+            var user =await _userManager.FindByIdAsync(id.ToString());
+            if(user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
+
+            var userVm = new UserViewModel()
+            {
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                email = user.Email,
+                phoneNumber = user.PhoneNumber,
+                userName = user.UserName,
+                Dob = user.Dob,
+            };
+            return new ApiSuccessResult<UserViewModel>(userVm);
+        }
+
+        public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
 
             if (!string.IsNullOrEmpty(request.keyword))
             {
-                query = query.Where(x=>x.UserName.Contains(request.keyword) 
-                || x.PhoneNumber.Contains(request.keyword)); 
+                query = query.Where(x => x.UserName.Contains(request.keyword)
+                || x.PhoneNumber.Contains(request.keyword));
             }
 
             // 3 Paging
@@ -86,12 +104,14 @@ namespace ShoeStore.Application.System.Users
             var data = await query.Skip(request.pageIndex - 1).Take(request.pageSize).
                 Select(x => new UserViewModel()
                 {
-                   Id = x.Id,
+                    Id = x.Id,
+                    Dob = x.Dob,
                     firstName = x.FirstName,
                     lastName = x.LastName,
                     email = x.Email,
                     phoneNumber = x.PhoneNumber,
                     userName = x.UserName,
+                    
                 }).ToListAsync();
             //4 Select and projection
             var pageResult = new PagedResult<UserViewModel>()
@@ -99,12 +119,24 @@ namespace ShoeStore.Application.System.Users
                 TotalRecord = totalRow,
                 Items = data
             };
-            return pageResult;
+            return new ApiSuccessResult<PagedResult<UserViewModel>>(pageResult);
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
-            var user = new AppUser()
+            var user = await _userManager.FindByNameAsync(request.userName);
+
+            if (user != null)
+            {
+                return new ApiErrorResult<bool>("Tài khoản đã tồn tại ");
+            }
+
+            if (await _userManager.FindByEmailAsync(request.email) != null)
+            {
+                return new ApiErrorResult<bool>("Email đã tồn tại");
+            }
+
+            user = new AppUser()
             {
                 UserName = request.userName,
                 FirstName = request.firstName,
@@ -117,11 +149,31 @@ namespace ShoeStore.Application.System.Users
             var result = await _userManager.CreateAsync(user, request.passWord);
             if (result.Succeeded)
             {
-                return true;
+                return new ApiSuccessResult<bool>();
             }
-            return false;
+            return new ApiErrorResult<bool>("Đăng ký không thành công");
         }
 
+        public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
+        {
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.email && x.Id != id))
+            {
+                return new ApiErrorResult<bool>("Email đã tồn tại");
+            }
 
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            user.Dob = request.Dob;
+            user.Email = request.email;
+            user.FirstName = request.firstName;
+            user.LastName = request.lastName;
+            user.PhoneNumber = request.phoneNumber;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<bool>();
+            }
+            return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
     }
 }

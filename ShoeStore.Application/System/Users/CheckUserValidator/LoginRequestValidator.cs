@@ -1,11 +1,12 @@
 ﻿using FluentValidation;
+using ShoeStore.Application.System.Users.DTOS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.System.Users.DTOS
+namespace ShoeStore.Application.System.Users.CheckUserValidator
 {
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {
