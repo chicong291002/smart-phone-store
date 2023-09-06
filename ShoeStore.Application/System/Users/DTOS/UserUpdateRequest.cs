@@ -9,6 +9,7 @@ namespace ShoeStore.Application.System.Users.DTOS
 {
     public class UserUpdateRequest
     {
+        public Guid Id { get; set; }
         [Display(Name = "Tên")]
         public string firstName { get; set; }
         [Display(Name = "Họ")]

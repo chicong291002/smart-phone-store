@@ -42,7 +42,7 @@ namespace ShoeStore.AdminApp.Services
             var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", request.BearerToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/users/paging?pageIndex={request.pageIndex}&pageSize={request.pageSize}" +
                 $"&keyword={request.keyword}"); //by tu query vao`
             var body = await response.Content.ReadAsStringAsync();
@@ -86,19 +86,20 @@ namespace ShoeStore.AdminApp.Services
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
-            var response = await client.PostAsync($"/api/users/update/{id}", httpContent);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                
+            var response = await client.PutAsync($"/api/users/{id}", httpContent);   
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-            {
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
-                //convert qua Ojbect de return 
-            }
+
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
     }

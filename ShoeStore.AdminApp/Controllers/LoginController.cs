@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ShoeStore.AdminApp.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace ShoeStore.AdminApp.Controllers
 {
@@ -38,15 +39,15 @@ namespace ShoeStore.AdminApp.Controllers
                 return View(ModelState);
             }
 
-            var token = await _userApiClient.Authenticate(request);
+            var result = await _userApiClient.Authenticate(request);
 
-            var userPrincipal = ValidateToken(token);
+            var userPrincipal = ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
-            HttpContext.Session.SetString("Token", token);
+            HttpContext.Session.SetString("Token", result.ResultObj);
             //khi Login thanh cong lay token ra 
 
             await HttpContext.SignInAsync(
