@@ -66,7 +66,6 @@ namespace ShoeStore.AdminApp.Controllers
         [HttpGet]
         public IActionResult Update()
         {
-            var user = _userApiClient.
             return View();
         }
 

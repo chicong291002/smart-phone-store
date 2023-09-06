@@ -13,7 +13,7 @@ namespace ShoeStore.Data.Entities
 
         public string LastName { get; set; }
 
-        public string Dob { get; set; }
+        public DateTime Dob { get; set; }
 
         public List<Carts> Carts { get; set; }
 
