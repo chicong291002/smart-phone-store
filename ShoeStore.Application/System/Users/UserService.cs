@@ -1,20 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.Entities;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ShoeStore.Application.System.Users
 {
@@ -43,13 +37,13 @@ namespace ShoeStore.Application.System.Users
 
             if (user == null)
             {
-                return null;
+                return new ApiErrorResult<string>("Account not exist");
             }
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
 
             if (!result.Succeeded)
-                return null;
+                return new ApiSuccessResult<string>("Login not Success");
 
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -73,8 +67,8 @@ namespace ShoeStore.Application.System.Users
 
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
-            var user =await _userManager.FindByIdAsync(id.ToString());
-            if(user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
 
             var userVm = new UserViewModel()
             {
@@ -94,14 +88,18 @@ namespace ShoeStore.Application.System.Users
 
             if (!string.IsNullOrEmpty(request.keyword))
             {
-                query = query.Where(x => x.UserName.Contains(request.keyword)
-                || x.PhoneNumber.Contains(request.keyword));
+                query = query.Where(x => 
+                   x.UserName.Contains(request.keyword)
+                || x.Email.Contains(request.keyword)
+                || x.PhoneNumber.Contains(request.keyword) 
+                || x.FirstName.Contains(request.keyword)
+                || x.LastName.Contains(request.keyword));
             }
 
             // 3 Paging
 
             int totalRow = await query.CountAsync();
-            var data = await query.Skip(request.pageIndex - 1).Take(request.pageSize).
+            var data = await query.Skip(request.PageIndex - 1).Take(request.PageSize).
                 Select(x => new UserViewModel()
                 {
                     Id = x.Id,
@@ -111,12 +109,14 @@ namespace ShoeStore.Application.System.Users
                     email = x.Email,
                     phoneNumber = x.PhoneNumber,
                     userName = x.UserName,
-                    
+
                 }).ToListAsync();
             //4 Select and projection
             var pageResult = new PagedResult<UserViewModel>()
             {
                 TotalRecord = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
             return new ApiSuccessResult<PagedResult<UserViewModel>>(pageResult);
@@ -174,6 +174,21 @@ namespace ShoeStore.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        public async Task<ApiResult<bool>> Delete(Guid id)
+        {
+            var result = await _userManager.FindByIdAsync(id.ToString());
+            if (result == null)
+            {
+                return new ApiErrorResult<bool>("Not found User");
+            }
+            var user = await _userManager.DeleteAsync(result);
+            if (user.Succeeded)
+            {
+                return new ApiSuccessResult<bool>();
+            }
+            return new ApiErrorResult<bool>("Delete not Successful");
         }
     }
 }

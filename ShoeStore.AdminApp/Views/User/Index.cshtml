@@ -2,77 +2,103 @@
 @model PagedResult<ShoeStore.Application.System.Users.DTOS.UserViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="content">
-    <div class="container-fluid">
-        <h1 class="h3 mb-2 text-gray-800">Danh sách người dùng </h1>
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">  
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Tên
-                                </th>
-                                <th>
-                                    Họ
-                                </th>
-                                <th>
-                                    Số điện thoại
-                                </th>
-                                <th>
-                                    Tài khoản
-                                </th>
-                                <th>
-                                    Email
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Items)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.firstName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.lastName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.phoneNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.userName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.email)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Update", "Update", new {  id=item.Id  }) |
-                                        @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |  
-                                        @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+<div class="container-fluid">
+    <h1 class="mt-4">Danh sách người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách người dùng</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-8 d-flex align-items-center">
+                                <input type="text" value="@ViewBag.keyword" name="keyword" class="form-control flex-grow-1" />
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center">
+                                <button type="submit" class="btn btn-primary"
+                                        style="margin: 10px">
+                                    Tìm
+                                </button>
+                                <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-dark ml-2">Reset</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
+        <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Tên
+                            </th>
+                            <th>
+                                Họ
+                            </th>
+                            <th>
+                                Số điện thoại
+                            </th>
+                            <th>
+                                Tài khoản
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.firstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.lastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.phoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.userName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Sửa", "Update", new { id = item.Id }) |
+                                    @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                    @Html.ActionLink("Gán quyền", "RoleAssign", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
     </div>
-    <!-- /.container-fluid -->
-
 </div>
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>

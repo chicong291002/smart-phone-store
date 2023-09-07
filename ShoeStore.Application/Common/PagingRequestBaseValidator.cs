@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Common
 {
-    public class PagingRequestBaseValidator : AbstractValidator<PagingRequestBase>
+    public class PagingRequestBaseValidator : AbstractValidator<PageResultBase>
     {
         public PagingRequestBaseValidator()
         {
-            RuleFor(x => x.pageIndex).NotEmpty().WithMessage("pageIndex is Required");
+            RuleFor(x => x.PageIndex).NotEmpty().WithMessage("pageIndex is Required");
 
-            RuleFor(x => x.pageSize).NotEmpty().WithMessage("pageSize is Required");
+            RuleFor(x => x.PageSize).NotEmpty().WithMessage("pageSize is Required");
         }
     }
 }

@@ -1,14 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.System.Users.DTOS;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace ShoeStore.AdminApp.Controllers
 {
@@ -24,17 +16,18 @@ namespace ShoeStore.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
         {
             //default parameters
             /*            var session = HttpContext.Session.GetString("Token");*/
             var request = new GetUserPagingRequest()
             {
                 keyword = keyword,
-                pageIndex = pageIndex,
-                pageSize = pageSize
+                PageIndex = pageIndex,
+                PageSize = pageSize
             };
             var data = await _userApiClient.GetAllUsersPaging(request);
+            ViewBag.keyword = keyword;
             return View(data.ResultObj); // ra duoc pageUser
         }
 
@@ -107,5 +100,29 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _userApiClient.GetById(id);
             return View(result.ResultObj);
         }
+
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var result = await _userApiClient.Delete(id);
+            if (result.IsSuccessed)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", result.Message);  //lỗi model bussiness
+            //message tu api truyen vao 
+            return View(result); // ko co thi tra ve view voi du~ lieu co san
+        }   
     }
 }
