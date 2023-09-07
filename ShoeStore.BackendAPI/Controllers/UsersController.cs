@@ -86,5 +86,12 @@ namespace ShoeStore.BackendAPI.Controllers
             var users = await _userService.GetById(id);
             return Ok(users);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var users = await _userService.Delete(id);
+            return Ok(users);
+        }
     }
 }

@@ -1,20 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.Entities;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ShoeStore.Application.System.Users
 {
@@ -73,8 +67,8 @@ namespace ShoeStore.Application.System.Users
 
         public async Task<ApiResult<UserViewModel>> GetById(Guid id)
         {
-            var user =await _userManager.FindByIdAsync(id.ToString());
-            if(user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
 
             var userVm = new UserViewModel()
             {
@@ -111,7 +105,7 @@ namespace ShoeStore.Application.System.Users
                     email = x.Email,
                     phoneNumber = x.PhoneNumber,
                     userName = x.UserName,
-                    
+
                 }).ToListAsync();
             //4 Select and projection
             var pageResult = new PagedResult<UserViewModel>()
@@ -176,6 +170,21 @@ namespace ShoeStore.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Cập nhật không thành công");
+        }
+
+        public async Task<ApiResult<bool>> Delete(Guid id)
+        {
+            var result = await _userManager.FindByIdAsync(id.ToString());
+            if (result == null)
+            {
+                return new ApiErrorResult<bool>("Not found User");
+            }
+            var user = await _userManager.DeleteAsync(result);
+            if (user.Succeeded)
+            {
+                return new ApiSuccessResult<bool>();
+            }
+            return new ApiErrorResult<bool>("Delete not Successful");
         }
     }
 }

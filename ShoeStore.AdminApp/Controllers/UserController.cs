@@ -107,5 +107,29 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _userApiClient.GetById(id);
             return View(result.ResultObj);
         }
+
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var result = await _userApiClient.Delete(id);
+            if (result.IsSuccessed)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", result.Message);  //lỗi model bussiness
+            //message tu api truyen vao 
+            return View(result); // ko co thi tra ve view voi du~ lieu co san
+        }
     }
 }
