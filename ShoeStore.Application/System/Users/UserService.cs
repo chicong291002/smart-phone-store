@@ -37,13 +37,13 @@ namespace ShoeStore.Application.System.Users
 
             if (user == null)
             {
-                return null;
+                return new ApiErrorResult<string>("Account not exist");
             }
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
 
             if (!result.Succeeded)
-                return null;
+                return new ApiSuccessResult<string>("Login not Success");
 
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -88,8 +88,12 @@ namespace ShoeStore.Application.System.Users
 
             if (!string.IsNullOrEmpty(request.keyword))
             {
-                query = query.Where(x => x.UserName.Contains(request.keyword)
-                || x.PhoneNumber.Contains(request.keyword));
+                query = query.Where(x => 
+                   x.UserName.Contains(request.keyword)
+                || x.Email.Contains(request.keyword)
+                || x.PhoneNumber.Contains(request.keyword) 
+                || x.FirstName.Contains(request.keyword)
+                || x.LastName.Contains(request.keyword));
             }
 
             // 3 Paging

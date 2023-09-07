@@ -1,14 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShoeStore.AdminApp.Services;
 using ShoeStore.Application.System.Users.DTOS;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace ShoeStore.AdminApp.Controllers
 {
@@ -35,6 +27,7 @@ namespace ShoeStore.AdminApp.Controllers
                 PageSize = pageSize
             };
             var data = await _userApiClient.GetAllUsersPaging(request);
+            ViewBag.keyword = keyword;
             return View(data.ResultObj); // ra duoc pageUser
         }
 
@@ -130,6 +123,6 @@ namespace ShoeStore.AdminApp.Controllers
             ModelState.AddModelError("", result.Message);  //lỗi model bussiness
             //message tu api truyen vao 
             return View(result); // ko co thi tra ve view voi du~ lieu co san
-        }
+        }   
     }
 }
