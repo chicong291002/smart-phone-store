@@ -23,5 +23,7 @@ namespace ShoeStore.Application.System.Users.DTOS
         public string email { get; set; }
         [Display(Name = "Ngày Sinh")]
         public DateTime Dob { get; set; }
+
+        public IList<string> Roles { get; set; }
     }
 }

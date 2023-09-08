@@ -1,7 +1,8 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ShoeStore.AdminApp.Services;
+using ShoeStore.AdminApp.Services.Roles;
+using ShoeStore.AdminApp.Services.Users;
 using ShoeStore.Application.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ builder.Services.AddControllersWithViews().AddFluentValidation(
     fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
+
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIROMENT");
 
