@@ -35,15 +35,14 @@ namespace ShoeStore.Application.System.Users
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
 
-            if (user == null)
-            {
-                return new ApiErrorResult<string>("Account not exist");
-            }
+            if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
 
             if (!result.Succeeded)
-                return new ApiSuccessResult<string>("Login not Success");
+            {
+                return new ApiErrorResult<string>("Đăng nhập không đúng");
+            }
 
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -70,6 +69,7 @@ namespace ShoeStore.Application.System.Users
             var user = await _userManager.FindByIdAsync(id.ToString());
             if (user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
 
+            var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserViewModel()
             {
                 firstName = user.FirstName,
@@ -78,6 +78,7 @@ namespace ShoeStore.Application.System.Users
                 phoneNumber = user.PhoneNumber,
                 userName = user.UserName,
                 Dob = user.Dob,
+                Roles = roles
             };
             return new ApiSuccessResult<UserViewModel>(userVm);
         }
@@ -88,10 +89,10 @@ namespace ShoeStore.Application.System.Users
 
             if (!string.IsNullOrEmpty(request.keyword))
             {
-                query = query.Where(x => 
+                query = query.Where(x =>
                    x.UserName.Contains(request.keyword)
                 || x.Email.Contains(request.keyword)
-                || x.PhoneNumber.Contains(request.keyword) 
+                || x.PhoneNumber.Contains(request.keyword)
                 || x.FirstName.Contains(request.keyword)
                 || x.LastName.Contains(request.keyword));
             }
@@ -189,6 +190,29 @@ namespace ShoeStore.Application.System.Users
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Delete not Successful");
+        }
+
+        public async Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("Tài khoản không tồn tại ");
+            }
+
+            var removeRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name);
+            await _userManager.RemoveFromRolesAsync(user, removeRoles);
+
+            var addRoles = request.Roles.Where(x => x.Selected == true).Select(x => x.Name).ToList();
+            foreach (var role in addRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, role) == false)
+                {
+                    await _userManager.AddToRoleAsync(user, role); 
+                }
+            }
+            return new ApiSuccessResult<bool>();
         }
     }
 }

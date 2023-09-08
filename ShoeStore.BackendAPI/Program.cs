@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
+using ShoeStore.Application.System.Roles;
 using ShoeStore.Application.System.Users;
 using ShoeStore.Application.System.Users.CheckUserValidator;
 using ShoeStore.Application.System.Users.DTOS;
@@ -26,9 +27,10 @@ builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<AppUser, AppUser>();
+builder.Services.AddTransient<IRoleService,RoleService>();
 
-builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
-builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
+/*builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();*/
 
 builder.Services.AddControllers().AddFluentValidation(
     fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

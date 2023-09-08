@@ -28,6 +28,7 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var resultToken = await _userService.Authenticate(request);
             if (string.IsNullOrEmpty(resultToken.ResultObj))
             {
@@ -42,11 +43,10 @@ namespace ShoeStore.BackendAPI.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+
             var result = await _userService.Register(request);
-            if (!result.ResultObj)
+            if (!result.IsSuccessed)
             {
                 return BadRequest(result);
             }
@@ -92,6 +92,24 @@ namespace ShoeStore.BackendAPI.Controllers
         {
             var users = await _userService.Delete(id);
             return Ok(users);
+        }
+
+        //Put : https://localhost:7204/api/Users/id
+        [HttpPut("{id}/roles")]
+        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
+        {
+            //Guid la kieu unit identity 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _userService.RoleAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

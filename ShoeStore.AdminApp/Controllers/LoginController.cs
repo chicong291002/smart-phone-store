@@ -7,8 +7,7 @@ using ShoeStore.Application.System.Users.DTOS;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ShoeStore.AdminApp.Services;
-using Microsoft.AspNetCore.Http;
+using ShoeStore.AdminApp.Services.Users;
 
 namespace ShoeStore.AdminApp.Controllers
 {
@@ -35,9 +34,7 @@ namespace ShoeStore.AdminApp.Controllers
         public async Task<IActionResult> Index(LoginRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return View(ModelState);
-            }
 
             var result = await _userApiClient.Authenticate(request);
             if(result.ResultObj == null)
@@ -46,7 +43,7 @@ namespace ShoeStore.AdminApp.Controllers
                 return View();
             }
 
-            var userPrincipal = ValidateToken(result.ResultObj);
+            var userPrincipal = this.ValidateToken(result.ResultObj);
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
