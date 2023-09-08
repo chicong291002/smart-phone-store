@@ -28,6 +28,11 @@ namespace ShoeStore.AdminApp.Controllers
             };
             var data = await _userApiClient.GetAllUsersPaging(request);
             ViewBag.keyword = keyword;
+
+            if(TempData["result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["result"];
+            }
             return View(data.ResultObj); // ra duoc pageUser
         }
 
@@ -48,6 +53,7 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _userApiClient.Register(request);
             if (result.IsSuccessed)
             {
+                TempData["result"] = "Thêm mới người dùng thành công";
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", result.Message);  //lỗi model bussiness
@@ -88,6 +94,7 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _userApiClient.Update(request.Id, request);
             if (result.IsSuccessed)
             {
+                TempData["result"] = "Cập nhật người dùng thành công";
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", result.Message);
@@ -102,27 +109,31 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete()
+        public IActionResult Delete(Guid id)
         {
-            return View();
+            return View(new UserDeleteRequest()
+            {
+                Id = id
+            });;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(UserDeleteRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            var result = await _userApiClient.Delete(id);
+            var result = await _userApiClient.Delete(request.Id);
             if (result.IsSuccessed)
             {
+                TempData["result"] = "Xóa người dùng thành công";
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", result.Message);  //lỗi model bussiness
             //message tu api truyen vao 
             return View(result); // ko co thi tra ve view voi du~ lieu co san
-        }   
+        }
     }
 }
