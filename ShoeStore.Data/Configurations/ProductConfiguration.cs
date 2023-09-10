@@ -17,6 +17,7 @@ namespace ShoeStore.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(p => p.Name).IsRequired();
             builder.Property(x => x.Price).IsRequired();
+            builder.Property(x => x.Stock).IsRequired();
 
             // Cấu hình mối quan hệ một-nhiều với ProductInCategory
             builder.HasMany(p => p.ProductInCategories)

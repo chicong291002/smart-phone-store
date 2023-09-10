@@ -29,7 +29,7 @@ namespace ShoeStore.BackendAPI.Controllers
 
         //http://localhost:port/products?pageIndex=1&pageSize=10&CategoryIds=1
         [HttpGet("paging")]
-        public async Task<IActionResult> GetAllProductsPagings([FromQuery] GetManageProductPagingRequest request)
+        public async Task<IActionResult> GetAllProductsPagings([FromQuery] GetProductPagingRequest request)
         {
             var products = await _manageProductService.GetAllPagingProducts(request);
             return Ok(products);

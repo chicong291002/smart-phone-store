@@ -34,6 +34,7 @@ namespace ShoeStore.Application.Catalog.Products
                 Name = request.Name,
                 Description = request.Description,
                 Price = request.Price,
+                Stock = request.Stock,
                 OriginalPrice = request.OriginalPrice,
                 DateCreated = DateTime.Now,
 
@@ -89,7 +90,7 @@ namespace ShoeStore.Application.Catalog.Products
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<PagedResult<ProductViewModel>> GetAllPagingProducts(GetManageProductPagingRequest request)
+        public async Task<PagedResult<ProductViewModel>> GetAllPagingProducts(GetProductPagingRequest request)
         {
             // 1.Select join
             var query = from p in _context.Products
@@ -106,7 +107,7 @@ namespace ShoeStore.Application.Catalog.Products
                 query = query.Where(x => x.p.Name.Contains(request.Keyword));
             }
 
-            if (request.CategoryIds > 0)
+            if (request.CategoryIds !=null && request.CategoryIds != 0)
             {
                 query = query.Where(p => request.CategoryIds == p.pic.CategoryId);
             }
@@ -122,6 +123,7 @@ namespace ShoeStore.Application.Catalog.Products
                     Description = x.p.Description,
                     OriginalPrice = x.p.OriginalPrice,
                     Price = x.p.Price,
+                    Stock = x.p.Stock,
                 }).ToListAsync();
             //4 Select and projection
             var pageResult = new PagedResult<ProductViewModel>()
@@ -145,6 +147,7 @@ namespace ShoeStore.Application.Catalog.Products
                 DateCreated = i.DateCreated,
                 Description = i.Description,
                 ThumbnailImage = i.Thumbnail,
+                Stock = i.Stock,
             }).ToListAsync();
         }
 
@@ -278,6 +281,7 @@ namespace ShoeStore.Application.Catalog.Products
                 Price = product.Price,
                 OriginalPrice = product.OriginalPrice,
                 Name = product.Name,
+                Stock = product.Stock,
                 Description = product.Description,
                 ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
             };

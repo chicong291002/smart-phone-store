@@ -16,6 +16,8 @@ namespace ShoeStore.BackendAPI.Controllers
         public RolesController(IRoleService roleService) {
             _roleService = roleService;
         }
+
+        [HttpGet("roles")]
         public async Task<IActionResult> GetAllRoles()
         {
             var roles =await _roleService.GetAllRoles();

@@ -13,7 +13,7 @@ namespace ShoeStore.Application.Catalog.Products
         Task<bool> UpdatePrice(int productId, decimal newPrice);
         Task<List<ProductViewModel>> GetAllProducts();
         //trả về một model mà có đầy đủ các thông tin 
-        Task<PagedResult<ProductViewModel>> GetAllPagingProducts(GetManageProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllPagingProducts(GetProductPagingRequest request);
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
