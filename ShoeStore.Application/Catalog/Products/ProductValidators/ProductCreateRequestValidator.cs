@@ -19,6 +19,7 @@ namespace ShoeStore.Application.Catalog.Products.ProductValidators
 
             RuleFor(x => x.Thumbnail).NotEmpty().WithMessage("Thumbnail is Required");
 
+            RuleFor(x => x.Stock).NotEmpty().WithMessage("Stock is Required");
             RuleFor(x => x.Price).NotEmpty().WithMessage("Price is Required");
 
             RuleFor(x => x.OriginalPrice).NotEmpty().WithMessage("OriginalPrice is Required");

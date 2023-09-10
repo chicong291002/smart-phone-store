@@ -41,13 +41,13 @@ namespace ShoeStore.AdminApp.Controllers
             return View(data.ResultObj); // ra duoc pageUser
         }
 
-        [HttpGet]
+        [HttpGet("create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
+       [HttpPost("create")]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (!ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("Update")]
         public async Task<IActionResult> Update(Guid id)
         {
             var result = await _userApiClient.GetById(id);
@@ -88,7 +88,7 @@ namespace ShoeStore.AdminApp.Controllers
             return RedirectToAction("Error", "Home");
         }
 
-        [HttpPost]
+        [HttpPost("Update")]
         public async Task<IActionResult> Update(UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -106,14 +106,14 @@ namespace ShoeStore.AdminApp.Controllers
             return View(request); // ko co thi tra ve view voi du~ lieu co san
         }
 
-        [HttpGet]
+        [HttpGet("details")]
         public async Task<IActionResult> Details(Guid id)
         {
             var result = await _userApiClient.GetById(id);
             return View(result.ResultObj);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Delete(Guid id)
         {
             return View(new UserDeleteRequest()
@@ -122,7 +122,7 @@ namespace ShoeStore.AdminApp.Controllers
             }); ;
         }
 
-        [HttpPost]
+        [HttpPost("delete")]
         public async Task<IActionResult> Delete(UserDeleteRequest request)
         {
             if (!ModelState.IsValid)
@@ -141,14 +141,14 @@ namespace ShoeStore.AdminApp.Controllers
             return View(result); // ko co thi tra ve view voi du~ lieu co san
         }
 
-        [HttpGet]
+        [HttpGet("{id}/RoleAssign")]
         public async Task<IActionResult> RoleAssign(Guid id)
         {
             var roleAssinRequest = await GetRoleAssignRequest(id);
             return View(roleAssinRequest);
         }
 
-        [HttpPost]
+        [HttpPost("RoleAssign")]
         public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
         {
             if (!ModelState.IsValid)

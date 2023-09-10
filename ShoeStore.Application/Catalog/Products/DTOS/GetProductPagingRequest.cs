@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Catalog.Products.DTOS
 {
-    public class GetManageProductPagingRequest : PageResultBase
+    public class GetProductPagingRequest : PageResultBase
     {
         public string Keyword { get; set; }
-        public int CategoryIds { get; set; }
+        public int? CategoryIds { get; set; }
     }
 }
