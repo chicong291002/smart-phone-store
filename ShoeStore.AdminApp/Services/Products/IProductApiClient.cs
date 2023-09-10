@@ -9,5 +9,6 @@ namespace ShoeStore.AdminApp.Services.Products
     public interface IProductApiClient
     {
         Task<PagedResult<ProductViewModel>> GetAllProductsPaging(GetProductPagingRequest request);
+/*      Task<PagedResult<ProductViewModel>> RegisterProduct(ProductCreateRequest request);*/
     }
 }

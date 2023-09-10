@@ -38,5 +38,30 @@ namespace ShoeStore.AdminApp.Controllers
             }
             return View(data); // ra duoc pageUser
         }
+
+/*        [HttpGet("create")]
+        public IActionResult Create()
+        {
+            return View();
+        }*/
+
+       /* [HttpPost("create")]
+        public async Task<IActionResult> Create(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var result = await _productApiClient.Register(request);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Thêm mới sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", result.Message);  //lỗi model bussiness
+            //message tu api truyen vao 
+            return View(request); // ko co thi tra ve view voi du~ lieu co san
+        }*/
     }
 }
