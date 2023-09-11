@@ -94,13 +94,13 @@ namespace ShoeStore.Application.Catalog.Products
         {
             // 1.Select join
             var query = from p in _context.Products
-                        //join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
-                        //from pic in ppic.DefaultIfEmpty()
-                        //join c in _context.Categories on pic.CategoryId equals c.Id into picc
-                        //from c in picc.DefaultIfEmpty()
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        select new { p, pi };
+                        select new { p, pi, pic };
 
             //2 .filter
 
@@ -109,10 +109,10 @@ namespace ShoeStore.Application.Catalog.Products
                 query = query.Where(x => x.p.Name.Contains(request.Keyword));
             }
 
-            /*if (request.CategoryIds !=null && request.CategoryIds != 0)
+            if (request.CategoryIds != null && request.CategoryIds != 0)
             {
                 query = query.Where(p => request.CategoryIds == p.pic.CategoryId);
-            }*/
+            }
 
             // 3 Paging
 
@@ -280,10 +280,10 @@ namespace ShoeStore.Application.Catalog.Products
         public async Task<ProductImageViewModel> GetImageById(int imageId)
         {
             var image = await _context.ProductImages.FindAsync(imageId);
-           /* if (image != null)
-            {
-                throw new Exception($"Cannot find an image with id {imageId}");
-            }*/
+            /* if (image != null)
+             {
+                 throw new Exception($"Cannot find an image with id {imageId}");
+             }*/
 
             var productImageViewModel = new ProductImageViewModel()
             {

@@ -12,18 +12,19 @@ namespace ShoeStore.BackendAPI.Controllers
     [Authorize] //bat buoc phai login moi vao dc  
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _manageProductService;
+        private readonly IProductService _productService;
 
         public ProductsController(IProductService manageProductService)
         {
-            _manageProductService = manageProductService;
+            _productService = manageProductService;
         }
 
         //http://localhost:port/products?pageIndex=1&pageSize=10&CategoryIds=1
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllProductsPagings([FromQuery] GetProductPagingRequest request)
         {
-            var products = await _manageProductService.GetAllPagingProducts(request);
+            Console.WriteLine(request.CategoryIds);
+            var products = await _productService.GetAllPagingProducts(request);
             return Ok(products);
         }
 
@@ -31,7 +32,7 @@ namespace ShoeStore.BackendAPI.Controllers
         [HttpGet("{productId}")]
         public async Task<IActionResult> GetByProductId(int productId)
         {
-            var product = await _manageProductService.getByProductId(productId);
+            var product = await _productService.getByProductId(productId);
             if (product == null)
             {
                 return BadRequest("Cannot find Product");
@@ -48,11 +49,11 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var productId = await _manageProductService.Create(request);
+            var productId = await _productService.Create(request);
             if (productId == 0)
                 return BadRequest();
 
-            var product = await _manageProductService.getByProductId(productId);
+            var product = await _productService.getByProductId(productId);
 
             return CreatedAtAction(nameof(GetByProductId), new { id = productId }, product);
         }
@@ -64,7 +65,7 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var productId = await _manageProductService.Update(request);
+            var productId = await _productService.Update(request);
             if (productId == 0)
                 return BadRequest();
 
@@ -74,7 +75,7 @@ namespace ShoeStore.BackendAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete([FromForm] ProductDeleteRequest request)
         {
-            var productId = await _manageProductService.Delete(request);
+            var productId = await _productService.Delete(request);
             if (productId == 0)
                 return BadRequest();
 
@@ -84,7 +85,7 @@ namespace ShoeStore.BackendAPI.Controllers
         [HttpPatch("{productId}/{newPrice}")]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
-            var successful = await _manageProductService.UpdatePrice(productId, newPrice);
+            var successful = await _productService.UpdatePrice(productId, newPrice);
             if (successful)
                 return Ok();
             return BadRequest();
@@ -94,7 +95,7 @@ namespace ShoeStore.BackendAPI.Controllers
         [HttpGet("{productId}/images")]
         public async Task<IActionResult> GetImageById(int productId)
         {
-            var imageId = await _manageProductService.GetImageById(productId);
+            var imageId = await _productService.GetImageById(productId);
             if (imageId == null)
             {
                 return BadRequest($"Cannot find imageId:{imageId}");
@@ -109,11 +110,11 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var imageId = await _manageProductService.AddImage(productId, request);
+            var imageId = await _productService.AddImage(productId, request);
             if (imageId == 0)
                 return BadRequest();
 
-            var image = await _manageProductService.GetImageById(productId);
+            var image = await _productService.GetImageById(productId);
 
             return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
@@ -126,7 +127,7 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var image = await _manageProductService.UpdateImage(imageId, request);
+            var image = await _productService.UpdateImage(imageId, request);
             if (image == 0)
                 return BadRequest();
 
@@ -140,7 +141,7 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var productId = await _manageProductService.RemoveImage(imageId);
+            var productId = await _productService.RemoveImage(imageId);
             if (productId == 0)
                 return BadRequest();
 
@@ -154,7 +155,7 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var products = await _manageProductService.GetListImage(productId);
+            var products = await _productService.GetListImage(productId);
             if (products == null)
                 return BadRequest();
 
