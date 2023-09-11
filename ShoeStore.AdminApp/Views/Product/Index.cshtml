@@ -29,9 +29,16 @@
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
                         <div class="row">
-                            <div class="col-md-8 d-flex align-items-center">
+                            <div class="col-md-4 d-flex align-items-center">
                                 <input type="text" value="@ViewBag.keyword" name="keyword" class="form-control flex-grow-1" />
                             </div>
+
+                            <div class="col-md-4 d-flex align-items-center">
+                                <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option>--Chọn danh mục--</option>
+                                </select>
+                            </div>
+
                             <div class="col-md-4 d-flex align-items-center">
                                 <button type="submit" class="btn btn-primary"
                                         style="margin: 10px">

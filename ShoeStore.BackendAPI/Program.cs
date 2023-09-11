@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ShoeStore.Application.Catalog.Categories;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Roles;
@@ -28,6 +29,7 @@ builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<AppUser, AppUser>();
 builder.Services.AddTransient<IRoleService,RoleService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 /*builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
 builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();*/

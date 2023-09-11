@@ -55,9 +55,10 @@ namespace ShoeStore.AdminApp.Services.Products
 
         public async Task<PagedResult<ProductViewModel>> GetAllProductsPaging(GetProductPagingRequest request)
         {
+            Console.WriteLine(request.CategoryIds);
             var data = await GetAsync<PagedResult<ProductViewModel>>
                 ($"/api/products/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
-                $"&keyword={request.Keyword}");
+                $"&keyword={request.Keyword}&categoryIds={request.CategoryIds}");
             return data;
         }
     }
