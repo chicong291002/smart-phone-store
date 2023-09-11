@@ -24,3 +24,20 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+
+function chenDauChamNganGiua() {
+    var inputElement = document.getElementById("myNumberInput");
+    var inputValue = inputElement.value;
+
+    var outputValue = inputValue.replace(/0{4,}/g, function (match) {
+        var dotCount = Math.floor(match.length / 2);
+        if (match.length % 2 === 0) {
+            return ".".repeat(dotCount) + ".";
+        } else {
+            return ".".repeat(dotCount);
+        }
+    });
+
+    inputElement.value = outputValue;
+}

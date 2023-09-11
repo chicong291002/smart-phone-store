@@ -16,25 +16,22 @@
             }
         }
         else
-        {   
+        {
             urlTemplate += "&" + key + "=" + request.Query[key];
         }
     }
 
     var startIndex = Math.Max(Model.PageIndex - 5, 1);
     var finishIndex = Math.Min(Model.PageIndex + 5, Model.PageCount);
-    //du co nhieu hon 5 chi show ra 5 so thoi 
 }
-
 
 @if (Model.PageCount > 1)
 {
     <ul class="pagination">
-        @if (Model.PageIndex != startIndex)
+        @if (Model.PageIndex != 1)
         {
             <li class="page-item">
-                <a class="page-link" title="1" href="@urlTemplate.Replace("{0}", "1")">Đầu</a> 
-                @*show trang dau *@
+                <a class="page-link" title="1" href="@urlTemplate.Replace("{0}", "1")">Đầu</a>
             </li>
             <li class="page-item">
                 <a class="page-link" href="@urlTemplate.Replace("{0}", (Model.PageIndex-1).ToString())">Trước</a>
@@ -53,7 +50,7 @@
                 <li class="page-item"><a class="page-link" title="Trang @i.ToString()" href="@urlTemplate.Replace("{0}", i.ToString())">@i</a></li>
             }
         }
-        @if (Model.PageIndex != finishIndex)
+        @if (Model.PageIndex != Model.PageCount)
         {
             <li class="page-item">
                 <a class="page-link" title="@Model.PageCount.ToString()" href="@urlTemplate.Replace("{0}", (Model.PageIndex+1).ToString())">Sau</a>

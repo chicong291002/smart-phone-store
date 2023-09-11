@@ -19,10 +19,8 @@ namespace ShoeStore.AdminApp.Controllers
             _productApiClient = productApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
-            //default parameters
-            /*            var session = HttpContext.Session.GetString("Token");*/
             var request = new GetProductPagingRequest()
             {
                 Keyword = keyword,
@@ -39,29 +37,29 @@ namespace ShoeStore.AdminApp.Controllers
             return View(data); // ra duoc pageUser
         }
 
-/*        [HttpGet("create")]
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
-        }*/
+        }
 
-       /* [HttpPost("create")]
-        public async Task<IActionResult> Create(RegisterRequest request)
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            var result = await _productApiClient.Register(request);
-            if (result.IsSuccessed)
+            var result = await _productApiClient.CreateProduct(request);
+            if (result)
             {
                 TempData["result"] = "Thêm mới sản phẩm thành công";
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError("", result.Message);  //lỗi model bussiness
+            ModelState.AddModelError("","Thêm Sản Phẩm thất bại");  //lỗi model bussiness
             //message tu api truyen vao 
             return View(request); // ko co thi tra ve view voi du~ lieu co san
-        }*/
+        }
     }
 }

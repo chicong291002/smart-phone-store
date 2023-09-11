@@ -15,17 +15,12 @@ namespace ShoeStore.Application.Catalog.Products.ProductValidators
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name is Required");
 
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description is Required")
-                    .MinimumLength(1000).WithMessage("Description is at least 1000 characters");
-
-            RuleFor(x => x.Thumbnail).NotEmpty().WithMessage("Thumbnail is Required");
+                    .MaximumLength(1000).WithMessage("Description is at least 1000 characters");
 
             RuleFor(x => x.Stock).NotEmpty().WithMessage("Stock is Required");
             RuleFor(x => x.Price).NotEmpty().WithMessage("Price is Required");
 
             RuleFor(x => x.OriginalPrice).NotEmpty().WithMessage("OriginalPrice is Required");
-
-            RuleFor(x => x.Image).NotEmpty().WithMessage("Image is Required");
-
         }
 
     }

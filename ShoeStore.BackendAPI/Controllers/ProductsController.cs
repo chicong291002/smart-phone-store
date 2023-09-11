@@ -19,14 +19,6 @@ namespace ShoeStore.BackendAPI.Controllers
             _manageProductService = manageProductService;
         }
 
-        //http://localhost:port/products
-        [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
-        {
-            var products = await _manageProductService.GetAllProducts();
-            return Ok(products);
-        }
-
         //http://localhost:port/products?pageIndex=1&pageSize=10&CategoryIds=1
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllProductsPagings([FromQuery] GetProductPagingRequest request)
@@ -48,6 +40,8 @@ namespace ShoeStore.BackendAPI.Controllers
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
+        //chap nhan doi tuong form len 
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)

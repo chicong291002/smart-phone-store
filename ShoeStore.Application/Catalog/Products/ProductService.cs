@@ -94,11 +94,13 @@ namespace ShoeStore.Application.Catalog.Products
         {
             // 1.Select join
             var query = from p in _context.Products
-                        join
-                        pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        join
-                        c in _context.Categories on pic.CategoryId equals c.Id
-                        select new { p, pic };
+                        //join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        //from pic in ppic.DefaultIfEmpty()
+                        //join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        //from c in picc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        select new { p, pi };
 
             //2 .filter
 
@@ -107,10 +109,10 @@ namespace ShoeStore.Application.Catalog.Products
                 query = query.Where(x => x.p.Name.Contains(request.Keyword));
             }
 
-            if (request.CategoryIds !=null && request.CategoryIds != 0)
+            /*if (request.CategoryIds !=null && request.CategoryIds != 0)
             {
                 query = query.Where(p => request.CategoryIds == p.pic.CategoryId);
-            }
+            }*/
 
             // 3 Paging
 
@@ -124,6 +126,7 @@ namespace ShoeStore.Application.Catalog.Products
                     OriginalPrice = x.p.OriginalPrice,
                     Price = x.p.Price,
                     Stock = x.p.Stock,
+                    ThumbnailImage = x.pi.ImagePath
                 }).ToListAsync();
             //4 Select and projection
             var pageResult = new PagedResult<ProductViewModel>()
@@ -134,21 +137,6 @@ namespace ShoeStore.Application.Catalog.Products
                 Items = data
             };
             return pageResult;
-        }
-
-        public async Task<List<ProductViewModel>> GetAllProducts()
-        {
-            return await _context.Products.Select(i => new ProductViewModel()
-            {
-                Id = i.Id,
-                Name = i.Name,
-                Price = i.Price,
-                OriginalPrice = i.OriginalPrice,
-                DateCreated = i.DateCreated,
-                Description = i.Description,
-                ThumbnailImage = i.Thumbnail,
-                Stock = i.Stock,
-            }).ToListAsync();
         }
 
         public async Task<int> Update(ProductUpdateRequest request)

@@ -23,8 +23,6 @@ namespace ShoeStore.AdminApp.Controllers
 
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
         {
-            //default parameters
-            /*            var session = HttpContext.Session.GetString("Token");*/
             var request = new GetUserPagingRequest()
             {
                 keyword = keyword,
@@ -41,13 +39,13 @@ namespace ShoeStore.AdminApp.Controllers
             return View(data.ResultObj); // ra duoc pageUser
         }
 
-        [HttpGet("create")]
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-       [HttpPost("create")]
+       [HttpPost]
         public async Task<IActionResult> Create(RegisterRequest request)
         {
             if (!ModelState.IsValid)
@@ -67,7 +65,7 @@ namespace ShoeStore.AdminApp.Controllers
         }
 
 
-        [HttpGet("Update")]
+        [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
             var result = await _userApiClient.GetById(id);
@@ -113,7 +111,7 @@ namespace ShoeStore.AdminApp.Controllers
             return View(result.ResultObj);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult Delete(Guid id)
         {
             return View(new UserDeleteRequest()

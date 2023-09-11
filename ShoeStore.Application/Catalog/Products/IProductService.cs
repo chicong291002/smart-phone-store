@@ -11,7 +11,6 @@ namespace ShoeStore.Application.Catalog.Products
         Task<int> Update(ProductUpdateRequest request);
         Task<int> Delete(ProductDeleteRequest request);
         Task<bool> UpdatePrice(int productId, decimal newPrice);
-        Task<List<ProductViewModel>> GetAllProducts();
         //trả về một model mà có đầy đủ các thông tin 
         Task<PagedResult<ProductViewModel>> GetAllPagingProducts(GetProductPagingRequest request);
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
