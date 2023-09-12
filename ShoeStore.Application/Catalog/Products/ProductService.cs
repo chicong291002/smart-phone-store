@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -263,6 +264,13 @@ namespace ShoeStore.Application.Catalog.Products
             var product = await _context.Products.FindAsync(productId);
 
             var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
+
+            var categories = await (from c in _context.Categories
+                                    join
+                             pic in _context.ProductInCategories on c.Id equals pic.CategoryId
+                                    where pic.CategoryId == productId
+                                    select c.Name).ToListAsync();
+
             var productViewModel = new ProductViewModel()
             {
                 Id = product.Id,
@@ -272,7 +280,8 @@ namespace ShoeStore.Application.Catalog.Products
                 Name = product.Name,
                 Stock = product.Stock,
                 Description = product.Description,
-                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg"
+                ThumbnailImage = image != null ? image.ImagePath : "no-image.jpg",
+                Categories = categories,
             };
 
             return productViewModel;
@@ -285,6 +294,10 @@ namespace ShoeStore.Application.Catalog.Products
             {
                 throw new Exception($"Cannot find an image with id {imageId}");
             }*/
+            if (image != null)
+            {
+                throw new Exception($"Cannot find an image with id {imageId}");
+            }
 
             var productImageViewModel = new ProductImageViewModel()
             {
@@ -299,6 +312,35 @@ namespace ShoeStore.Application.Catalog.Products
             };
 
             return productImageViewModel;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                return new ApiErrorResult<bool>($"Sản phẩm với id {id} không tồn tại ");
+            }
+
+            var removeCategories = request.Categories.Where(x => x.Selected == false).ToList();
+            foreach (var category in removeCategories)
+            {
+                var productInCategory = await _context.ProductInCategories.FirstOrDefaultAsync(x => x.CategoryId == int.Parse(category.Id)
+                && x.ProductId == id);
+                if (productInCategory != null)
+                    _context.ProductInCategories.Remove(productInCategory);
+            }
+
+            var addCategories = request.Categories.Where(x => x.Selected == true).ToList();
+            foreach (var category in addCategories)
+            {
+                var productInCategory = await _context.ProductInCategories.FindAsync(id, category.Id);
+                if (productInCategory != null)
+                    await _context.ProductInCategories.AddAsync(productInCategory);
+            }
+            await _context.SaveChangesAsync();
+            return new ApiSuccessResult<bool>();
         }
     }
 }

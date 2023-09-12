@@ -2,7 +2,7 @@
 using ShoeStore.Application.Constants;
 using System.Net.Http.Headers;
 
-namespace ShoeStore.AdminApp.Services.Products
+namespace ShoeStore.AdminApp.Services
 {
     public class BaseApiClient
     {

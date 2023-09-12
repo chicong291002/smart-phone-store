@@ -10,5 +10,9 @@ namespace ShoeStore.AdminApp.Services.Products
     {
         Task<PagedResult<ProductViewModel>> GetAllProductsPaging(GetProductPagingRequest request);
         Task<bool> CreateProduct(ProductCreateRequest request);
+
+        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
+
+        Task<ProductViewModel> GetByProductId(int id);
     }   
 }

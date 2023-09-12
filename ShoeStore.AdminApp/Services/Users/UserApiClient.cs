@@ -116,7 +116,7 @@ namespace ShoeStore.AdminApp.Services.Users
                 return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
 
             return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
-        }
+        }   
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {

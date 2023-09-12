@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products.DTOS;
+using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
+using ShoeStore.Application.System.Users.DTOS;
 
 namespace ShoeStore.Application.Catalog.Products
 {
@@ -20,5 +22,7 @@ namespace ShoeStore.Application.Catalog.Products
         Task<ProductViewModel> getByProductId(int productId);
 
         Task<ProductImageViewModel> GetImageById(int imageId);
+
+        Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
     }
 }
