@@ -6,6 +6,8 @@ using ShoeStore.Application.System.Users.DTOS;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using ShoeStore.Application.Constants;
+using System.Text;
+using ShoeStore.Data.Entities;
 
 namespace ShoeStore.AdminApp.Services.Products
 {
@@ -20,6 +22,25 @@ namespace ShoeStore.AdminApp.Services.Products
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/products/{id}/categories", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
         }
 
         public async Task<bool> CreateProduct(ProductCreateRequest request)
@@ -59,6 +80,12 @@ namespace ShoeStore.AdminApp.Services.Products
             var data = await GetAsync<PagedResult<ProductViewModel>>
                 ($"/api/products/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
                 $"&keyword={request.Keyword}&categoryIds={request.CategoryIds}");
+            return data;
+        }
+
+        public async Task<ProductViewModel> GetByProductId(int id)
+        {
+            var data = await GetAsync<ProductViewModel>($"/api/products/{id}");
             return data;
         }
     }

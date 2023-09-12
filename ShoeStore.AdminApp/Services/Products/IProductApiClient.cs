@@ -3,6 +3,7 @@ using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.DTOS;
 using ShoeStore.Application.System.Users.DTOS;
+using ShoeStore.Data.Entities;
 
 namespace ShoeStore.AdminApp.Services.Products
 {
@@ -10,5 +11,7 @@ namespace ShoeStore.AdminApp.Services.Products
     {
         Task<PagedResult<ProductViewModel>> GetAllProductsPaging(GetProductPagingRequest request);
         Task<bool> CreateProduct(ProductCreateRequest request);
+        Task<ProductViewModel> GetByProductId(int id);
+       Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
     }   
 }

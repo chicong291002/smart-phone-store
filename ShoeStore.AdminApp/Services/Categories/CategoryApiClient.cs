@@ -1,8 +1,4 @@
-﻿using Azure.Core;
-using ShoeStore.Application.Catalog.Categories.DTOS;
-using ShoeStore.Application.Catalog.Products.DTOS;
-using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
+﻿using ShoeStore.Application.Catalog.Categories.DTOS;
 
 namespace ShoeStore.AdminApp.Services.Categories
 {
@@ -24,6 +20,12 @@ namespace ShoeStore.AdminApp.Services.Categories
         {
             var data = await GetListAsync<CategoryViewModel>
                ($"/api/categories");
+            return data;
+        }
+
+        public async Task<CategoryViewModel> GetById(int id)
+        {
+            var data = await GetAsync<CategoryViewModel>($"/api/categories/{id}");
             return data;
         }
     }

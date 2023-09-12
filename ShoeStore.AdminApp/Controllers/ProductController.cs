@@ -6,6 +6,7 @@ using ShoeStore.AdminApp.Services.Roles;
 using ShoeStore.AdminApp.Services.Users;
 using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
+using ShoeStore.Application.Constants;
 using ShoeStore.Application.System.Users.DTOS;
 
 namespace ShoeStore.AdminApp.Controllers
@@ -78,5 +79,54 @@ namespace ShoeStore.AdminApp.Controllers
             //message tu api truyen vao 
             return View(request); // ko co thi tra ve view voi du~ lieu co san
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CategoryAssign(int id)
+        {
+
+            var roleAssignRequest = await GetCategoryAssignRequest(id);
+            return View(roleAssignRequest);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
+
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Cập nhật quyền thành công";
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", result.Message);
+
+            var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
+
+            return View(roleAssignRequest);
+        }
+
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        {
+            var productObj = await _productApiClient.GetByProductId(id);
+
+            var categories = await _categoryApiClient.GetAllCategorys();
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var role in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = productObj.Categories.Contains(role.Name)
+                });
+            }
+            return categoryAssignRequest;
+        }
+
     }
 }
