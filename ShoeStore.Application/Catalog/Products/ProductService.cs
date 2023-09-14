@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Application.Catalog.ProductImages;
-using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
+using ShoeStore.ViewModels.Catalog.ProductImages;
+using ShoeStore.ViewModels.Catalog.Products;
+using ShoeStore.ViewModels.Common;
 using System.Net.Http.Headers;
 
 namespace ShoeStore.Application.Catalog.Products

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoeStore.Application.Common;
+using ShoeStore.ViewModels.Common;
 
 namespace ShoeStore.AdminApp.Controllers.Components
 {

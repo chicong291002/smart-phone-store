@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using ShoeStore.Application.Common;
-using ShoeStore.Application.System.Roles;
-using ShoeStore.Application.System.Users.DTOS;
 using System.Net.Http.Headers;
-using System.Net.Http;
+using ShoeStore.ViewModels.Common;
+using ShoeStore.ViewModels.System.Roles;
 
 namespace ShoeStore.AdminApp.Services.Roles
 {

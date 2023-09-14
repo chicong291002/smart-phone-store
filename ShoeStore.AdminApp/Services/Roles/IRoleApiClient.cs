@@ -1,5 +1,5 @@
-﻿using ShoeStore.Application.Common;
-using ShoeStore.Application.System.Roles;
+﻿using ShoeStore.ViewModels.Common;
+using ShoeStore.ViewModels.System.Roles;
 
 namespace ShoeStore.AdminApp.Services.Roles
 {

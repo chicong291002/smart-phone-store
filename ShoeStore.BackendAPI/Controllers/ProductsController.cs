@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products;
-using ShoeStore.Application.Catalog.Products.DTOS;
+using ShoeStore.ViewModels.Catalog.ProductImages;
+using ShoeStore.ViewModels.Catalog.Products;
 using System.Threading.Tasks;
 
 namespace ShoeStore.BackendAPI.Controllers

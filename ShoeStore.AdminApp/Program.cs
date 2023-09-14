@@ -5,7 +5,7 @@ using ShoeStore.AdminApp.Services.Categories;
 using ShoeStore.AdminApp.Services.Products;
 using ShoeStore.AdminApp.Services.Roles;
 using ShoeStore.AdminApp.Services.Users;
-using ShoeStore.Application.System.Users.CheckUserValidator;
+using ShoeStore.ViewModels.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();

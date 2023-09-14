@@ -1,6 +1,6 @@
-﻿using ShoeStore.Application.Catalog.ProductImages;
-using ShoeStore.Application.Catalog.Products.DTOS;
-using ShoeStore.Application.Common;
+﻿using ShoeStore.ViewModels.Catalog.ProductImages;
+using ShoeStore.ViewModels.Catalog.Products;
+using ShoeStore.ViewModels.Common;
 
 namespace ShoeStore.Application.Catalog.Products
 {

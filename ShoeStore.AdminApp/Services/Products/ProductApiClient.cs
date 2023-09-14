@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using ShoeStore.Application.Constants;
 using System.Text;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
+using ShoeStore.ViewModels.Constants;
 
 namespace ShoeStore.AdminApp.Services.Products
 {

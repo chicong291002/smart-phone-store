@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using ShoeStore.Application.Constants;
+using ShoeStore.ViewModels.Constants;
 using System.Net.Http.Headers;
 
 namespace ShoeStore.AdminApp.Services

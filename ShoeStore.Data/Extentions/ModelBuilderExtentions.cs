@@ -73,7 +73,7 @@ namespace ShoeStore.Data.Extentions
                 Email = "congkhpro291002@gmail.com",
                 NormalizedEmail = "congkhpro291002@gmail.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "ABCD1234"),
+                PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
                 SecurityStamp = string.Empty,
                 FirstName = "Chi",
                 LastName = "Cong",

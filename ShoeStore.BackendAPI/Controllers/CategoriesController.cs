@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Application.Catalog.Products.DTOS;
-using ShoeStore.Application.Catalog.Products;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShoeStore.Application.Catalog.Categories;
 using System.Threading.Tasks;
 

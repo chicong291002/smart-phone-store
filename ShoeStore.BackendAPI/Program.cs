@@ -14,10 +14,10 @@ using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Roles;
 using ShoeStore.Application.System.Users;
-using ShoeStore.Application.System.Users.CheckUserValidator;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
 using ShoeStore.ViewModels.Constants;
+using ShoeStore.ViewModels.System.Users.CheckUserValidator;
 using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
