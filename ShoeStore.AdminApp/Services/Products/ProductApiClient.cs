@@ -1,17 +1,13 @@
 ﻿using Newtonsoft.Json;
-using ShoeStore.Application.Catalog.Products.DTOS;
-using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
-using ShoeStore.Application.System.Users.DTOS;
 using System.Net.Http.Headers;
-using System.Net.Http;
 using ShoeStore.Application.Constants;
 using System.Text;
-using ShoeStore.Data.Entities;
+using ShoeStore.ViewModels.Catalog.Products;
+using ShoeStore.ViewModels.Common;
 
 namespace ShoeStore.AdminApp.Services.Products
 {
-    public class ProductApiClient : BaseApiClient, IProductApiClient
+    public class ProductApiClient : BaseApiClient, IProductApiClient    
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
@@ -24,7 +20,7 @@ namespace ShoeStore.AdminApp.Services.Products
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request)
+        public async Task<bool> CategoryAssign(int id, CategoryAssignRequest request)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -38,9 +34,9 @@ namespace ShoeStore.AdminApp.Services.Products
             var response = await client.PutAsync($"/api/products/{id}/categories", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+                return JsonConvert.DeserializeObject<bool>(result);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return JsonConvert.DeserializeObject<bool>(result);
         }
 
         public async Task<bool> CreateProduct(ProductCreateRequest request)
@@ -74,12 +70,16 @@ namespace ShoeStore.AdminApp.Services.Products
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            return await Delete($"/api/products/" + id);
+        }
+
         public async Task<PagedResult<ProductViewModel>> GetAllProductsPaging(GetProductPagingRequest request)
         {
-            Console.WriteLine(request.CategoryIds);
             var data = await GetAsync<PagedResult<ProductViewModel>>
                 ($"/api/products/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
-                $"&keyword={request.Keyword}&categoryIds={request.CategoryIds}");
+                $"&keyword={request.Keyword}&categoryIds={request.CategoryId}");
             return data;
         }
 
@@ -87,6 +87,48 @@ namespace ShoeStore.AdminApp.Services.Products
         {
             var data = await GetAsync<ProductViewModel>($"/api/products/{id}");
             return data;
+        }
+
+        public async Task<bool> Update(ProductUpdateRequest request)
+        {
+            var sessions = _httpContextAccessor
+     .HttpContext
+     .Session
+     .GetString(SystemConstants.AppSettings.Token);
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.Image != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.Image.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.Image.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "Image", request.Image.FileName);
+            }
+
+           /* if (request.Image != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ProductImage.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ProductImage.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
+            }*/
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? " " : request.Name.ToString()), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? " " : request.Description.ToString()), "description");
+           
+
+            var response = await client.PutAsync($"/api/products/" + request.Id, requestContent);
+            return response.IsSuccessStatusCode;
         }
     }
 }

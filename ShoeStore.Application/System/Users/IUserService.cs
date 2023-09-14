@@ -1,5 +1,5 @@
 ﻿using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
+using ShoeStore.Application;
 using ShoeStore.Application.System.Users.DTOS;
 
 namespace ShoeStore.Application.System.Users

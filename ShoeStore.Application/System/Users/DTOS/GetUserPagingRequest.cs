@@ -1,5 +1,5 @@
 ﻿using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
+using ShoeStore.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;

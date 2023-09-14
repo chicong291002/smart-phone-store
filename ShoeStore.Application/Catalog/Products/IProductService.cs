@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using ShoeStore.Application.Catalog.ProductImages;
+﻿using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
 
 namespace ShoeStore.Application.Catalog.Products
 {
@@ -10,7 +8,7 @@ namespace ShoeStore.Application.Catalog.Products
     {
         Task<int> Create(ProductCreateRequest request);
         Task<int> Update(ProductUpdateRequest request);
-        Task<int> Delete(ProductDeleteRequest request);
+        Task<int> Delete(int productId);
         Task<bool> UpdatePrice(int productId, decimal newPrice);
         //trả về một model mà có đầy đủ các thông tin 
         Task<PagedResult<ProductViewModel>> GetAllPagingProducts(GetProductPagingRequest request);

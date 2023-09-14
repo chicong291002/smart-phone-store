@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShoeStore.AdminApp.Services.Roles;
 using ShoeStore.AdminApp.Services.Users;
-using ShoeStore.Application.Common;
-using ShoeStore.Application.System.Users.DTOS;
+using ShoeStore.ViewModels.Common;
+using ShoeStore.ViewModels.System.Users;
 
 namespace ShoeStore.AdminApp.Controllers
 {
@@ -86,7 +86,7 @@ namespace ShoeStore.AdminApp.Controllers
             return RedirectToAction("Error", "Home");
         }
 
-        [HttpPost("Update")]
+        [HttpPost]
         public async Task<IActionResult> Update(UserUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -104,7 +104,7 @@ namespace ShoeStore.AdminApp.Controllers
             return View(request); // ko co thi tra ve view voi du~ lieu co san
         }
 
-        [HttpGet("details")]
+        [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
             var result = await _userApiClient.GetById(id);
@@ -120,7 +120,7 @@ namespace ShoeStore.AdminApp.Controllers
             }); ;
         }
 
-        [HttpPost("delete")]
+        [HttpPost]
         public async Task<IActionResult> Delete(UserDeleteRequest request)
         {
             if (!ModelState.IsValid)
@@ -139,14 +139,14 @@ namespace ShoeStore.AdminApp.Controllers
             return View(result); // ko co thi tra ve view voi du~ lieu co san
         }
 
-        [HttpGet("{id}/RoleAssign")]
+        [HttpGet]
         public async Task<IActionResult> RoleAssign(Guid id)
         {
             var roleAssinRequest = await GetRoleAssignRequest(id);
             return View(roleAssinRequest);
         }
 
-        [HttpPost("RoleAssign")]
+        [HttpPost]
         public async Task<IActionResult> RoleAssign(RoleAssignRequest request)
         {
             if (!ModelState.IsValid)

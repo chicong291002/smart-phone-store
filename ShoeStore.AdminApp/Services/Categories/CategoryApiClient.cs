@@ -1,4 +1,4 @@
-﻿using ShoeStore.Application.Catalog.Categories.DTOS;
+﻿using ShoeStore.ViewModels.Catalog.Categories;
 
 namespace ShoeStore.AdminApp.Services.Categories
 {

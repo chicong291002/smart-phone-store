@@ -1,6 +1,6 @@
-﻿using ShoeStore.Application.Catalog.Categories.DTOS;
-using ShoeStore.Application.Common;
+﻿
 using ShoeStore.Data.Entities;
+using ShoeStore.ViewModels.Catalog.Categories;
 
 namespace ShoeStore.AdminApp.Services.Categories
 {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
+using ShoeStore.Application;
 using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.Entities;
 using System.IdentityModel.Tokens.Jwt;

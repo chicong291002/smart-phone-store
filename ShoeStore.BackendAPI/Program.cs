@@ -1,8 +1,12 @@
-﻿using FluentValidation;
-using FluentValidation.AspNetCore;
+﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ShoeStore.Application.Catalog.Categories;
@@ -11,25 +15,38 @@ using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Roles;
 using ShoeStore.Application.System.Users;
 using ShoeStore.Application.System.Users.CheckUserValidator;
-using ShoeStore.Application.System.Users.DTOS;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
+using ShoeStore.ViewModels.Constants;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ShoeStoreDbContext>().AddDefaultTokenProviders();
+builder.Services.AddDbContext<ShoeStoreDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+builder.Services.AddIdentity<AppUser, AppRole>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireDigit = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.SignIn.RequireConfirmedEmail = true;
+    options.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<ShoeStoreDbContext>().AddDefaultTokenProviders();
 //Declare DI
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IStorageService, FileStorageService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
 builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<AppUser, AppUser>();
-builder.Services.AddTransient<IRoleService,RoleService>();
-builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 /*builder.Services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
 builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();*/
@@ -37,7 +54,6 @@ builder.Services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValida
 builder.Services.AddControllers().AddFluentValidation(
     fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 //dang ky tat ca Validator cung cai asssembly (cung cai DOE) cung vs thang Application 
-
 builder.Services.AddSwaggerGen(c =>
  {
      c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger Shoe Store", Version = "v1" });

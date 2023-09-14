@@ -1,8 +1,7 @@
 ﻿using Azure.Core;
 using Newtonsoft.Json;
-using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
-using ShoeStore.Application.System.Users.DTOS;
+using ShoeStore.ViewModels.Common;
+using ShoeStore.ViewModels.System.Users;
 using System.Net.Http.Headers;
 using System.Text;
 

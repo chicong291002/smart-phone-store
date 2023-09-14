@@ -21,18 +21,18 @@ namespace ShoeStore.AdminApp.Services.Roles
 
         public async Task<ApiResult<List<RoleViewModel>>> GetAllRoles()
         {
-            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token"); // lay session ko can requestBase
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var response = await client.GetAsync($"/api/roles");
-            var result = await response.Content.ReadAsStringAsync();
+            var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                List<RoleViewModel> myDeserializedObjList = (List<RoleViewModel>)JsonConvert.DeserializeObject(result, typeof(List<RoleViewModel>));
+                List<RoleViewModel> myDeserializedObjList = (List<RoleViewModel>)JsonConvert.DeserializeObject(body, typeof(List<RoleViewModel>));
                 return new ApiSuccessResult<List<RoleViewModel>>(myDeserializedObjList);
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<List<RoleViewModel>>>(result);
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<RoleViewModel>>>(body);
         }
     }
 }

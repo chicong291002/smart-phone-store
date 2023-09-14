@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
 using System.Net.Http.Headers;
@@ -33,7 +32,6 @@ namespace ShoeStore.Application.Catalog.Products
                 Stock = request.Stock,
                 OriginalPrice = request.OriginalPrice,
                 DateCreated = DateTime.Now,
-
             };
 
             //Save Image
@@ -66,16 +64,16 @@ namespace ShoeStore.Application.Catalog.Products
             return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
 
-        public async Task<int> Delete(ProductDeleteRequest request)
+        public async Task<int> Delete(int productId)
         {
-            var product = await _context.Products.FindAsync(request.Id);
+            var product = await _context.Products.FindAsync(productId);
 
             if (product == null)
             {
-                throw new Exception($"Cannot find a product: {request.Id}");
+                throw new Exception($"Cannot find a product: {productId}");
             }
 
-            var Image = _context.ProductImages.Where(i => i.ProductId == request.Id);
+            var Image = _context.ProductImages.Where(i => i.ProductId == productId);
 
             foreach (var image in Image)
             {
@@ -105,9 +103,9 @@ namespace ShoeStore.Application.Catalog.Products
                 query = query.Where(x => x.p.Name.Contains(request.Keyword));
             }
 
-            if (request.CategoryIds != null && request.CategoryIds != 0)
+            if (request.CategoryId != null && request.CategoryId != 0)
             {
-                query = query.Where(p => request.CategoryIds == p.pic.CategoryId);
+                query = query.Where(p => request.CategoryId == p.pic.CategoryId);
             }
 
             // 3 Paging

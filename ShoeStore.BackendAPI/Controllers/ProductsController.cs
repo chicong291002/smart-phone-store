@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShoeStore.Application.Catalog.ProductImages;
 using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Catalog.Products.DTOS;
+using System.Threading.Tasks;
 
 namespace ShoeStore.BackendAPI.Controllers
 {
@@ -23,7 +24,6 @@ namespace ShoeStore.BackendAPI.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllProductsPagings([FromQuery] GetProductPagingRequest request)
         {
-            Console.WriteLine(request.CategoryIds);
             var products = await _productService.GetAllPagingProducts(request);
             return Ok(products);
         }
@@ -46,9 +46,8 @@ namespace ShoeStore.BackendAPI.Controllers
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+            
             var productId = await _productService.Create(request);
             if (productId == 0)
                 return BadRequest();
@@ -58,24 +57,25 @@ namespace ShoeStore.BackendAPI.Controllers
             return CreatedAtAction(nameof(GetByProductId), new { id = productId }, product);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        [HttpPut("{productId}")]
+        public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var productId = await _productService.Update(request);
-            if (productId == 0)
+            request.Id = productId;
+            var product = await _productService.Update(request);
+            if (product == 0)
                 return BadRequest();
 
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromForm] ProductDeleteRequest request)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var productId = await _productService.Delete(request);
+            var productId = await _productService.Delete(id);
             if (productId == 0)
                 return BadRequest();
 
@@ -130,7 +130,6 @@ namespace ShoeStore.BackendAPI.Controllers
             var image = await _productService.UpdateImage(imageId, request);
             if (image == 0)
                 return BadRequest();
-
             return Ok();
         }
 

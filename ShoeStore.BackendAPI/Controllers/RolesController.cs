@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShoeStore.Application.System.Roles;
-using ShoeStore.Data.Entities;
+using System.Threading.Tasks;
 
 namespace ShoeStore.BackendAPI.Controllers
 {
@@ -17,10 +15,10 @@ namespace ShoeStore.BackendAPI.Controllers
             _roleService = roleService;
         }
 
-        [HttpGet("roles")]
+        [HttpGet]
         public async Task<IActionResult> GetAllRoles()
         {
-            var roles =await _roleService.GetAllRoles();
+            var roles = await _roleService.GetAllRoles();
             return Ok(roles);
         }
     }

@@ -1,14 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShoeStore.Application.Catalog.Categories.DTOS;
-using ShoeStore.Application.Catalog.Products.DTOS;
 using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
 using ShoeStore.Data.EF;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ShoeStore.Data.Entities;
+using ShoeStore.ViewModels.Catalog.Categories;
+using ShoeStore.ViewModels.Catalog.Products;
+using ShoeStore.ViewModels.Common;
 
 namespace ShoeStore.Application.Catalog.Categories
 {
@@ -38,6 +34,33 @@ namespace ShoeStore.Application.Catalog.Categories
                     Name = x.c.Name,
                     ParentId = x.c.ParentId
                 }).ToListAsync();
-        }   
+        }
+
+        public async Task<int> Create(CategoryCreateRequest request)
+        {
+            var category = new Category()
+            {
+                Name = request.Name
+            };
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync(); // ko can cho thread va phuc vu duoc request khac 
+            return category.Id; 
+        }
+
+        public Task<int> Update(CategoryUpdateRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> Delete(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProductViewModel> getByCategoryId(int categoryId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

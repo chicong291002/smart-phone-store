@@ -1,5 +1,5 @@
 ﻿using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
+using ShoeStore.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,6 @@ namespace ShoeStore.Application.Catalog.Products.DTOS
     public class GetProductPagingRequest : PageResultBase
     {
         public string Keyword { get; set; }
-        public int? CategoryIds { get; set; }
+        public int? CategoryId { get; set; }
     }
 }

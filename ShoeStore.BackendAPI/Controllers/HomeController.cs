@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.BackendAPI.Models;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace ShoeStore.BackendAPI.Controllers
 {

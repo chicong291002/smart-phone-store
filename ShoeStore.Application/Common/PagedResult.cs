@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.DTOS
+namespace ShoeStore.Application.Common
 {
     public class PagedResult<T> : PageResultBase
     {

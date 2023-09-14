@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using ShoeStore.Application.Common;
-using ShoeStore.Application.DTOS;
-using ShoeStore.Application.System.Users.DTOS;
+using ShoeStore.ViewModels.Common;
+using ShoeStore.ViewModels.System.Users;
 
 namespace ShoeStore.AdminApp.Services.Users
 {

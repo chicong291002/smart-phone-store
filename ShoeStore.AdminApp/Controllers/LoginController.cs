@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using ShoeStore.Application.System.Users.DTOS;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ShoeStore.AdminApp.Services.Users;
+using ShoeStore.ViewModels.System.Users;
 
 namespace ShoeStore.AdminApp.Controllers
 {
