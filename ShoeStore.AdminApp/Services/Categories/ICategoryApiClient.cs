@@ -1,6 +1,8 @@
 ﻿
 using ShoeStore.Data.Entities;
 using ShoeStore.ViewModels.Catalog.Categories;
+using ShoeStore.ViewModels.Catalog.Products;
+using ShoeStore.ViewModels.Common;
 
 namespace ShoeStore.AdminApp.Services.Categories
 {
@@ -9,5 +11,13 @@ namespace ShoeStore.AdminApp.Services.Categories
         Task<List<CategoryViewModel>> GetAllCategorys();
 
         Task<CategoryViewModel> GetById(int id);
+
+        Task<bool> CreateCategory(CategoryCreateRequest request);
+
+        Task<bool> UpdateCategory(CategoryUpdateRequest request);
+
+        Task<bool> DeleteCategory(int id);
+
+        Task<PagedResult<CategoryViewModel>> GetAllCategoryPaging(GetProductPagingRequest request);
     }
 }

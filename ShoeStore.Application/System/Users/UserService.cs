@@ -38,6 +38,8 @@ namespace ShoeStore.Application.System.Users
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
 
+
+            
             if (!result.Succeeded)
             {
                 return new ApiErrorResult<string>("Đăng nhập không đúng");

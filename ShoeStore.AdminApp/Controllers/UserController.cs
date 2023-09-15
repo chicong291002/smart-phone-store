@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShoeStore.AdminApp.Services.Products.Users;
 using ShoeStore.AdminApp.Services.Roles;
-using ShoeStore.AdminApp.Services.Users;
 using ShoeStore.ViewModels.Common;
 using ShoeStore.ViewModels.System.Users;
 

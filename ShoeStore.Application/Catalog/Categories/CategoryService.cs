@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
 using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
@@ -48,19 +49,71 @@ namespace ShoeStore.Application.Catalog.Categories
             return category.Id; 
         }
 
-        public Task<int> Update(CategoryUpdateRequest request)
+        public async Task<int> Update(CategoryUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var category = await _context.Categories.FindAsync(request.Id);
+            if (category == null)
+            {
+                throw new Exception($"Cannot find a category: {request.Id}");
+            }
+            category.Name = request.Name;
+
+            return await _context.SaveChangesAsync();
         }
 
-        public Task<int> Delete(int categoryId)
+        public async Task<int> Delete(int categoryId)
         {
-            throw new NotImplementedException();
+            var category = await _context.Categories.FindAsync(categoryId);
+
+            if (category == null)
+            {
+                throw new Exception($"Cannot find a category: {categoryId}");
+            }
+
+            _context.Categories.Remove(category);
+            return await _context.SaveChangesAsync();
         }
 
-        public Task<ProductViewModel> getByCategoryId(int categoryId)
+        public async Task<CategoryViewModel> getByCategoryId(int categoryId)
         {
-            throw new NotImplementedException();
+            var query = from c in _context.Categories where c.Id == categoryId
+                        select new { c };
+
+            return await query.Select(x => new CategoryViewModel()
+            {
+                Id = x.c.Id,
+                Name = x.c.Name,
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<PagedResult<CategoryViewModel>> GetAllCategoryPaging(GetProductPagingRequest request)
+        {
+            var query = from c in _context.Categories
+                        select new { c };
+
+            if (!string.IsNullOrEmpty(request.Keyword))
+                query = query.Where(x => x.c.Name.Contains(request.Keyword));
+
+            //3. Paging
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(x => new CategoryViewModel()
+                {
+                    Id = x.c.Id,
+                    Name = x.c.Name,
+                }).ToListAsync();
+
+            //4. Select and projection
+            var pagedResult = new PagedResult<CategoryViewModel>()
+            {
+                TotalRecord = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                Items = data
+            };
+            return pagedResult;
         }
     }
 }

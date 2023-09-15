@@ -5,7 +5,7 @@ using ShoeStore.ViewModels.System.Users;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace ShoeStore.AdminApp.Services.Users
+namespace ShoeStore.AdminApp.Services.Products.Users
 {
     public class UserApiClient : IUserApiClient
     {

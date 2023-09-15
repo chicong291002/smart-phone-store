@@ -2,7 +2,7 @@
 using ShoeStore.ViewModels.Common;
 using ShoeStore.ViewModels.System.Users;
 
-namespace ShoeStore.AdminApp.Services.Users
+namespace ShoeStore.AdminApp.Services.Products.Users
 {
     public interface IUserApiClient
     {
