@@ -43,8 +43,7 @@ namespace ShoeStore.AdminApp.Services.Categories
 
         public async Task<PagedResult<CategoryViewModel>> GetAllCategoryPaging(GetProductPagingRequest request)
         {
-            var data = await GetAsync<PagedResult<CategoryViewModel>>(
-               $"/api/categories/paging?pageIndex={request.PageIndex}" +
+            var data = await GetAsync<PagedResult<CategoryViewModel>>($"/api/categories/paging?pageIndex={request.PageIndex}" +
                $"&pageSize={request.PageSize}" +
                $"&keyword={request.Keyword}");
             return data;
@@ -76,7 +75,7 @@ namespace ShoeStore.AdminApp.Services.Categories
 
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"/api/categories/updateCategory", httpContent);
+            var response = await client.PutAsync($"/api/categories/" + request.Id, httpContent);
             return response.IsSuccessStatusCode;
         }
     }

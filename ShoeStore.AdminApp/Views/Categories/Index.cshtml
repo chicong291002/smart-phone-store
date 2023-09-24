@@ -7,6 +7,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
 <div class="container-fluid">
     <h1 class="mt-4">Danh sách danh mục</h1>
     <ol class="breadcrumb mb-4">
@@ -16,19 +24,19 @@
     <div class="card mb-12">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-7 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="Category">Tạo mới</a>
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Categories">Tạo mới</a>
                 </div>
-                <div class="col-md-5 col-xs-12">
-                    <form asp-action="Index" asp-controller="Category" method="get">
+
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" asp-controller="Categories" method="get">
                         <div class="row">
-                            <div class="col-md-9">
-                                @*name: là tên tham số*@
+                            <div class="col-md-4 d-flex align-items-center">
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4 d-flex align-items-center">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                <button type="button" onclick="window.location.href='/Category/Index'" class="btn btn-secondary">Đặt lại</button>
+                                <button type="button" onclick="window.location.href='/Categories/Index'" class="btn btn-secondary">Đặt lại</button>
                             </div>
                         </div>
                     </form>
@@ -37,7 +45,14 @@
         </div>
 
         <div class="card-body">
-
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -45,7 +60,7 @@
                             <th class="text-center">
                                 ID
                             </th>
-                            <th>
+                            <th class="text-center">
                                 Tên
                             </th>
                             <th class="text-center">
@@ -60,7 +75,7 @@
                                 <td class="text-center">
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td class="text-center">
@@ -73,7 +88,7 @@
                 </table>
             </div>
             @*truyền Model vào hàm InvokeAsync của class PagerViewComponent để phân trang *@
-            @*await Component.InvokeAsync("Pager", Model)*@
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
 </div>

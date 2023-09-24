@@ -61,14 +61,15 @@ namespace ShoeStore.BackendAPI.Controllers
             return CreatedAtAction(nameof(GetBycategoryId), new { id = categoryId }, category);
         }
 
-        [HttpPut("updateCategory")]
+        [HttpPut("{Id}")]
         [Authorize]
-        public async Task<IActionResult> Update([FromForm] CategoryUpdateRequest request)
+        public async Task<IActionResult> Update([FromRoute] int Id, [FromForm] CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ModelState);  
             }
+            request.Id = Id;
             var category = await _categoryService.Update(request);
             if (category == 0)
                 return BadRequest();

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ShoeStore.AdminApp.Services.Categories;
 using ShoeStore.AdminApp.Services.Products;
-using ShoeStore.AdminApp.Services.Products.Users;
 using ShoeStore.AdminApp.Services.Roles;
+using ShoeStore.AdminApp.Services.Users;
 using ShoeStore.ViewModels.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);

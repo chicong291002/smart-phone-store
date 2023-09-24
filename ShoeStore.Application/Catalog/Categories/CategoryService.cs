@@ -57,6 +57,7 @@ namespace ShoeStore.Application.Catalog.Categories
                 throw new Exception($"Cannot find a category: {request.Id}");
             }
             category.Name = request.Name;
+            _context.Categories.Update(category);
 
             return await _context.SaveChangesAsync();
         }

@@ -21,9 +21,7 @@ namespace ShoeStore.AdminApp.Services
 
         protected async Task<TResponse> GetAsync<TResponse>(string url)
         {
-            var sessions = _httpContextAccessor
-                .HttpContext
-                .Session
+            var sessions = _httpContextAccessor.HttpContext.Session
                 .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();

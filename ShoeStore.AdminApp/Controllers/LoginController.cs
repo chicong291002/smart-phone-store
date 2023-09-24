@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ShoeStore.ViewModels.System.Users;
-using ShoeStore.AdminApp.Services.Products.Users;
+using ShoeStore.AdminApp.Services.Users;
 
 namespace ShoeStore.AdminApp.Controllers
 {

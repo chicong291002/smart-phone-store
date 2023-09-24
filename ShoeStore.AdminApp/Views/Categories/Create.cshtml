@@ -1,15 +1,15 @@
-﻿@model ShoeStore.ViewModels.Catalog.Categories.CategoryUpdateRequest
+﻿@model ShoeStore.ViewModels.Catalog.Categories.CategoryCreateRequest
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Cập nhật danh mục</h1>
+    <h1 class="mt-4">Tạo mới danh mục</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Cập nhật danh mục</li>
+        <li class="breadcrumb-item active">Tạo mới danh mục</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
@@ -18,20 +18,19 @@
 
         <div class="card-body">
             <div class="col-md-8">
-                <form asp-action="Update" enctype="multipart/form-data" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="Id" type="hidden" name="Id" value="@Model.Id" />
+                <form asp-action="Create" asp-controller="Categories" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                        <input type="submit" value="Tạo mới" class="btn btn-primary" />
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-

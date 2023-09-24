@@ -10,7 +10,7 @@ namespace ShoeStore.AdminApp.Services.Categories
     {
         Task<List<CategoryViewModel>> GetAllCategorys();
 
-        Task<CategoryViewModel> GetById(int id);
+        Task<CategoryViewModel> GetById(int id);    
 
         Task<bool> CreateCategory(CategoryCreateRequest request);
 

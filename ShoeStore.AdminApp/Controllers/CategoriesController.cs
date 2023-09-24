@@ -5,11 +5,11 @@ using ShoeStore.ViewModels.Catalog.Products;
 
 namespace ShoeStore.AdminApp.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICategoryApiClient _categoryApiClient;
 
-        public CategoryController(ICategoryApiClient categoryApiClient)
+        public CategoriesController(ICategoryApiClient categoryApiClient)
         {
             _categoryApiClient = categoryApiClient;
         }
@@ -24,6 +24,7 @@ namespace ShoeStore.AdminApp.Controllers
             };
 
             var data = await _categoryApiClient.GetAllCategoryPaging(request);
+            ViewBag.keyword = keyword;
 
             if (TempData["result"] != null)
             {
@@ -50,7 +51,7 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _categoryApiClient.CreateCategory(request);
             if (result)
             {
-                TempData["CreateCategorySuccessful"] = "Thêm mới danh mục thành công";
+                TempData["result"] = "Thêm mới danh mục thành công";
                 return RedirectToAction("Index");
             }
 
@@ -62,14 +63,27 @@ namespace ShoeStore.AdminApp.Controllers
         public async Task<IActionResult> GetByCategoryId(int id)
         {
             var categories = await _categoryApiClient.GetById(id);
-
-            var editVm = new CategoryUpdateRequest()
-            {
-                Id = id,
-                Name = categories.Name
-            };
+                var editVm = new CategoryUpdateRequest()
+                {
+                    Id = id,
+                    Name = categories.Name
+                };            
 
             return View(editVm);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var result = await _categoryApiClient.GetById(id);
+            var category = result;
+            var  categoryUpdateRequest = new CategoryUpdateRequest()
+            {
+                Id = category.Id,
+                Name = category.Name
+            };
+            return View(categoryUpdateRequest);
         }
 
         [HttpPost]
@@ -84,7 +98,7 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _categoryApiClient.UpdateCategory(request);
             if (result)
             {
-                TempData["UpdateCategorySuccessful"] = "Cập nhật danh mục thành công";
+                TempData["result"] = "Cập nhật danh mục thành công";
                 return RedirectToAction("Index");
             }
 
@@ -110,7 +124,7 @@ namespace ShoeStore.AdminApp.Controllers
             var result = await _categoryApiClient.DeleteCategory(request.Id);
             if (result)
             {
-                TempData["DeleteCategorySuccessful"] = "Xóa danh mục thành công";
+                TempData["result"] = "Xóa danh mục thành công";
                 return RedirectToAction("Index");
             }
 

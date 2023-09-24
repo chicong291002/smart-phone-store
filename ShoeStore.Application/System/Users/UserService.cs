@@ -32,19 +32,20 @@ namespace ShoeStore.Application.System.Users
 
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
+            // Tìm xem tên user có tồn tại hay không
             var user = await _userManager.FindByNameAsync(request.UserName);
 
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
+
+            // Trả về một SignInResult, tham số cuối là IsPersistent kiểu bool
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
-
-
             
-            if (!result.Succeeded)
+            /*if (!result.Succeeded)
             {
-                return new ApiErrorResult<string>("Đăng nhập không đúng");
+                return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
             }
-
+*/
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
             {

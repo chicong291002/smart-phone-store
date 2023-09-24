@@ -86,7 +86,7 @@ namespace ShoeStore.AdminApp.Services.Products
         public async Task<ProductViewModel> GetByProductId(int id)
         {
             var data = await GetAsync<ProductViewModel>($"/api/products/{id}");
-            return data;
+            return data;    
         }
 
         public async Task<bool> Update(ProductUpdateRequest request)
