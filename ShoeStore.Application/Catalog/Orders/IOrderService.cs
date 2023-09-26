@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Catalog.Orders
 {
-    internal interface IOrderService
+    public interface IOrderService
     {
+
     }
 }

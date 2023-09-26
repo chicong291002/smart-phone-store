@@ -14,6 +14,7 @@ using ShoeStore.Application.Catalog.Products;
 using ShoeStore.Application.Common;
 using ShoeStore.Application.System.Roles;
 using ShoeStore.Application.System.Users;
+using ShoeStore.Application.Utilities.Slides;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
 using ShoeStore.ViewModels.Constants;
@@ -41,6 +42,7 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IStorageService, FileStorageService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ISlideService, SlideService>();
 
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
