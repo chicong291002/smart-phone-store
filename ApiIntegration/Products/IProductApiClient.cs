@@ -1,7 +1,7 @@
 ﻿using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
 
-namespace ShoeStore.AdminApp.Services.Products
+namespace ShoeStore.AdminApp.ApiIntegration.Products
 {
     public interface IProductApiClient
     {

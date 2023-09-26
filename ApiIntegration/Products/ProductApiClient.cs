@@ -4,8 +4,10 @@ using System.Text;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
 using ShoeStore.ViewModels.Constants;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
-namespace ShoeStore.AdminApp.Services.Products
+namespace ShoeStore.AdminApp.ApiIntegration.Products
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient    
     {

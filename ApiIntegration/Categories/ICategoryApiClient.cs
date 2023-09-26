@@ -4,7 +4,7 @@ using ShoeStore.ViewModels.Catalog.Categories;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
 
-namespace ShoeStore.AdminApp.Services.Categories
+namespace ShoeStore.AdminApp.ApiIntegration.Categories
 {
     public interface ICategoryApiClient
     {

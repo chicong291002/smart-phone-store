@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using ShoeStore.Data.Entities;
 using ShoeStore.ViewModels.Catalog.Categories;
 using ShoeStore.ViewModels.Catalog.Products;
@@ -7,7 +9,7 @@ using ShoeStore.ViewModels.Constants;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace ShoeStore.AdminApp.Services.Categories
+namespace ShoeStore.AdminApp.ApiIntegration.Categories
 {
     public class CategoryApiClient : BaseApiClient, ICategoryApiClient
     {

@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using ShoeStore.ViewModels.Constants;
 using System.Net.Http.Headers;
 
-namespace ShoeStore.AdminApp.Services
+namespace ShoeStore.AdminApp.ApiIntegration
 {
     public class BaseApiClient
     {
