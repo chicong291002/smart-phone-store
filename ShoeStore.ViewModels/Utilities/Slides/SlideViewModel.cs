@@ -1,8 +1,13 @@
 ﻿using ShoeStore.Data.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ShoeStore.Data.Entities
+namespace ShoeStore.ViewModels.Utilities.Slides
 {
-    public class Slide
+    public class SlideViewModel
     {
         public int Id { set; get; }
         public string Name { set; get; }
@@ -10,6 +15,6 @@ namespace ShoeStore.Data.Entities
         public string Url { set; get; }
         public string Image { get; set; }
         public int SortOrder { get; set; }
-        public Status Status { set; get; }
+        public Status Status { set; get; }  
     }
 }
