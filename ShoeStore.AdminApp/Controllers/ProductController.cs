@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ShoeStore.AdminApp.Services.Categories;
-using ShoeStore.AdminApp.Services.Products;
+using ShoeStore.AdminApp.ApiIntegration.Categories;
+using ShoeStore.AdminApp.ApiIntegration.Products;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
 

@@ -1,11 +1,13 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ShoeStore.ViewModels.Common;
 using ShoeStore.ViewModels.System.Users;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace ShoeStore.AdminApp.Services.Users
+namespace ShoeStore.AdminApp.ApiIntegration.Users
 {
     public class UserApiClient : IUserApiClient
     {

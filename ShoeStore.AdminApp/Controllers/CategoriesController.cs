@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.AdminApp.Services.Categories;
+using ShoeStore.AdminApp.ApiIntegration.Categories;
 using ShoeStore.ViewModels.Catalog.Categories;
 using ShoeStore.ViewModels.Catalog.Products;
 

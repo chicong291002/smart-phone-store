@@ -2,8 +2,10 @@
 using System.Net.Http.Headers;
 using ShoeStore.ViewModels.Common;
 using ShoeStore.ViewModels.System.Roles;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 
-namespace ShoeStore.AdminApp.Services.Roles
+namespace ShoeStore.AdminApp.ApiIntegration.Roles
 {
     public class RoleApiClient : IRoleApiClient
     {

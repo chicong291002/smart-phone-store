@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Orders\**" />
+    <Content Remove="Services\Orders\**" />
+    <EmbeddedResource Remove="Services\Orders\**" />
+    <None Remove="Services\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\scss\navs\_global.scss" />
     <None Include="wwwroot\scss\navs\_sidebar.scss" />
     <None Include="wwwroot\scss\navs\_topbar.scss" />
@@ -33,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiIntegration\ApiIntegration.csproj" />
     <ProjectReference Include="..\ShoeStore.Application\ShoeStore.Application.csproj" />
     <ProjectReference Include="..\ShoeStore.ViewModels\ShoeStore.ViewModels.csproj" />
   </ItemGroup>
@@ -41,10 +49,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.9" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Orders\" />
   </ItemGroup>
 
 </Project>

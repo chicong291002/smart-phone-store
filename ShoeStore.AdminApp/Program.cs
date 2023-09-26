@@ -1,10 +1,10 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ShoeStore.AdminApp.Services.Categories;
-using ShoeStore.AdminApp.Services.Products;
-using ShoeStore.AdminApp.Services.Roles;
-using ShoeStore.AdminApp.Services.Users;
+using ShoeStore.AdminApp.ApiIntegration.Categories;
+using ShoeStore.AdminApp.ApiIntegration.Products;
+using ShoeStore.AdminApp.ApiIntegration.Roles;
+using ShoeStore.AdminApp.ApiIntegration.Users;
 using ShoeStore.ViewModels.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);
