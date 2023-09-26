@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoeStore.ViewModels.Utilities.Slides;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,10 @@ namespace ShoeStore.ViewModels.Common
         public bool IsSuccessed { get; set; }
         public string Message { get; set; }
         public T ResultObj { get; set; }
+
+        public static implicit operator List<T>(ApiResult<List<SlideViewModel>> v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
