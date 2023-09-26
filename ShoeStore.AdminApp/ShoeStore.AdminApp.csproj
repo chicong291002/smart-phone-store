@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Orders\**" />
+    <Content Remove="Services\Orders\**" />
+    <EmbeddedResource Remove="Services\Orders\**" />
+    <None Remove="Services\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\scss\navs\_global.scss" />
     <None Include="wwwroot\scss\navs\_sidebar.scss" />
     <None Include="wwwroot\scss\navs\_topbar.scss" />
