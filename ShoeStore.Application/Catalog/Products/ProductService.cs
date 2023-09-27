@@ -334,7 +334,8 @@ namespace ShoeStore.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        join pi in _context.ProductImages.Where(x=> x.IsDefault == true)    
+                        on p.Id equals pi.ProductId into ppi          
                         from pi in ppi.DefaultIfEmpty()
                         select new { p, pi, pic };
 
