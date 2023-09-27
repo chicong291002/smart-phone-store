@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShoeStore.Application.Common;
@@ -323,6 +324,34 @@ namespace ShoeStore.Application.Catalog.Products
             }
             await _context.SaveChangesAsync();
             return new ApiSuccessResult<bool>();
+        }
+
+        public async Task<List<ProductViewModel>> GetFeaturedProducts(int take)
+        {
+            // 1.Select join
+            var query = from p in _context.Products
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        select new { p, pi, pic };
+
+
+            var data = await query.OrderByDescending(x=>x.p.DateCreated).Take(take).
+            Select(x => new ProductViewModel()
+                {
+                    Id = x.p.Id,
+                    Name = x.p.Name,
+                    Description = x.p.Description,
+                    OriginalPrice = x.p.OriginalPrice,
+                    Price = x.p.Price,
+                    Stock = x.p.Stock,
+                    ThumbnailImage = x.pi.ImagePath
+                }).ToListAsync();
+         
+            return data;
         }
     }
 }

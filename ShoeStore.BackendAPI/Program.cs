@@ -17,7 +17,7 @@ using ShoeStore.Application.System.Users;
 using ShoeStore.Application.Utilities.Slides;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
-using ShoeStore.ViewModels.Constants;
+using ShoeStore.Utilities.Constants;
 using ShoeStore.ViewModels.System.Users.CheckUserValidator;
 using System.Collections.Generic;
 

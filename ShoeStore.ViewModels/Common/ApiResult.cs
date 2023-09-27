@@ -10,9 +10,5 @@ namespace ShoeStore.ViewModels.Common
         public string Message { get; set; }
         public T ResultObj { get; set; }
 
-        public static implicit operator List<T>(ApiResult<List<SlideViewModel>> v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

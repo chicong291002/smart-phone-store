@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ShoeStore.Data.Entities;
+using ShoeStore.Utilities.Constants;
 using ShoeStore.ViewModels.Catalog.Categories;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.Constants;
 using System.Net.Http.Headers;
 using System.Text;
 

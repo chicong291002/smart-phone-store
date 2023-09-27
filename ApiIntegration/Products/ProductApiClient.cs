@@ -3,9 +3,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using ShoeStore.Utilities.Constants;
 
 namespace ShoeStore.AdminApp.ApiIntegration.Products
 {
@@ -89,6 +89,11 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
         {
             var data = await GetAsync<ProductViewModel>($"/api/products/{id}");
             return data;    
+        }
+
+        public async Task<List<ProductViewModel>> GetFeaturedProducts(int take)
+        {
+            return await GetListAsync<ProductViewModel>($"/api/products/featured/{take}");
         }
 
         public async Task<bool> Update(ProductUpdateRequest request)

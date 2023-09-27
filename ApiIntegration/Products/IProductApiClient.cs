@@ -13,5 +13,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
         Task<bool> Delete(int id);
         Task<ProductViewModel> GetByProductId(int id);
         Task<bool> CategoryAssign(int id, CategoryAssignRequest request);
+
+        Task<List<ProductViewModel>> GetFeaturedProducts(int take);
     }
 }
