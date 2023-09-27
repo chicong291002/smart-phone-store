@@ -12,17 +12,17 @@ namespace ShoeStore.BackendAPI.Controllers
     public class SlidesController : ControllerBase
     {
         private readonly ISlideService _slideService;
-
         public SlidesController(ISlideService slideService)
         {
             _slideService = slideService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSlides()
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll()
         {
-            var slides = await _slideService.GetAll();
-            return Ok(slides);
+            var roles = await _slideService.GetAll();
+            return Ok(roles);
         }
     }
 }

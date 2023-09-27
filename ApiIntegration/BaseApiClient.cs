@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using ShoeStore.ViewModels.Constants;
+using ShoeStore.Utilities.Constants;
 using System.Net.Http.Headers;
 
 namespace ShoeStore.AdminApp.ApiIntegration
@@ -41,13 +41,11 @@ namespace ShoeStore.AdminApp.ApiIntegration
             return JsonConvert.DeserializeObject<TResponse>(body);
         }
 
-        public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
+        public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = true)
         {
-            var sessions = _httpContextAccessor
-               .HttpContext
-               .Session
-               .GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+        
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 

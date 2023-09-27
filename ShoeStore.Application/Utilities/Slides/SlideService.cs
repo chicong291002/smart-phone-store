@@ -13,6 +13,10 @@ namespace ShoeStore.Application.Utilities.Slides
     public class SlideService : ISlideService
     {
         private readonly ShoeStoreDbContext _context; //readonly la chi gan 1 lan
+        public SlideService(ShoeStoreDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task<List<SlideViewModel>> GetAll()
         {

@@ -21,5 +21,7 @@ namespace ShoeStore.Application.Catalog.Products
         Task<ProductImageViewModel> GetImageById(int imageId);
 
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
+
+        Task<List<ProductViewModel>> GetFeaturedProducts(int take);
     }
 }
