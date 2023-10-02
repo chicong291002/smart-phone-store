@@ -248,7 +248,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9565af4a-77f9-49cc-8220-de2b9275b009",
+                            ConcurrencyStamp = "d5eec3b5-63c9-4821-8dbb-4463adb9937b",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "congkhpro291002@gmail.com",
                             EmailConfirmed = true,
@@ -257,7 +257,7 @@ namespace ShoeStore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "congkhpro291002@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA7jZrqAbvFvqmljtTEQhARBSTIxIuLc6UUCT5/pVt21HudrTgWjYngnRrDdQUivtg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECZNJeXDsISM21dskOkaLYkJJtunSpiljvOKnmUn6FLhbOt5t7hDj+rYJ1BADcySEg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -444,7 +444,7 @@ namespace ShoeStore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 9, 14, 20, 26, 15, 549, DateTimeKind.Local).AddTicks(3954),
+                            DateCreated = new DateTime(2023, 9, 28, 11, 18, 52, 895, DateTimeKind.Local).AddTicks(4364),
                             Description = "So Good",
                             Name = "Test",
                             OriginalPrice = 100000m,
@@ -454,7 +454,7 @@ namespace ShoeStore.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2023, 9, 14, 20, 26, 15, 549, DateTimeKind.Local).AddTicks(3969),
+                            DateCreated = new DateTime(2023, 9, 28, 11, 18, 52, 895, DateTimeKind.Local).AddTicks(4379),
                             Description = "So Good 2",
                             Name = "Test 2",
                             OriginalPrice = 200000m,
@@ -630,6 +630,31 @@ namespace ShoeStore.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ShoeStore.Data.Entities.Subcategory", b =>
+                {
+                    b.Property<int>("SubcategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("SubcategoryId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubcategoryId"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int")
+                        .HasColumnName("CategoryId");
+
+                    b.Property<string>("SubcategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("SubcategoryName");
+
+                    b.HasKey("SubcategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Subcategories", (string)null);
+                });
+
             modelBuilder.Entity("ShoeStore.Data.Entities.Carts", b =>
                 {
                     b.HasOne("ShoeStore.Data.Entities.Product", "Product")
@@ -707,6 +732,17 @@ namespace ShoeStore.Data.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ShoeStore.Data.Entities.Subcategory", b =>
+                {
+                    b.HasOne("ShoeStore.Data.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.AppUser", b =>

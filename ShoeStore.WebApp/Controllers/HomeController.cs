@@ -28,7 +28,8 @@ namespace ShoeStore.WebApp.Controllers
             var viewModel = new HomeViewModel
             {
                 Slides = slides,
-                FeaturedProducts = await _productApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts)
+                FeaturedProducts = await _productApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
+                LatestProducts = await _productApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts)
             };
             return View(viewModel);
         }

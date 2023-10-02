@@ -66,9 +66,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Categories
 
         public async Task<bool> UpdateCategory(CategoryUpdateRequest request)
         {
-            var sessions = _httpContextAccessor
-               .HttpContext
-               .Session
+            var sessions = _httpContextAccessor.HttpContext.Session
                .GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
@@ -77,7 +75,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Categories
 
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PutAsync($"/api/categories/" + request.Id, httpContent);
+            var response = await client.PutAsync($"/api/categories/updateCategory", httpContent);
             return response.IsSuccessStatusCode;
         }
     }

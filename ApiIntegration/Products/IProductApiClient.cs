@@ -15,5 +15,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
         Task<bool> CategoryAssign(int id, CategoryAssignRequest request);
 
         Task<List<ProductViewModel>> GetFeaturedProducts(int take);
+
+        Task<List<ProductViewModel>> GetLatestProducts(int take);
     }
 }

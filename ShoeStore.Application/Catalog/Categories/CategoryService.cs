@@ -1,40 +1,23 @@
-﻿using Azure.Core;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
 using ShoeStore.ViewModels.Catalog.Categories;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Catalog.Categories
 {
     public class CategoryService : ICategoryService
     {
         private readonly ShoeStoreDbContext _context; //readonly la chi gan 1 lan
-        private readonly IStorageService _storageService;
-        private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
-        public CategoryService(ShoeStoreDbContext context, IStorageService storageService)
+        public CategoryService(ShoeStoreDbContext context)
         {
             _context = context;
-            _storageService = storageService;
-        }
-
-        public async Task<List<CategoryViewModel>> GetAllCategorys()
-        {
-            // 1.Select join
-            var query = from c in _context.Categories
-                        select new { c } ;
-
-            int totalRow = await query.CountAsync();
-            return await query.Select(
-                x => new CategoryViewModel()
-                {
-                    Id = x.c.Id,
-                    Name = x.c.Name,
-                    ParentId = x.c.ParentId
-                }).ToListAsync();
         }
 
         public async Task<int> Create(CategoryCreateRequest request)
@@ -46,7 +29,7 @@ namespace ShoeStore.Application.Catalog.Categories
 
             _context.Categories.Add(category);
             await _context.SaveChangesAsync(); // ko can cho thread va phuc vu duoc request khac 
-            return category.Id; 
+            return category.Id;
         }
 
         public async Task<int> Update(CategoryUpdateRequest request)
@@ -75,25 +58,39 @@ namespace ShoeStore.Application.Catalog.Categories
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<CategoryViewModel> getByCategoryId(int categoryId)
+        public async Task<CategoryViewModel> getByCategoryId(int id)
         {
-            var query = from c in _context.Categories where c.Id == categoryId
+            var query = from c in _context.Categories
+                        where c.Id == id
+                        select new { c };
+
+            return await query.Select(x => new CategoryViewModel()
+            {
+                Id = x.c.Id,
+                Name = x.c.Name
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<CategoryViewModel>> GetAll()
+        {
+            var query = from c in _context.Categories
                         select new { c };
 
             return await query.Select(x => new CategoryViewModel()
             {
                 Id = x.c.Id,
                 Name = x.c.Name,
-            }).FirstOrDefaultAsync();
+            }).ToListAsync();
         }
 
         public async Task<PagedResult<CategoryViewModel>> GetAllCategoryPaging(GetProductPagingRequest request)
         {
             var query = from c in _context.Categories
-                        select new { c };
+                        join subc in _context.Subcategories on c.Id equals subc.CategoryId into subcategories
+                        select new { Category = c, Subcategories = subcategories };
 
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.c.Name.Contains(request.Keyword));
+                query = query.Where(x => x.Category.Name.Contains(request.Keyword));
 
             //3. Paging
             int totalRow = await query.CountAsync();
@@ -102,9 +99,15 @@ namespace ShoeStore.Application.Catalog.Categories
                 .Take(request.PageSize)
                 .Select(x => new CategoryViewModel()
                 {
-                    Id = x.c.Id,
-                    Name = x.c.Name,
+                    Id = x.Category.Id,
+                    Name = x.Category.Name,
+                    Subcategories = x.Subcategories.Select(s => new Subcategory
+                    {
+                        SubcategoryId = s.SubcategoryId,
+                        SubcategoryName = s.SubcategoryName,
+                    }).ToList()
                 }).ToListAsync();
+
 
             //4. Select and projection
             var pagedResult = new PagedResult<CategoryViewModel>()

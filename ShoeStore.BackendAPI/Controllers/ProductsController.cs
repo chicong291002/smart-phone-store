@@ -52,6 +52,18 @@ namespace ShoeStore.BackendAPI.Controllers
             return Ok(product);
         }
 
+        [HttpGet("latest/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take)
+        {
+            var product = await _productService.GetFeaturedProducts(take);
+            if (product == null)
+            {
+                return BadRequest("Cannot find Product");
+            }
+            return Ok(product);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")]
         //chap nhan doi tuong form len 

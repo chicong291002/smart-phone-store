@@ -1,14 +1,18 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using ShoeStore.Application.Common;
 using ShoeStore.Data.EF;
 using ShoeStore.Data.Entities;
+using ShoeStore.Utilities.Constants;
 using ShoeStore.ViewModels.Catalog.ProductImages;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Catalog.Products
 {
@@ -16,7 +20,7 @@ namespace ShoeStore.Application.Catalog.Products
     {
         private readonly ShoeStoreDbContext _context; //readonly la chi gan 1 lan
         private readonly IStorageService _storageService;
-        private const string USER_CONTENT_FOLDER_NAME = "user-content";
+        private const string USER_CONTENT_FOLDER_NAME = "Images";
 
         public ProductService(ShoeStoreDbContext context, IStorageService storageService)
         {
@@ -117,9 +121,9 @@ namespace ShoeStore.Application.Catalog.Products
                 Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
-                    Name = x.p.Name,
-                    Description = x.p.Description,
-                    OriginalPrice = x.p.OriginalPrice,
+                    Name = x.p == null ? SystemConstants.ProductConstants.NA : x.p.Name,
+                    Description = x.p == null ? SystemConstants.ProductConstants.NA : x.p.Description,
+                    OriginalPrice = x.p.OriginalPrice,  
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ThumbnailImage = x.pi.ImagePath
@@ -334,24 +338,49 @@ namespace ShoeStore.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        join pi in _context.ProductImages.Where(x=> x.IsDefault == true)    
-                        on p.Id equals pi.ProductId into ppi          
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi          
                         from pi in ppi.DefaultIfEmpty()
                         select new { p, pi, pic };
-
 
             var data = await query.OrderByDescending(x=>x.p.DateCreated).Take(take).
             Select(x => new ProductViewModel()
                 {
                     Id = x.p.Id,
                     Name = x.p.Name,
-                    Description = x.p.Description,
+                    //Description = x.p.Description,
                     OriginalPrice = x.p.OriginalPrice,
                     Price = x.p.Price,
                     Stock = x.p.Stock,
                     ThumbnailImage = x.pi.ImagePath
                 }).ToListAsync();
          
+            return data;
+        }
+
+        public async Task<List<ProductViewModel>> GetLatestProducts(int take)
+        {
+            // 1.Select join
+            var query = from p in _context.Products
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
+                        from c in picc.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
+                        select new { p, pi, pic };
+
+            var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take).
+            Select(x => new ProductViewModel()
+            {
+                Id = x.p.Id,
+                Name = x.p.Name,
+               // Description = x.p.Description,
+                OriginalPrice = x.p.OriginalPrice,
+                Price = x.p.Price,
+                Stock = x.p.Stock,
+                ThumbnailImage = x.pi.ImagePath
+            }).ToListAsync();
+
             return data;
         }
     }

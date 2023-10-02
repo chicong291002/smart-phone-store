@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShoeStore.Utilities\ShoeStore.Utilities.csproj" />
-    <ProjectReference Include="..\ShoeStore.ViewModels\ShoeStore.ViewModels.csproj" />
+    <ProjectReference Include="..\ShoeStore.Utilities\SmartPhoneStore.Utilities.csproj" />
+    <ProjectReference Include="..\ShoeStore.ViewModels\SmartPhoneStore.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

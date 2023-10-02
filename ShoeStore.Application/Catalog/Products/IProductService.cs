@@ -1,10 +1,12 @@
 ﻿using ShoeStore.ViewModels.Catalog.ProductImages;
 using ShoeStore.ViewModels.Catalog.Products;
 using ShoeStore.ViewModels.Common;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShoeStore.Application.Catalog.Products
 {
-    public interface IProductService
+    public interface IProductService    
     {
         Task<int> Create(ProductCreateRequest request);
         Task<int> Update(ProductUpdateRequest request);
@@ -23,5 +25,7 @@ namespace ShoeStore.Application.Catalog.Products
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
 
         Task<List<ProductViewModel>> GetFeaturedProducts(int take);
+
+        Task<List<ProductViewModel>> GetLatestProducts(int take);
     }
 }

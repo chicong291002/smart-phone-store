@@ -1,0 +1,50 @@
+﻿@model List<ShoeStore.ViewModels.Catalog.Categories.CategoryViewModel>
+
+<div id="sidebar" class="span3">
+    <div class="well well-small"><a id="myCart" href="product_summary.html">Danh mục</a></div>
+    <ul id="sideManu" class="nav nav-tabs nav-stacked">
+        @foreach(var item in Model.Where(x=>x.ParentId == null))
+        {
+            var children = Model.Where(x => x.ParentId == item.Id);
+            var parent = children.Count() > 0 ? "class=\"dropdown-toggle\" data-toggle=\"dropdown\"":"";
+            if (children.Count() > 0)
+            {
+                <li class="subMenu open">
+                    <a>@children</a>
+                    <ul>
+                        @foreach(var childItem in children)
+                        {
+                            <li><a class="active" href="/categories/@childItem.Id"><i class="icon-chevron-right"></i>@childItem.Name</a></li>
+                        }
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li><a class="active" href="/categories/@children.">@parent</a></li>
+            }
+        }
+
+    </ul>
+    <br />
+@*    <div class="thumbnail">
+        <img src="/themes/images/products/panasonic.jpg" alt="Bootshop panasonoc New camera" />
+        <div class="caption">
+            <h5>Panasonic</h5>
+            <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
+        </div>
+    </div><br />
+    <div class="thumbnail">
+        <img src="/themes/images/products/kindle.png" title="Bootshop New Kindel" alt="Bootshop Kindel">
+        <div class="caption">
+            <h5>Kindle</h5>
+            <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>
+        </div>
+    </div><br />
+    <div class="thumbnail">
+        <img src="/themes/images/payment_methods.png" title="Bootshop Payment Methods" alt="Payments Methods">
+        <div class="caption">
+            <h5>Payment Methods</h5>
+        </div>
+    </div>*@
+</div>

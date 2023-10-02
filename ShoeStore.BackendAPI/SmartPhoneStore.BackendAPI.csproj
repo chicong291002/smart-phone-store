@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShoeStore.AdminApp\ShoeStore.AdminApp.csproj" />
-    <ProjectReference Include="..\ShoeStore.Application\ShoeStore.Application.csproj" />
-    <ProjectReference Include="..\ShoeStore.Data\ShoeStore.Data.csproj" />
-    <ProjectReference Include="..\ShoeStore.ViewModels\ShoeStore.ViewModels.csproj" />
+    <ProjectReference Include="..\ShoeStore.AdminApp\SmartPhoneStore.AdminApp.csproj" />
+    <ProjectReference Include="..\ShoeStore.Application\SmartPhoneStore.Application.csproj" />
+    <ProjectReference Include="..\ShoeStore.Data\SmartPhoneStore.Data.csproj" />
+    <ProjectReference Include="..\ShoeStore.ViewModels\SmartPhoneStore.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
