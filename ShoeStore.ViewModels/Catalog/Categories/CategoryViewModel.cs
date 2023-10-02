@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShoeStore.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,8 @@ namespace ShoeStore.ViewModels.Catalog.Categories
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
         public int? ParentId { get; set; }
+        public List<Subcategory> Subcategories { get; set; }
 
     }
 }

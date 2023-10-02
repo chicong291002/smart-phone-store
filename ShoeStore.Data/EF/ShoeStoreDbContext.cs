@@ -26,6 +26,7 @@ namespace ShoeStore.Data.EF
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
+            modelBuilder.ApplyConfiguration(new SubcategoryConfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -50,6 +51,7 @@ namespace ShoeStore.Data.EF
         public DbSet<Product> Products { get; set; }
         public DbSet<Slide> Slides { get; set; }
 
+        public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<ProductInCategory> ProductInCategories { get; set; }   
     }
 }

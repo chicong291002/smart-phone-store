@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using ShoeStore.AdminApp.ApiIntegration.Categories;
 using ShoeStore.AdminApp.ApiIntegration.Products;
 using System;
 
@@ -20,8 +21,9 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddControllersWithViews();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddTransient<ISlideApiClient,SlideApiClient>();
+builder.Services.AddTransient<ISlideApiClient, SlideApiClient>();
 builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
+builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
@@ -41,6 +43,25 @@ app.UseAuthentication();
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "Product Category",
+    pattern: "categories/{id}",
+    new
+    {
+        controller = "Product",
+        action = "Category"
+    });
+
+
+app.MapControllerRoute(
+   name: "Product Details",
+    pattern: "products/{id}",
+    new
+    {
+        controller = "Product",
+        action = "Detail"
+    });
 
 app.MapControllerRoute(
     name: "default",

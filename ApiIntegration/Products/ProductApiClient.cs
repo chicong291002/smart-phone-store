@@ -96,6 +96,11 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
             return await GetListAsync<ProductViewModel>($"/api/products/featured/{take}");
         }
 
+        public async Task<List<ProductViewModel>> GetLatestProducts (int take)
+        {
+            return await GetListAsync<ProductViewModel>($"/api/products/latest/{take}");
+        }
+
         public async Task<bool> Update(ProductUpdateRequest request)
         {
             var sessions = _httpContextAccessor

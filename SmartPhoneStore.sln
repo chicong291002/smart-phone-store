@@ -3,18 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.WebApp", "ShoeStore.WebApp\ShoeStore.WebApp.csproj", "{AFC1E458-56B2-40D0-B764-00AB87A04EB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.WebApp", "ShoeStore.WebApp\SmartPhoneStore.WebApp.csproj", "{AFC1E458-56B2-40D0-B764-00AB87A04EB4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.BackendAPI", "ShoeStore.BackendAPI\ShoeStore.BackendAPI.csproj", "{F9D5BAE8-3CCD-4A7E-BAE4-C3186B4222AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.BackendAPI", "ShoeStore.BackendAPI\SmartPhoneStore.BackendAPI.csproj", "{F9D5BAE8-3CCD-4A7E-BAE4-C3186B4222AB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Solution Items", "0.Solution Items", "{B59B49C5-E26A-4AE9-8706-F1EE2BC76506}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.Data", "ShoeStore.Data\ShoeStore.Data.csproj", "{E871D603-9286-4C4F-9DBA-4825212EBEAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.Data", "ShoeStore.Data\SmartPhoneStore.Data.csproj", "{E871D603-9286-4C4F-9DBA-4825212EBEAD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.Application", "ShoeStore.Application\ShoeStore.Application.csproj", "{97262F1C-8BF5-4E71-A606-4737739EAFBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.Application", "ShoeStore.Application\SmartPhoneStore.Application.csproj", "{97262F1C-8BF5-4E71-A606-4737739EAFBF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Infrastructures", "1.Infrastructures", "{1BE972BF-49F2-4101-8639-230A0C594A7C}"
 EndProject
@@ -23,15 +23,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Domain", "2.Domain", "{6C
 		ShoeStore.ViewModels\System\Users\LoginRequest.cs = ShoeStore.ViewModels\System\Users\LoginRequest.cs
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.AdminApp", "ShoeStore.AdminApp\ShoeStore.AdminApp.csproj", "{CC6E9893-1228-41C5-84AD-0819249EC271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.AdminApp", "ShoeStore.AdminApp\SmartPhoneStore.AdminApp.csproj", "{CC6E9893-1228-41C5-84AD-0819249EC271}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoeStore.ViewModels", "ShoeStore.ViewModels\ShoeStore.ViewModels.csproj", "{6B67D816-7BCF-43C7-B4DF-2B6ACF0E38F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.ViewModels", "ShoeStore.ViewModels\SmartPhoneStore.ViewModels.csproj", "{6B67D816-7BCF-43C7-B4DF-2B6ACF0E38F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Hosts", "3.Hosts", "{79D715A1-D12A-4D8D-A472-D1C78429AA2F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiIntegration", "ApiIntegration\ApiIntegration.csproj", "{8B57F9AF-68BF-4D53-960B-3A4857150969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoeStore.Utilities", "ShoeStore.Utilities\ShoeStore.Utilities.csproj", "{858EF568-203A-4D05-AAB7-F930A46E3FF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartPhoneStore.Utilities", "ShoeStore.Utilities\SmartPhoneStore.Utilities.csproj", "{858EF568-203A-4D05-AAB7-F930A46E3FF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

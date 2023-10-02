@@ -12,17 +12,16 @@ namespace ShoeStore.BackendAPI.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-
         public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategorys()
+        public async Task<IActionResult> GetAll()
         {
-            var categorys = await _categoryService.GetAllCategorys();
-            return Ok(categorys);
+            var categories = await _categoryService.GetAll();
+            return Ok(categories);
         }
 
         [HttpGet("paging")]
@@ -37,10 +36,6 @@ namespace ShoeStore.BackendAPI.Controllers
         public async Task<IActionResult> GetBycategoryId(int id)
         {
             var category = await _categoryService.getByCategoryId(id);
-            if (category == null)
-            {
-                return BadRequest("Cannot find Category");
-            }
             return Ok(category);
         }
 
@@ -61,15 +56,14 @@ namespace ShoeStore.BackendAPI.Controllers
             return CreatedAtAction(nameof(GetBycategoryId), new { id = categoryId }, category);
         }
 
-        [HttpPut("{Id}")]
+        [HttpPut("updateCategory")]
         [Authorize]
-        public async Task<IActionResult> Update([FromRoute] int Id, [FromForm] CategoryUpdateRequest request)
+        public async Task<IActionResult> Update([FromBody] CategoryUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);  
             }
-            request.Id = Id;
             var category = await _categoryService.Update(request);
             if (category == 0)
                 return BadRequest();
