@@ -11,7 +11,7 @@ using ShoeStore.Data.EF;
 
 namespace ShoeStore.Data.Migrations
 {
-    [DbContext(typeof(ShoeStoreDbContext))]
+    [DbContext(typeof(SmartPhoneStoreDbContext))]
     [Migration("20230829081324_aspnetcoreidentityDb")]
     partial class aspnetcoreidentityDb
     {

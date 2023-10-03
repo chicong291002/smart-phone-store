@@ -1,6 +1,6 @@
 ﻿@using ShoeStore.ViewModels.Common;
 @model PagedResult<ShoeStore.ViewModels.Catalog.Products.ProductViewModel>
-
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
     ViewData["Title"] = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-md-6 col-xs-12">
-                    <form asp-action="Index" method="get">
+                    <form asp-action="Index" asp-controller="Product" method="get">
                         <div class="row">
                             <div class="col-md-4 d-flex align-items-center">
                                 <input type="text" value="@ViewBag.keyword" name="keyword" class="form-control flex-grow-1" />
@@ -36,7 +36,7 @@
 
                             <div class="col-md-4 d-flex align-items-center">
                                 <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
-                                    <option>--Chọn danh mục--</option>
+                                    <option>All</option>
                                 </select>
                             </div>
 
@@ -66,48 +66,49 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>
-                                Mã SP
+                            <th class="text-center">
+                                ID
+                            </th>
+                            <th class="text-center">
+                                Ảnh đại diện
                             </th>
                             <th>
-                                Tên Sản Phẩm
+                                Tên
                             </th>
-                            <th>
-                                Giá Nhập
+                            <th class="text-center">
+                                Giá bán
                             </th>
-                            <th>
-                                Giá Bán
+                            <th class="text-center">
+                                Số lượng tồn
                             </th>
-                            <th>
-                                Số lượng tồn 
+                            <th class="text-center">
+                                Thao tác
                             </th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
                             <tr>
-                                <td>
+                                <td class="text-center">
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)    
+                                <td class="text-center">
+                                    <img style="width:100px;height:100px" src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="Alternate Text" />
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
+                                    @Html.DisplayFor(modelItem => item.Name)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OriginalPrice)
+                                <td class="text-center">
+                                    @item.Price.ToString("N0") <span>&#8363;</span>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @Html.DisplayFor(modelItem => item.Stock)
                                 </td>
                                 <td>
                                     @Html.ActionLink("Sửa", "Update", new { id = item.Id }) |
                                     @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
                                     @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                                    @Html.ActionLink("Gán danh mục", "CategoryAssign", new { id = item.Id }) |
                                 </td>
                             </tr>
                         }

@@ -18,6 +18,9 @@ namespace ShoeStore.Data.Configurations
             builder.Property(p => p.Name).IsRequired();
             builder.Property(x => x.Price).IsRequired();
             builder.Property(x => x.Stock).IsRequired();
+            builder.Property(x => x.Thumbnail).HasMaxLength(300).IsRequired(false);
+
+            builder.Property(x => x.ProductImage).HasMaxLength(300).IsRequired(false);
 
             // Cấu hình mối quan hệ một-nhiều với ProductInCategory
             builder.HasMany(p => p.ProductInCategories)
@@ -28,11 +31,6 @@ namespace ShoeStore.Data.Configurations
             builder.HasMany(p => p.OrderDetails)
                 .WithOne(od => od.Product)
                 .HasForeignKey(od => od.productId);
-
-            // Cấu hình mối quan hệ một-nhiều với ProductImage
-            builder.HasMany(p => p.ProductImages)
-                .WithOne(pi => pi.Product)
-                .HasForeignKey(pi => pi.ProductId);
 
         }
     }

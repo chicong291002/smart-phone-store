@@ -51,20 +51,31 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
 
             var requestContent = new MultipartFormDataContent();
 
-            if (request.Image != null)
+            if (request.ThumbnailImage != null)
             {
                 byte[] data;
-                using (var br = new BinaryReader(request.Image.OpenReadStream()))
+                using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
                 {
-                    data = br.ReadBytes((int)request.Image.OpenReadStream().Length);
+                    data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
                 }
                 ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "Image", request.Image.FileName);
+                requestContent.Add(bytes, "ThumbnailImage", request.ThumbnailImage.FileName);
+            }
+
+            if (request.ProductImage != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ProductImage.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ProductImage.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
             }
 
             requestContent.Add(new StringContent(request.Price.ToString()), "price");
-            requestContent.Add(new StringContent(request.OriginalPrice.ToString()), "originalPrice");
             requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
+            requestContent.Add(new StringContent(request.CategoryId.ToString()), "categoryId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
 
@@ -81,7 +92,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
         {
             var data = await GetAsync<PagedResult<ProductViewModel>>
                 ($"/api/products/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
-                $"&keyword={request.Keyword}&categoryIds={request.CategoryId}");
+                $"&keyword={request.Keyword}&categoryId={request.CategoryId}");
             return data;
         }
 
@@ -103,10 +114,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
 
         public async Task<bool> Update(ProductUpdateRequest request)
         {
-            var sessions = _httpContextAccessor
-     .HttpContext
-     .Session
-     .GetString(SystemConstants.AppSettings.Token);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
@@ -114,18 +122,17 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
 
             var requestContent = new MultipartFormDataContent();
 
-            if (request.Image != null)
-            {
+            if (request.ThumbnailImage!=null) { 
                 byte[] data;
-                using (var br = new BinaryReader(request.Image.OpenReadStream()))
+                using (var br = new BinaryReader(request.ThumbnailImage.OpenReadStream()))
                 {
-                    data = br.ReadBytes((int)request.Image.OpenReadStream().Length);
+                    data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
                 }
                 ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "Image", request.Image.FileName);
+                requestContent.Add(bytes, "ThumbnailImage", request.ThumbnailImage.FileName);
             }
 
-           /* if (request.Image != null)
+            if (request.ProductImage != null)
             {
                 byte[] data;
                 using (var br = new BinaryReader(request.ProductImage.OpenReadStream()))
@@ -133,11 +140,14 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
                     data = br.ReadBytes((int)request.ProductImage.OpenReadStream().Length);
                 }
                 ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "productImage", request.ProductImage.FileName);
-            }*/
+                requestContent.Add(bytes, "ProductImage", request.ProductImage.FileName);
+            }
+            requestContent.Add(new StringContent(request.Price.ToString()), "price");
+            requestContent.Add(new StringContent(request.Stock.ToString()), "stock");
+            requestContent.Add(new StringContent(request.CategoryId.ToString()), "categoryId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? " " : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? " " : request.Description.ToString()), "description");
-           
+
 
             var response = await client.PutAsync($"/api/products/" + request.Id, requestContent);
             return response.IsSuccessStatusCode;

@@ -1,19 +1,29 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
+using ShoeStore.ViewModels.Catalog.Categories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShoeStore.ViewModels.Catalog.Products
 {
     public class ProductCreateRequest
     {
+        [Display(Name = "Tên sản phẩm")]
         public string Name { get; set; }
+
+        [Display(Name = "Danh mục")]
+        public int CategoryId { set; get; }
+        [Display(Name = "Số lượng")]
         public int Stock { set; get; }
-        public string Description { get; set; }
-        public decimal Price { set; get; }
-        public decimal OriginalPrice { set; get; }
-        public IFormFile Image { get; set; }
+        [Display(Name = "Thông số kỹ thuật")]
+        public string Description { set; get; }
+        [Display(Name = "Giá tiền")]
+        public decimal Price { get; set; }
+        [Display(Name = "Ảnh đại diện")]
+        public IFormFile ThumbnailImage { get; set; }
+
+        [Display(Name = "Ảnh đầy đủ")]
+        public IFormFile ProductImage { get; set; }
+
+        public List<CategoryViewModel> Categories { get; set; } = new List<CategoryViewModel>();
     }
 }

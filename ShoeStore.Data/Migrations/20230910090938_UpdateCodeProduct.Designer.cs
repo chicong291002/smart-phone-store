@@ -11,7 +11,7 @@ using ShoeStore.Data.EF;
 
 namespace ShoeStore.Data.Migrations
 {
-    [DbContext(typeof(ShoeStoreDbContext))]
+    [DbContext(typeof(SmartPhoneStoreDbContext))]
     [Migration("20230910090938_UpdateCodeProduct")]
     partial class UpdateCodeProduct
     {

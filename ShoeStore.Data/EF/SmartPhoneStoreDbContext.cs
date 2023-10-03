@@ -7,9 +7,9 @@ using ShoeStore.Data.Extentions;
 
 namespace ShoeStore.Data.EF
 {
-    public class ShoeStoreDbContext : IdentityDbContext<AppUser,AppRole,Guid>
+    public class SmartPhoneStoreDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
-        public ShoeStoreDbContext(DbContextOptions options) : base(options) { }
+        public SmartPhoneStoreDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,11 +22,9 @@ namespace ShoeStore.Data.EF
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
             modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductImageConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
-            modelBuilder.ApplyConfiguration(new SubcategoryConfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -47,11 +45,8 @@ namespace ShoeStore.Data.EF
         public DbSet<Order> Orders { get; set; }
         public DbSet<Carts> Carts { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Slide> Slides { get; set; }
-
-        public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<ProductInCategory> ProductInCategories { get; set; }   
     }
 }

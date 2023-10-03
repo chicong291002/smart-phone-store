@@ -25,7 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<ShoeStoreDbContext>(options =>
+builder.Services.AddDbContext<SmartPhoneStoreDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {
@@ -36,7 +36,7 @@ builder.Services.AddIdentity<AppUser, AppRole>(options =>
     options.Password.RequireLowercase = true;
     options.SignIn.RequireConfirmedEmail = true;
     options.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<ShoeStoreDbContext>().AddDefaultTokenProviders();
+}).AddEntityFrameworkStores<SmartPhoneStoreDbContext>().AddDefaultTokenProviders();
 //Declare DI
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IStorageService, FileStorageService>();
@@ -119,8 +119,8 @@ builder.Services.AddAuthentication(opt =>
 });
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ShoeStoreDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ShoeStoreDb")));
+builder.Services.AddDbContext<SmartPhoneStoreDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("SmartPhoneStoreDb")));
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();

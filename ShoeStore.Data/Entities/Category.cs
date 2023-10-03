@@ -11,7 +11,6 @@ namespace ShoeStore.Data.Entities
         public int? ParentId { set; get; }
         public Status Status { set; get; }
         public List<ProductInCategory> ProductInCategories { get; set; }
-        public List<Subcategory> Subcategories { get; set; }
 
     }
 }

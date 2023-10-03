@@ -19,8 +19,6 @@ namespace ShoeStore.ViewModels.Catalog.Products.ProductValidators
 
             RuleFor(x => x.Stock).NotEmpty().WithMessage("Stock is Required");
             RuleFor(x => x.Price).NotEmpty().WithMessage("Price is Required");
-
-            RuleFor(x => x.OriginalPrice).NotEmpty().WithMessage("OriginalPrice is Required");
         }
 
     }
