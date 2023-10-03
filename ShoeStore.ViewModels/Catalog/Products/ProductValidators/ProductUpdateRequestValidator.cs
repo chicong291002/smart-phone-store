@@ -19,7 +19,7 @@ namespace ShoeStore.ViewModels.Catalog.Products.ProductValidators
             RuleFor(x => x.Description).NotEmpty().WithMessage("Thumbnail is Required")
                 .MinimumLength(1000).WithMessage("Description not over 1000 characters");
 
-            RuleFor(x => x.Image).NotEmpty().WithMessage("Image is Required");
+            RuleFor(x => x.ThumbnailImage).NotEmpty().WithMessage("Image is Required");
 
         }
 

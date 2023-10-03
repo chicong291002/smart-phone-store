@@ -33,8 +33,7 @@ namespace ShoeStore.AdminApp.ApiIntegration
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,
-                    typeof(TResponse));
+                TResponse myDeserializedObjList = (TResponse)JsonConvert.DeserializeObject(body,typeof(TResponse));
 
                 return myDeserializedObjList;
             }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ShoeStore.AdminApp.ApiIntegration.Categories;
 using ShoeStore.AdminApp.ApiIntegration.Products;
 using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
 
 namespace ShoeStore.AdminApp.Controllers
 {
@@ -21,7 +20,7 @@ namespace ShoeStore.AdminApp.Controllers
             _categoryApiClient = categoryApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 5)
         {
             var request = new GetProductPagingRequest()
             {
@@ -30,11 +29,13 @@ namespace ShoeStore.AdminApp.Controllers
                 PageSize = pageSize,
                 CategoryId = categoryId
             };
+
             var data = await _productApiClient.GetAllProductsPaging(request);
             ViewBag.keyword = keyword;
-            var categories = await _categoryApiClient.GetAllCategorys();
 
-            ViewBag.categories = categories.Select(x => new SelectListItem()
+
+            var categories = await _categoryApiClient.GetAllCategorys();
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
             {
                 Text = x.Name,
                 Value = x.Id.ToString(),
@@ -46,21 +47,29 @@ namespace ShoeStore.AdminApp.Controllers
                 ViewBag.SuccessMsg = TempData["result"];
             }
 
-            return View(data); // ra duoc pageProduct
+            return View(data); 
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var categories = await _categoryApiClient.GetAllCategorys();
+            var productVM = new ProductCreateRequest()
+            {
+                Categories = categories
+            };
+            return View(productVM);
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create(ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                request.CategoryId = 0;
+                request.Categories = await _categoryApiClient.GetAllCategorys();
+                return View(request);
             }
 
             var result = await _productApiClient.CreateProduct(request);
@@ -69,67 +78,26 @@ namespace ShoeStore.AdminApp.Controllers
                 TempData["result"] = "Thêm mới sản phẩm thành công";
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError("", "Thêm Sản Phẩm thất bại");  //lỗi model bussiness
-            //message tu api truyen vao 
-            return View(request); // ko co thi tra ve view voi du~ lieu co san
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> CategoryAssign(int id)
-        {
-
-            var roleAssignRequest = await GetCategoryAssignRequest(id);
-            return View(roleAssignRequest);
-
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
-        {
-            if (!ModelState.IsValid)
-                return View();
-
-            var result = await _productApiClient.CategoryAssign(request.Id, request);
-
-            if (result)
-            {
-                TempData["result"] = "Cập nhật quyền thành công";
-                return RedirectToAction("Index");
-            }
-            ModelState.AddModelError("", "Cập nhật thất bại");
-
-            var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
-
-            return View(roleAssignRequest);
-        }
-
-        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
-        {
-            var productObj = await _productApiClient.GetByProductId(id);
-            var categories = await _categoryApiClient.GetAllCategorys();
-            var categoryAssignRequest = new CategoryAssignRequest();
-            foreach (var role in categories)
-            {
-                categoryAssignRequest.Categories.Add(new SelectItem()
-                {
-                    Id = role.Id.ToString(),
-                    Name = role.Name,
-                    Selected = productObj.Categories.Contains(role.Name)
-                });
-            }
-            return categoryAssignRequest;
+            ModelState.AddModelError("", "Thêm Sản Phẩm thất bại");
+            request.CategoryId = 0;
+            request.Categories = await _categoryApiClient.GetAllCategorys();
+            return View(request);
         }
 
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var result = await _productApiClient.GetByProductId(id);
-            var product = result;
+            var categories = await _categoryApiClient.GetAllCategorys();
+            var product = await _productApiClient.GetByProductId(id);
             var ProductUpdateRequest = new ProductUpdateRequest()
             {
                 Id = product.Id,
                 Name = product.Name,
-                Description = product.Description
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                Categories = categories,
+                Price = product.Price,
+                Stock = product.Stock,
             };
             return View(ProductUpdateRequest);
         }
@@ -141,7 +109,9 @@ namespace ShoeStore.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(); //lỗi validation modelstate trả về 
+                request.CategoryId = 0;
+                request.Categories = await _categoryApiClient.GetAllCategorys();
+                return View(request);
             }
 
             var result = await _productApiClient.Update(request);
@@ -150,15 +120,30 @@ namespace ShoeStore.AdminApp.Controllers
                 TempData["result"] = "Cập nhật sản phẩm thành công";
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại ");
-            return View(request); // ko co thi tra ve view voi du~ lieu co san
+            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");
+            request.CategoryId = 0;
+            request.Categories = await _categoryApiClient.GetAllCategorys();
+            return View(request);
         }
 
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var result = await _productApiClient.GetByProductId(id);
-            return View(result);
+            var product = await _productApiClient.GetByProductId(id);
+            var category = await _categoryApiClient.GetById(product.CategoryId);
+
+            var detailVm = new ProductViewModel()
+            {
+                Price = product.Price,
+                Stock = product.Stock,
+                Name = product.Name,
+                Category = category,
+                Description = product.Description,
+                ThumbnailImage = product.ThumbnailImage,
+                ProductImage = product.ProductImage
+            };
+
+            return View(detailVm);
         }
 
         [HttpGet]
@@ -184,9 +169,8 @@ namespace ShoeStore.AdminApp.Controllers
                 TempData["result"] = "Xóa sản phẩm thành công";
                 return RedirectToAction("Index");
             }
-            ModelState.AddModelError("", "Xóa sản phẩm thất bại");  //lỗi model bussiness
-                                                           //message tu api truyen vao 
-            return View(result); // ko co thi tra ve view voi du~ lieu co san
+            ModelState.AddModelError("", "Xóa sản phẩm thất bại");  
+            return View(result);
         }
     }
 }

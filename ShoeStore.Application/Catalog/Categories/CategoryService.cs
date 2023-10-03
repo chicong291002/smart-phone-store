@@ -13,9 +13,9 @@ namespace ShoeStore.Application.Catalog.Categories
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ShoeStoreDbContext _context; //readonly la chi gan 1 lan
+        private readonly SmartPhoneStoreDbContext _context; //readonly la chi gan 1 lan
 
-        public CategoryService(ShoeStoreDbContext context)
+        public CategoryService(SmartPhoneStoreDbContext context)
         {
             _context = context;
         }
@@ -86,11 +86,11 @@ namespace ShoeStore.Application.Catalog.Categories
         public async Task<PagedResult<CategoryViewModel>> GetAllCategoryPaging(GetProductPagingRequest request)
         {
             var query = from c in _context.Categories
-                        join subc in _context.Subcategories on c.Id equals subc.CategoryId into subcategories
-                        select new { Category = c, Subcategories = subcategories };
+                       
+                        select new { c };
 
             if (!string.IsNullOrEmpty(request.Keyword))
-                query = query.Where(x => x.Category.Name.Contains(request.Keyword));
+                query = query.Where(x => x.c.Name.Contains(request.Keyword));
 
             //3. Paging
             int totalRow = await query.CountAsync();
@@ -99,13 +99,8 @@ namespace ShoeStore.Application.Catalog.Categories
                 .Take(request.PageSize)
                 .Select(x => new CategoryViewModel()
                 {
-                    Id = x.Category.Id,
-                    Name = x.Category.Name,
-                    Subcategories = x.Subcategories.Select(s => new Subcategory
-                    {
-                        SubcategoryId = s.SubcategoryId,
-                        SubcategoryName = s.SubcategoryName,
-                    }).ToList()
+                    Id = x.c.Id,
+                    Name = x.c.Name,
                 }).ToListAsync();
 
 
