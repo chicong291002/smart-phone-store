@@ -18,18 +18,22 @@ namespace ShoeStore.WebApp.Controllers
             _categoryApiClient = categoryApiClient;
         }
 
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail(int id)
         {
-           
-            return View();
+            var product = await _productApiClient.GetByProductId(id);
+            return View(new ProductDetailViewModel()
+            {
+                Product = product,
+                Category = await _categoryApiClient.GetById(id)
+            });
         }
 
-        public async Task<IActionResult> Category(int id, int page = 1)
+        public async Task<IActionResult> Category(int id, int pageIndex = 1)
         {
             var products = await _productApiClient.GetAllProductsPaging(new GetProductPagingRequest()
             {
                 CategoryId = id,
-                PageIndex = page,
+                PageIndex = pageIndex,
                 PageSize = 10
             });
 
