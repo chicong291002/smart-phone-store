@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.AdminApp.ApiIntegration.Categories;
-using ShoeStore.ViewModels.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.AdminApp.ApiIntegration.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Products;
 
 namespace ShoeStore.AdminApp.Controllers
 {

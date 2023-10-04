@@ -1,10 +1,10 @@
-﻿using ShoeStore.ViewModels.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
+﻿using SmartPhoneStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Categories
+namespace SmartPhoneStore.Application.Catalog.Categories
 {
     public interface ICategoryService
     {   

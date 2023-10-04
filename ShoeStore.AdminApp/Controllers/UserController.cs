@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.AdminApp.ApiIntegration.Roles;
-using ShoeStore.AdminApp.ApiIntegration.Users;
-using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Users;
+using SmartPhoneStore.AdminApp.ApiIntegration.Roles;
+using SmartPhoneStore.AdminApp.ApiIntegration.Users;
+using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Users;
 
-namespace ShoeStore.AdminApp.Controllers
+namespace SmartPhoneStore.AdminApp.Controllers
 {
     //dang nhap moi dc vao`
     public class UserController : BaseController

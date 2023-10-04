@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Application.Common;
-using ShoeStore.Data.EF;
-using ShoeStore.Data.Entities;
-using ShoeStore.Utilities.Constants;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
+using SmartPhoneStore.Application.Common;
+using SmartPhoneStore.Data.EF;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.Utilities.Constants;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Products
+namespace SmartPhoneStore.Application.Catalog.Products
 {
     public class ProductService : IProductService
     {
@@ -203,18 +203,17 @@ namespace ShoeStore.Application.Catalog.Products
         {
             // 1.Select join
             var query = from p in _context.Products
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
-                        from pic in ppic.DefaultIfEmpty()
-                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
-                        from c in picc.DefaultIfEmpty()
-                        select new { p, pic };
+                        join c in _context.Categories on p.CategoryId equals c.Id into picc
+                        select new { p };
+
 
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take).
             Select(x => new ProductViewModel()
             {
                 Id = x.p.Id,
                 Name = x.p.Name,
-                //Description = x.p.Description,
+                CategoryId = x.p.CategoryId,
+                Description = x.p.Description,
                 OriginalPrice = x.p.OriginalPrice,
                 Price = x.p.Price,
                 Stock = x.p.Stock,
@@ -229,18 +228,16 @@ namespace ShoeStore.Application.Catalog.Products
         {
             // 1.Select join
             var query = from p in _context.Products
-                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
-                        from pic in ppic.DefaultIfEmpty()
-                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
-                        from c in picc.DefaultIfEmpty()
-                        select new { p, pic };
+                            join c in _context.Categories on p.CategoryId equals c.Id into picc
+                        select new { p };
 
             var data = await query.OrderByDescending(x => x.p.DateCreated).Take(take).
             Select(x => new ProductViewModel()
             {
                 Id = x.p.Id,
                 Name = x.p.Name,
-                // Description = x.p.Description,
+                CategoryId = x.p.CategoryId,
+                Description = x.p.Description,
                 OriginalPrice = x.p.OriginalPrice,
                 Price = x.p.Price,
                 Stock = x.p.Stock,
@@ -255,7 +252,7 @@ namespace ShoeStore.Application.Catalog.Products
         {
             //1. Select join
             var query = from p in _context.Products
-                        join c in _context.Categories on p.CategoryId equals c.Id
+                        join c in _context.Categories on p.CategoryId equals c.Id into picc
                         select new { p };
             //2. filter
             if (request.CategoryId.HasValue && request.CategoryId.Value > 0)
@@ -272,6 +269,7 @@ namespace ShoeStore.Application.Catalog.Products
                     Id = x.p.Id,
                     Name = x.p.Name,
                     CategoryId = x.p.CategoryId,
+                    //Category = x.p.Category,
                     Description = x.p.Description,
                     Price = x.p.Price,
                     Stock = x.p.Stock,

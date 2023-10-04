@@ -1,4 +1,4 @@
-namespace ShoeStore.AdminApp.Models
+namespace SmartPhoneStore.AdminApp.Models
 {
     public class ErrorViewModel
     {

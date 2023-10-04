@@ -1,6 +1,6 @@
-﻿using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Roles;
-using ShoeStore.ViewModels.Utilities.Slides;
+﻿using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Roles;
+using SmartPhoneStore.ViewModels.Utilities.Slides;
 using System;
 using System.Collections.Generic;
 using System.Linq;

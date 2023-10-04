@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using ShoeStore.AdminApp.ApiIntegration;
-using ShoeStore.Data.Entities;
-using ShoeStore.ViewModels.Utilities.Slides;
+using SmartPhoneStore.AdminApp.ApiIntegration;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.ViewModels.Utilities.Slides;
 
 namespace ApiIntegration.Slides
 {

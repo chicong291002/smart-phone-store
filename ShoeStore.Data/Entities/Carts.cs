@@ -1,4 +1,4 @@
-﻿namespace ShoeStore.Data.Entities
+﻿namespace SmartPhoneStore.Data.Entities
 {
     public class Carts
     {

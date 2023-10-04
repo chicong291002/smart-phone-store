@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShoeStore.ViewModels.System.Roles
+namespace SmartPhoneStore.ViewModels.System.Roles
 {
     public class RoleViewModel
     {

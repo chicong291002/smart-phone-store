@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using System;
 
-namespace ShoeStore.ViewModels.System.Users.CheckUserValidator
+namespace SmartPhoneStore.ViewModels.System.Users.CheckUserValidator
 {
     public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
     {

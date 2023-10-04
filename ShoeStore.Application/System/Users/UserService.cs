@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ShoeStore.Data.Entities;
-using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Users;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Users;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.System.Users
+namespace SmartPhoneStore.Application.System.Users
 {
     public class UserService : IUserService
     {

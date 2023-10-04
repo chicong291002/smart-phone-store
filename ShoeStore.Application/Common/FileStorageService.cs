@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Common
+namespace SmartPhoneStore.Application.Common
 {
     public class FileStorageService : IStorageService
     {

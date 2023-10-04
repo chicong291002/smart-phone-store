@@ -1,4 +1,4 @@
-﻿namespace ShoeStore.ViewModels.System.Users
+﻿namespace SmartPhoneStore.ViewModels.System.Users
 {
     public class LoginRequest
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.AdminApp.ApiIntegration.Categories;
+using SmartPhoneStore.AdminApp.ApiIntegration.Categories;
 using System.Globalization;
 using System.Threading.Tasks;
 

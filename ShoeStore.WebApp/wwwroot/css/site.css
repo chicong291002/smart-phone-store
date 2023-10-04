@@ -51,3 +51,13 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-gap: 10px;
 }
+
+.row {
+    display: flex;
+}
+
+.col-md-4 {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}

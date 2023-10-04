@@ -2,12 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Users;
+using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Users;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace ShoeStore.AdminApp.ApiIntegration.Users
+namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
 {
     public class UserApiClient : IUserApiClient
     {

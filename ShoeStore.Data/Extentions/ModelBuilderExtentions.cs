@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Data.Entities;
-using ShoeStore.Data.Enums;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.Data.Enums;
 
-namespace ShoeStore.Data.Extentions
+namespace SmartPhoneStore.Data.Extentions
 {
     public static class ModelBuilderExtentions
     {
@@ -46,12 +46,6 @@ namespace ShoeStore.Data.Extentions
                OriginalPrice = 200000,
                Price = 400000,
            });
-
-
-            modelBuilder.Entity<ProductInCategory>().HasData(
-                new ProductInCategory() { ProductId = 1, CategoryId = 1 },
-                new ProductInCategory() { ProductId = 2, CategoryId = 2 }
-                );
 
             // any guid
             var roleId = new Guid("8D04DCE2-969A-435D-BBA4-DF3F325983DC");

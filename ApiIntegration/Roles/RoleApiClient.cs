@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Roles;
+using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Roles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 
-namespace ShoeStore.AdminApp.ApiIntegration.Roles
+namespace SmartPhoneStore.AdminApp.ApiIntegration.Roles
 {
     public class RoleApiClient : IRoleApiClient
     {

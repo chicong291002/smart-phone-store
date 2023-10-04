@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.ViewModels.Catalog.Categories
+namespace SmartPhoneStore.ViewModels.Catalog.Categories
 {
     public class SubcategoryViewModel
     {

@@ -1,4 +1,4 @@
-﻿namespace ShoeStore.ViewModels.Common
+﻿namespace SmartPhoneStore.ViewModels.Common
 {
     public class ApiSuccessResult<T> : ApiResult<T>
     {

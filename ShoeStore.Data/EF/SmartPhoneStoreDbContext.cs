@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Data.Configurations;
-using ShoeStore.Data.Entities;
-using ShoeStore.Data.Extentions;
+using SmartPhoneStore.Data.Configurations;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.Data.Extentions;
 
-namespace ShoeStore.Data.EF
+namespace SmartPhoneStore.Data.EF
 {
     public class SmartPhoneStoreDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
@@ -21,7 +21,6 @@ namespace ShoeStore.Data.EF
             modelBuilder.ApplyConfiguration(new CartConfiguration()); 
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
             modelBuilder.ApplyConfiguration(new SlideConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductInCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
             modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
@@ -47,6 +46,5 @@ namespace ShoeStore.Data.EF
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Slide> Slides { get; set; }
-        public DbSet<ProductInCategory> ProductInCategories { get; set; }   
     }
 }

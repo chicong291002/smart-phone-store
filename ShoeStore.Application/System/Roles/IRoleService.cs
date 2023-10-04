@@ -1,11 +1,11 @@
-﻿using ShoeStore.ViewModels.System.Roles;
+﻿using SmartPhoneStore.ViewModels.System.Roles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.System.Roles
+namespace SmartPhoneStore.Application.System.Roles
 {
     public interface IRoleService
     {

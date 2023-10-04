@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.ViewModels.Common
+namespace SmartPhoneStore.ViewModels.Common
 {
     public class PageResultBase
     {

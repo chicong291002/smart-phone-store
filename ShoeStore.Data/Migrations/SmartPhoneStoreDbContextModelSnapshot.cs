@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShoeStore.Data.EF;
+using SmartPhoneStore.Data.EF;
 
 #nullable disable
 
@@ -248,7 +248,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e2937d31-59bd-46f6-b4f5-4c04689cd99e",
+                            ConcurrencyStamp = "42482556-27b3-489b-bd20-b4b14fc3ac81",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "congkhpro291002@gmail.com",
                             EmailConfirmed = true,
@@ -257,7 +257,7 @@ namespace ShoeStore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "congkhpro291002@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGoTrrHtbcVQB4S6m0C7apEUEVyvXxOpim4pc/MD+t4f1OwdHS3rIzrgxmd5dM0hOw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB2abP2Xhsg0hkd9OgSrs1HSbGTg1rVerdGt1f24lcAfZU8d5NDLz3FUXAue0ESWHg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -456,7 +456,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 0,
-                            DateCreated = new DateTime(2023, 10, 2, 22, 27, 36, 699, DateTimeKind.Local).AddTicks(262),
+                            DateCreated = new DateTime(2023, 10, 4, 10, 59, 43, 552, DateTimeKind.Local).AddTicks(1606),
                             Description = "So Good",
                             Name = "Test",
                             OriginalPrice = 100000m,
@@ -467,39 +467,12 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 0,
-                            DateCreated = new DateTime(2023, 10, 2, 22, 27, 36, 699, DateTimeKind.Local).AddTicks(281),
+                            DateCreated = new DateTime(2023, 10, 4, 10, 59, 43, 552, DateTimeKind.Local).AddTicks(1619),
                             Description = "So Good 2",
                             Name = "Test 2",
                             OriginalPrice = 200000m,
                             Price = 400000m,
                             Stock = 0
-                        });
-                });
-
-            modelBuilder.Entity("ShoeStore.Data.Entities.ProductInCategory", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductInCategories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductId = 1
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            ProductId = 2
                         });
                 });
 
@@ -653,35 +626,11 @@ namespace ShoeStore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShoeStore.Data.Entities.ProductInCategory", b =>
-                {
-                    b.HasOne("ShoeStore.Data.Entities.Category", "Category")
-                        .WithMany("ProductInCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShoeStore.Data.Entities.Product", "Product")
-                        .WithMany("ProductInCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ShoeStore.Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Carts");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("ShoeStore.Data.Entities.Category", b =>
-                {
-                    b.Navigation("ProductInCategories");
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Order", b =>
@@ -694,8 +643,6 @@ namespace ShoeStore.Data.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductInCategories");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿namespace ShoeStore.Data.Enums
+﻿namespace SmartPhoneStore.Data.Enums
 {
     public enum Status
     {
