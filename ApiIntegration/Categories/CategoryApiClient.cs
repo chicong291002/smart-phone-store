@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using ShoeStore.Data.Entities;
-using ShoeStore.Utilities.Constants;
-using ShoeStore.ViewModels.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.Utilities.Constants;
+using SmartPhoneStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace ShoeStore.AdminApp.ApiIntegration.Categories
+namespace SmartPhoneStore.AdminApp.ApiIntegration.Categories
 {
     public class CategoryApiClient : BaseApiClient, ICategoryApiClient
     {

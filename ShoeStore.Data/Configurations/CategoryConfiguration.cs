@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShoeStore.Data.Entities;
-using ShoeStore.Data.Enums;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.Data.Enums;
 
-namespace ShoeStore.Data.Configurations
+namespace SmartPhoneStore.Data.Configurations
 {
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Application.System.Users;
-using ShoeStore.ViewModels.System.Users;
+using SmartPhoneStore.Application.System.Users;
+using SmartPhoneStore.ViewModels.System.Users;
 using System;
 using System.Threading.Tasks;
 

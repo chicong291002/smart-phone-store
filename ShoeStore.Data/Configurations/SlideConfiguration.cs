@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShoeStore.Data.Entities;
+using SmartPhoneStore.Data.Entities;
 
-namespace ShoeStore.Data.Configurations
+namespace SmartPhoneStore.Data.Configurations
 {
     public class SlideConfiguration : IEntityTypeConfiguration<Slide>
     {

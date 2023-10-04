@@ -1,11 +1,6 @@
-﻿using ShoeStore.Data.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartPhoneStore.Data.Enums;
 
-namespace ShoeStore.ViewModels.Utilities.Slides
+namespace SmartPhoneStore.ViewModels.Utilities.Slides
 {
     public class SlideViewModel
     {

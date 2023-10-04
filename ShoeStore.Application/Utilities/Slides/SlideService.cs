@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShoeStore.Application.Common;
-using ShoeStore.Data.EF;
-using ShoeStore.ViewModels.Utilities.Slides;
+using SmartPhoneStore.Application.Common;
+using SmartPhoneStore.Data.EF;
+using SmartPhoneStore.ViewModels.Utilities.Slides;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Utilities.Slides
+namespace SmartPhoneStore.Application.Utilities.Slides
 {
     public class SlideService : ISlideService
     {

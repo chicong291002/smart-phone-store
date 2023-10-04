@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ShoeStore.AdminApp.ApiIntegration.Categories;
-using ShoeStore.AdminApp.ApiIntegration.Products;
-using ShoeStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.AdminApp.ApiIntegration.Categories;
+using SmartPhoneStore.AdminApp.ApiIntegration.Products;
+using SmartPhoneStore.ViewModels.Catalog.Products;
 
-namespace ShoeStore.AdminApp.Controllers
+namespace SmartPhoneStore.AdminApp.Controllers
 {
     public class ProductController : Controller
     {

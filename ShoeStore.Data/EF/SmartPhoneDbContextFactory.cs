@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace ShoeStore.Data.EF
+namespace SmartPhoneStore.Data.EF
 {
     public class SmartPhoneStoreDbContextFactory : IDesignTimeDbContextFactory<SmartPhoneStoreDbContext>
     {

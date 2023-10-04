@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Application.Common;
-using ShoeStore.ViewModels.Common;
+using SmartPhoneStore.Application.Common;
+using SmartPhoneStore.ViewModels.Common;
 
-namespace ShoeStore.AdminApp.Controllers.Components
+namespace SmartPhoneStore.AdminApp.Controllers.Components
 {
     public class PagerViewComponent : ViewComponent
     {

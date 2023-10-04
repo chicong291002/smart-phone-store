@@ -1,0 +1,9 @@
+﻿.row {
+    display: flex;
+}
+
+.col-md-4 {
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}

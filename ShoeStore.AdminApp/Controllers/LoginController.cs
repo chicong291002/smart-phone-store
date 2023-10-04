@@ -6,10 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ShoeStore.ViewModels.System.Users;
-using ShoeStore.AdminApp.ApiIntegration.Users;
+using SmartPhoneStore.ViewModels.System.Users;
+using SmartPhoneStore.AdminApp.ApiIntegration.Users;
 
-namespace ShoeStore.AdminApp.Controllers
+namespace SmartPhoneStore.AdminApp.Controllers
 {
     public class LoginController : Controller
     {

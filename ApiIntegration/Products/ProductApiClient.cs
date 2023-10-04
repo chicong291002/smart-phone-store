@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using ShoeStore.Utilities.Constants;
+using SmartPhoneStore.Utilities.Constants;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 
-namespace ShoeStore.AdminApp.ApiIntegration.Products
+namespace SmartPhoneStore.AdminApp.ApiIntegration.Products
 {
     public class ProductApiClient : BaseApiClient, IProductApiClient    
     {

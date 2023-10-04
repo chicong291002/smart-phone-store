@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShoeStore.AdminApp.Models;
+using SmartPhoneStore.AdminApp.Models;
 using System.Diagnostics;
 
-namespace ShoeStore.AdminApp.Controllers
+namespace SmartPhoneStore.AdminApp.Controllers
 {
     public class HomeController : BaseController
     {

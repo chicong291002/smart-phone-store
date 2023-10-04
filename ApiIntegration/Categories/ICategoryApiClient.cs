@@ -1,10 +1,10 @@
 ﻿
-using ShoeStore.Data.Entities;
-using ShoeStore.ViewModels.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 
-namespace ShoeStore.AdminApp.ApiIntegration.Categories
+namespace SmartPhoneStore.AdminApp.ApiIntegration.Categories
 {
     public interface ICategoryApiClient
     {

@@ -1,9 +1,9 @@
-﻿using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Users;
+﻿using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Users;
 using System;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.System.Users
+namespace SmartPhoneStore.Application.System.Users
 {
     public interface IUserService
     {

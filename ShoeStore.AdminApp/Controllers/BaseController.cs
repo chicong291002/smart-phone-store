@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ShoeStore.AdminApp.Controllers
+namespace SmartPhoneStore.AdminApp.Controllers
 {   
     [Authorize]
     public class BaseController : Controller

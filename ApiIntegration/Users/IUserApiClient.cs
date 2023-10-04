@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using ShoeStore.ViewModels.Common;
-using ShoeStore.ViewModels.System.Users;
+using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Users;
 
-namespace ShoeStore.AdminApp.ApiIntegration.Users
+namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
 {
     public interface IUserApiClient
     {

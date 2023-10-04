@@ -12,8 +12,8 @@ using SmartPhoneStore.Data.EF;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(SmartPhoneStoreDbContext))]
-    [Migration("20230914132615_updateCode")]
-    partial class updateCode
+    [Migration("20231004035943_update_code_session_2")]
+    partial class update_code_session_2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,7 +251,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9565af4a-77f9-49cc-8220-de2b9275b009",
+                            ConcurrencyStamp = "42482556-27b3-489b-bd20-b4b14fc3ac81",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "congkhpro291002@gmail.com",
                             EmailConfirmed = true,
@@ -260,7 +260,7 @@ namespace ShoeStore.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "congkhpro291002@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA7jZrqAbvFvqmljtTEQhARBSTIxIuLc6UUCT5/pVt21HudrTgWjYngnRrDdQUivtg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEB2abP2Xhsg0hkd9OgSrs1HSbGTg1rVerdGt1f24lcAfZU8d5NDLz3FUXAue0ESWHg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -420,6 +420,9 @@ namespace ShoeStore.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
@@ -436,8 +439,16 @@ namespace ShoeStore.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ProductImage")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
+
+                    b.Property<string>("Thumbnail")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
@@ -447,7 +458,8 @@ namespace ShoeStore.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 9, 14, 20, 26, 15, 549, DateTimeKind.Local).AddTicks(3954),
+                            CategoryId = 0,
+                            DateCreated = new DateTime(2023, 10, 4, 10, 59, 43, 552, DateTimeKind.Local).AddTicks(1606),
                             Description = "So Good",
                             Name = "Test",
                             OriginalPrice = 100000m,
@@ -457,78 +469,13 @@ namespace ShoeStore.Data.Migrations
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(2023, 9, 14, 20, 26, 15, 549, DateTimeKind.Local).AddTicks(3969),
+                            CategoryId = 0,
+                            DateCreated = new DateTime(2023, 10, 4, 10, 59, 43, 552, DateTimeKind.Local).AddTicks(1619),
                             Description = "So Good 2",
                             Name = "Test 2",
                             OriginalPrice = 200000m,
                             Price = 400000m,
                             Stock = 0
-                        });
-                });
-
-            modelBuilder.Entity("ShoeStore.Data.Entities.ProductImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Caption")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductImages", (string)null);
-                });
-
-            modelBuilder.Entity("ShoeStore.Data.Entities.ProductInCategory", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductInCategories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            ProductId = 1
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            ProductId = 2
                         });
                 });
 
@@ -682,46 +629,11 @@ namespace ShoeStore.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShoeStore.Data.Entities.ProductImage", b =>
-                {
-                    b.HasOne("ShoeStore.Data.Entities.Product", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ShoeStore.Data.Entities.ProductInCategory", b =>
-                {
-                    b.HasOne("ShoeStore.Data.Entities.Category", "Category")
-                        .WithMany("ProductInCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShoeStore.Data.Entities.Product", "Product")
-                        .WithMany("ProductInCategories")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ShoeStore.Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Carts");
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("ShoeStore.Data.Entities.Category", b =>
-                {
-                    b.Navigation("ProductInCategories");
                 });
 
             modelBuilder.Entity("ShoeStore.Data.Entities.Order", b =>
@@ -734,10 +646,6 @@ namespace ShoeStore.Data.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductImages");
-
-                    b.Navigation("ProductInCategories");
                 });
 #pragma warning restore 612, 618
         }

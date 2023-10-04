@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShoeStore.Data.Entities
+﻿namespace SmartPhoneStore.Data.Entities
 {
     public class Product
     {
@@ -18,7 +12,6 @@ namespace ShoeStore.Data.Entities
         public string ProductImage { get; set; }
         public decimal OriginalPrice { set; get; }
         public DateTime DateCreated { set; get; }
-        public List<ProductInCategory> ProductInCategories { get; set; }
         public List<Carts> Carts { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
 

@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using ShoeStore.ViewModels.System.Users;
+using SmartPhoneStore.ViewModels.System.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.ViewModels.System.Users.CheckUserValidator
+namespace SmartPhoneStore.ViewModels.System.Users.CheckUserValidator
 {
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {

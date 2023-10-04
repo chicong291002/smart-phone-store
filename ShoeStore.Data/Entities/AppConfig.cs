@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Data.Entities
+namespace SmartPhoneStore.Data.Entities
 {
     public class AppConfig
     {

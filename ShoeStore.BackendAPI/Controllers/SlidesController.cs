@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Application.Utilities.Slides;
+using SmartPhoneStore.Application.Utilities.Slides;
 using System.Threading.Tasks;
 
 namespace ShoeStore.BackendAPI.Controllers

@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Data.Entities;
+using SmartPhoneStore.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartPhoneStore.Data.Entities;
 
-namespace ShoeStore.Data.Configurations
+namespace SmartPhoneStore.Data.Configurations
 {
     public class AppRoleConfiguration : IEntityTypeConfiguration<AppRole>
     {

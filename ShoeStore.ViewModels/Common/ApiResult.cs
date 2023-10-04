@@ -1,8 +1,8 @@
-﻿using ShoeStore.ViewModels.Utilities.Slides;
+﻿using SmartPhoneStore.ViewModels.Utilities.Slides;
 using System;
 using System.Collections.Generic;
 
-namespace ShoeStore.ViewModels.Common
+namespace SmartPhoneStore.ViewModels.Common
 {
     public class ApiResult<T>
     {

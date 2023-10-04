@@ -1,8 +1,8 @@
-﻿using ShoeStore.ViewModels.Common;
+﻿using SmartPhoneStore.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 
-namespace ShoeStore.ViewModels.System.Users
+namespace SmartPhoneStore.ViewModels.System.Users
 {
     public class RoleAssignRequest
     {

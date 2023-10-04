@@ -1,11 +1,11 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using ShoeStore.AdminApp.ApiIntegration.Categories;
-using ShoeStore.AdminApp.ApiIntegration.Products;
-using ShoeStore.AdminApp.ApiIntegration.Roles;
-using ShoeStore.AdminApp.ApiIntegration.Users;
-using ShoeStore.ViewModels.System.Users.CheckUserValidator;
+using SmartPhoneStore.AdminApp.ApiIntegration.Categories;
+using SmartPhoneStore.AdminApp.ApiIntegration.Products;
+using SmartPhoneStore.AdminApp.ApiIntegration.Roles;
+using SmartPhoneStore.AdminApp.ApiIntegration.Users;
+using SmartPhoneStore.ViewModels.System.Users.CheckUserValidator;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();

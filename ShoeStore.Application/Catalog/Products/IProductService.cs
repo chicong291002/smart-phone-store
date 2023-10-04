@@ -1,10 +1,10 @@
-﻿using ShoeStore.ViewModels.Catalog.ProductImages;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
+﻿using SmartPhoneStore.ViewModels.Catalog.ProductImages;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Products
+namespace SmartPhoneStore.Application.Catalog.Products
 {
     public interface IProductService    
     {

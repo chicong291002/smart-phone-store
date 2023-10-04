@@ -1,12 +1,12 @@
 ﻿using FluentValidation;
-using ShoeStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Catalog.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.ViewModels.Catalog.Products.ProductValidators
+namespace SmartPhoneStore.ViewModels.Catalog.Products.ProductValidators
 {
     public class ProductImageCreateRequestValidator : AbstractValidator<ProductCreateRequest>
     {

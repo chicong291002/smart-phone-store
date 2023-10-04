@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShoeStore.Data.Entities;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Data.Configurations
+namespace SmartPhoneStore.Data.Configurations 
 {
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
@@ -22,10 +23,6 @@ namespace ShoeStore.Data.Configurations
 
             builder.Property(x => x.ProductImage).HasMaxLength(300).IsRequired(false);
 
-            // Cấu hình mối quan hệ một-nhiều với ProductInCategory
-            builder.HasMany(p => p.ProductInCategories)
-                .WithOne(pic => pic.Product)
-                .HasForeignKey(pic => pic.ProductId);
 
             // Cấu hình mối quan hệ một-nhiều với OrderDetail
             builder.HasMany(p => p.OrderDetails)

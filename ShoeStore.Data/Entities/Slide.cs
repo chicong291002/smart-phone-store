@@ -1,6 +1,6 @@
-﻿using ShoeStore.Data.Enums;
+﻿using SmartPhoneStore.Data.Enums;
 
-namespace ShoeStore.Data.Entities
+namespace SmartPhoneStore.Data.Entities
 {
     public class Slide
     {

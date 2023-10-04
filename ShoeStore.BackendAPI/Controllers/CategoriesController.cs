@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Application.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.Application.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Products;
 using System.Threading.Tasks;
 
 namespace ShoeStore.BackendAPI.Controllers

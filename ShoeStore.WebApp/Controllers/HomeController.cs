@@ -1,13 +1,13 @@
 ﻿using ApiIntegration.Slides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ShoeStore.AdminApp.ApiIntegration.Products;
-using ShoeStore.Utilities.Constants;
-using ShoeStore.WebApp.Models;
+using SmartPhoneStore.AdminApp.ApiIntegration.Products;
+using SmartPhoneStore.Utilities.Constants;
+using SmartPhoneStore.WebApp.Models;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace ShoeStore.WebApp.Controllers
+namespace SmartPhoneStore.WebApp.Controllers
 {
     public class HomeController : Controller
     {

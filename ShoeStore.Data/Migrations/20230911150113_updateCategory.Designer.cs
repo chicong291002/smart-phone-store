@@ -5,18 +5,18 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShoeStore.Data.EF;
+using SmartPhoneStore.Data.EF;
 
 #nullable disable
 
-namespace ShoeStore.Data.Migrations
+namespace SmartPhoneStore.Data.Migrations
 {
     [DbContext(typeof(SmartPhoneStoreDbContext))]
     [Migration("20230911150113_updateCategory")]
     partial class updateCategory
     {
         /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+       /* protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -740,6 +740,6 @@ namespace ShoeStore.Data.Migrations
                     b.Navigation("ProductInCategories");
                 });
 #pragma warning restore 612, 618
-        }
+        }*/
     }
 }

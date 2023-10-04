@@ -1,8 +1,8 @@
-﻿using ShoeStore.ViewModels.Catalog.Categories;
+﻿using SmartPhoneStore.ViewModels.Catalog.Categories;
 using System;
 using System.Collections.Generic;
 
-namespace ShoeStore.ViewModels.Catalog.Products
+namespace SmartPhoneStore.ViewModels.Catalog.Products
 {
     public class ProductViewModel
     {

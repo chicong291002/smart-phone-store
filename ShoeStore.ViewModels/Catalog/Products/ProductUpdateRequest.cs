@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using ShoeStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Categories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.ViewModels.Catalog.Products
+namespace SmartPhoneStore.ViewModels.Catalog.Products
 {
     public class ProductUpdateRequest
     {

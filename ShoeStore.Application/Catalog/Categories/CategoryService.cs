@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using ShoeStore.Data.EF;
-using ShoeStore.Data.Entities;
-using ShoeStore.ViewModels.Catalog.Categories;
-using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Common;
+using SmartPhoneStore.Data.EF;
+using SmartPhoneStore.Data.Entities;
+using SmartPhoneStore.ViewModels.Catalog.Categories;
+using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Catalog.Categories
+namespace SmartPhoneStore.Application.Catalog.Categories
 {
     public class CategoryService : ICategoryService
     {

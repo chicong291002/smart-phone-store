@@ -1,8 +1,8 @@
-﻿using ShoeStore.ViewModels.Catalog.Products;
-using ShoeStore.ViewModels.Utilities.Slides;
+﻿using SmartPhoneStore.ViewModels.Catalog.Products;
+using SmartPhoneStore.ViewModels.Utilities.Slides;
 using System.Collections.Generic;
 
-namespace ShoeStore.WebApp.Models
+namespace SmartPhoneStore.WebApp.Models
 {
     public class HomeViewModel
     {

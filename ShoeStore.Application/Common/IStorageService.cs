@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShoeStore.Application.Common
+namespace SmartPhoneStore.Application.Common
 {
     public interface IStorageService
     {
