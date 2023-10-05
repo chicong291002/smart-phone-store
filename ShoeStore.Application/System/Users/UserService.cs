@@ -44,16 +44,16 @@ namespace SmartPhoneStore.Application.System.Users
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
             
-            /*if (!result.Succeeded)
+/*            if (!result.Succeeded)
             {
                 return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
-            }
-*/
+            }*/
+
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.GivenName,user.FirstName),
+                new Claim(ClaimTypes.GivenName,user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, request.UserName)
             };
@@ -77,12 +77,12 @@ namespace SmartPhoneStore.Application.System.Users
             var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserViewModel()
             {
-                firstName = user.FirstName,
-                lastName = user.LastName,
+                Name = user.Name,
                 email = user.Email,
+                Address = user.Address,
                 phoneNumber = user.PhoneNumber,
                 userName = user.UserName,
-                Dob = user.Dob,
+                Id = user.Id,
             };
 
             foreach (var role in roles)
@@ -103,8 +103,7 @@ namespace SmartPhoneStore.Application.System.Users
                    x.UserName.Contains(request.keyword)
                 || x.Email.Contains(request.keyword)
                 || x.PhoneNumber.Contains(request.keyword)
-                || x.FirstName.Contains(request.keyword)
-                || x.LastName.Contains(request.keyword));
+                || x.Name.Contains(request.keyword));
             }
 
             // 3 Paging
@@ -114,9 +113,8 @@ namespace SmartPhoneStore.Application.System.Users
                 Select(x => new UserViewModel()
                 {
                     Id = x.Id,
-                    Dob = x.Dob,
-                    firstName = x.FirstName,
-                    lastName = x.LastName,
+                    Name = x.Name,
+                    Address = x.Address,
                     email = x.Email,
                     phoneNumber = x.PhoneNumber,
                     userName = x.UserName,
@@ -150,9 +148,8 @@ namespace SmartPhoneStore.Application.System.Users
             user = new AppUser()
             {
                 UserName = request.userName,
-                FirstName = request.firstName,
-                LastName = request.lastName,
-                Dob = request.Dob,
+                Name = request.Name,
+                Address = request.Address,
                 Email = request.email,
                 PhoneNumber = request.phoneNumber,
             };
@@ -167,17 +164,16 @@ namespace SmartPhoneStore.Application.System.Users
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
         {
-            if (await _userManager.Users.AnyAsync(x => x.Email == request.email && x.Id != id))
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
             {
                 return new ApiErrorResult<bool>("Email đã tồn tại");
             }
 
             var user = await _userManager.FindByIdAsync(id.ToString());
-            user.Dob = request.Dob;
-            user.Email = request.email;
-            user.FirstName = request.firstName;
-            user.LastName = request.lastName;
-            user.PhoneNumber = request.phoneNumber;
+            user.Address = request.Address;
+            user.Email = request.Email;
+            user.Name = request.Name;
+            user.PhoneNumber = request.PhoneNumber;
 
             var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)
@@ -233,12 +229,12 @@ namespace SmartPhoneStore.Application.System.Users
             var roles = await _userManager.GetRolesAsync(user);
             var userVm = new UserViewModel()
             {
-                firstName = user.FirstName,
-                lastName = user.LastName,
+                Name = user.Name,
+                Address = user.Address,
                 email = user.Email,
                 phoneNumber = user.PhoneNumber,
                 userName = user.UserName,
-                Dob = user.Dob,
+                Id = user.Id,
             };
             if (roles.Count == 0)
             {

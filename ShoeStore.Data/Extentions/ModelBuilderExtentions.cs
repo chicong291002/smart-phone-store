@@ -69,9 +69,8 @@ namespace SmartPhoneStore.Data.Extentions
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
                 SecurityStamp = string.Empty,
-                FirstName = "Chi",
-                LastName = "Cong",
-                Dob = new DateTime(2020, 01, 31)
+                Name = "Chi Cong",
+                Address = "Ca Mau"
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>

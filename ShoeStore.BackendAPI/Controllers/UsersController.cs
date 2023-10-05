@@ -86,7 +86,7 @@ namespace ShoeStore.BackendAPI.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{userName}")]
+        [HttpGet("getByUserName/{userName}")]
         public async Task<IActionResult> GetByUserName(string userName)
         {
             var users = await _userService.GetByUserName(userName);

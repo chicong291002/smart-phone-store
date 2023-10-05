@@ -21,7 +21,7 @@ namespace SmartPhoneStore.AdminApp.Controllers
             _roleApiClient = roleApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 2)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 5)
         {
             var request = new GetUserPagingRequest()
             {
@@ -74,11 +74,11 @@ namespace SmartPhoneStore.AdminApp.Controllers
                 var user = result.ResultObj;
                 var userUpdateRequest = new UserUpdateRequest()
                 {
-                    Dob = user.Dob,
-                    email = user.email,
-                    firstName = user.firstName,
-                    lastName = user.lastName,
-                    phoneNumber = user.phoneNumber,
+                    Name = user.Name,
+                    Address = user.Address,
+                    Email = user.email,
+                    UserName = user.userName,
+                    PhoneNumber = user.phoneNumber,
                     Id = id
                 };
                 return View(userUpdateRequest);

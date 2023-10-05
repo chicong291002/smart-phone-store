@@ -6,14 +6,14 @@ namespace SmartPhoneStore.ViewModels.System.Users
     public class RegisterRequest
     {
         [Display(Name = "Tên")]
-        public string firstName { get; set; }
-        [Display(Name = "Họ")]
-        public string lastName { get; set; }
-        [Display(Name = "Ngày Sinh")]
-        [DataType(DataType.Date)]
-        public DateTime Dob { get; set; }
-        [Display(Name = "Hòm Thư")]
+        public string Name { get; set; }
+
+        [Display(Name = "Email")]
         public string email { get; set; }
+
+
+        [Display(Name = "Địa chỉ")]
+        public string Address { get; set; }
 
         [Display(Name = "Số điện thoại")]
         public string phoneNumber { get; set; }
