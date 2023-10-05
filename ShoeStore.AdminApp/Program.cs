@@ -17,12 +17,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = "/Login/Index"; // neu chua login thi Redirect ve day 
-        options.AccessDeniedPath = "/User/Forbidden/";
-    });
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Login/Index"; // neu chua login thi Redirect ve day 
+            options.AccessDeniedPath = "/User/Forbidden/";
+        });
 
 builder.Services.AddHttpContextAccessor();
 // Add services to the container.

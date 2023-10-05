@@ -1,11 +1,14 @@
 using ApiIntegration.Slides;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using ShoeStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.AdminApp.ApiIntegration.Categories;
 using SmartPhoneStore.AdminApp.ApiIntegration.Products;
+using SmartPhoneStore.AdminApp.ApiIntegration.Users;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,11 +22,20 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Login"; // neu chua login thi Redirect ve day 
+        options.AccessDeniedPath = "/User/Forbidden/";
+    });
+
 builder.Services.AddControllersWithViews();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<ISlideApiClient, SlideApiClient>();
 builder.Services.AddTransient<IProductApiClient, ProductApiClient>();
 builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+builder.Services.AddTransient<IUserApiClient, UserApiClient>();
+builder.Services.AddTransient<IOrderApiClient,OrderApiClient>();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
