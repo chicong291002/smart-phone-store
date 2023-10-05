@@ -21,6 +21,6 @@ namespace SmartPhoneStore.ViewModels.System.Users
         [Display(Name = "Ngày Sinh")]
         public DateTime Dob { get; set; }
 
-        public IList<string> Roles { get; set; }
+        public string Roles { get; set; }
     }
 }

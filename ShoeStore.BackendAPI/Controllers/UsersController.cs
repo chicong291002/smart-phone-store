@@ -38,7 +38,7 @@ namespace ShoeStore.BackendAPI.Controllers
         }
 
         [HttpPost("register")]
-        [AllowAnonymous]    
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
@@ -68,7 +68,7 @@ namespace ShoeStore.BackendAPI.Controllers
             {
                 return BadRequest(result);
             }
-            return Ok(result);    
+            return Ok(result);
         }
 
         //https://localhost:7204/api/paging?pageIndex=1&pageSize=10&keyword=""
@@ -76,13 +76,20 @@ namespace ShoeStore.BackendAPI.Controllers
         public async Task<IActionResult> GetAllUsersPaging([FromQuery] GetUserPagingRequest request)
         {
             var products = await _userService.GetUsersPaging(request);
-            return Ok(products); 
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             var users = await _userService.GetById(id);
+            return Ok(users);
+        }
+
+        [HttpGet("{userName}")]
+        public async Task<IActionResult> GetByUserName(string userName)
+        {
+            var users = await _userService.GetByUserName(userName);
             return Ok(users);
         }
 
@@ -104,6 +111,53 @@ namespace ShoeStore.BackendAPI.Controllers
             }
 
             var result = await _userService.RoleAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("changePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel model)
+        {
+            var result = await _userService.ChangePassword(model);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("confirmEmail")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailViewModel request)
+        {
+            var result = await _userService.ConfirmEmail(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("forgotPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordViewModel request)
+        {
+            var result = await _userService.ForgotPassword(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("resetPassword")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel request)
+        {
+            var result = await _userService.ResetPassword(request);
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);

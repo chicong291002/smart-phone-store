@@ -83,8 +83,13 @@ namespace SmartPhoneStore.Application.System.Users
                 phoneNumber = user.PhoneNumber,
                 userName = user.UserName,
                 Dob = user.Dob,
-                Roles = roles
             };
+
+            foreach (var role in roles)
+            {
+                userVm.Roles = role.ToString();
+            }
+
             return new ApiSuccessResult<UserViewModel>(userVm);
         }
 
@@ -217,6 +222,79 @@ namespace SmartPhoneStore.Application.System.Users
                     await _userManager.AddToRoleAsync(user, role); 
                 }
             }
+            return new ApiSuccessResult<bool>();
+        }
+
+        public async Task<ApiResult<UserViewModel>> GetByUserName(string userName)
+        {
+            var user = await _userManager.FindByIdAsync(userName);
+            if (user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var userVm = new UserViewModel()
+            {
+                firstName = user.FirstName,
+                lastName = user.LastName,
+                email = user.Email,
+                phoneNumber = user.PhoneNumber,
+                userName = user.UserName,
+                Dob = user.Dob,
+            };
+            if (roles.Count == 0)
+            {
+                userVm.Roles = "customer";
+            }
+            else
+            {
+                foreach (var role in roles)
+                {
+                    userVm.Roles = role.ToString();
+                }
+            }
+
+            return new ApiSuccessResult<UserViewModel>(userVm);
+        }
+
+        public async Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailViewModel request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.email);
+            if (user == null)
+                return new ApiErrorResult<bool>($"Không tìm thấy người dùng có email {request.email}");
+            var result = await _userManager.ConfirmEmailAsync(user, request.token);
+            return new ApiSuccessResult<bool>();
+        }
+
+        public async Task<ApiResult<bool>> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.RefreshSignInAsync(user);
+                return new ApiSuccessResult<bool>();
+            }
+
+            return new ApiErrorResult<bool>("Đổi mật khẩu không thành công");
+        }
+
+        public async Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user != null && await _userManager.IsEmailConfirmedAsync(user))
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                return new ApiSuccessResult<string>(token);
+            }
+            return new ApiErrorResult<string>($"Không thể khôi phục mật khẩu");
+        }
+
+        public async Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+                return new ApiErrorResult<bool>($"Không tìm thấy người dùng có email {request.Email}");
+            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
             return new ApiSuccessResult<bool>();
         }
     }

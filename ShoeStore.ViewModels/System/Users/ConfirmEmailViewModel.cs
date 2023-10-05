@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace SmartPhoneStore.ViewModels.System.Users
 {
-    public class LoginRequest
+    public class ConfirmEmailViewModel
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public bool RememberMe { get; set; }
-
+        public string token { get; set; }
+        public string email { get; set; }
     }
 }

@@ -17,5 +17,15 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
         Task<ApiResult<PagedResult<UserViewModel>>> GetAllUsersPaging(GetUserPagingRequest request);
 
         Task<ApiResult<UserViewModel>> GetById(Guid id);
+
+        Task<ApiResult<UserViewModel>> GetByUserName(string userName);
+
+        Task<ApiResult<bool>> ChangePassword(ChangePasswordViewModel model);
+
+        Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailViewModel model);
+
+        Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel model);
+
+        Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel model);
     }
 }

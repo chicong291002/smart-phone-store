@@ -15,10 +15,18 @@ namespace SmartPhoneStore.Application.System.Users
 
         Task<ApiResult<UserViewModel>> GetById(Guid id);
 
+        Task<ApiResult<UserViewModel>> GetByUserName(string userName);
+
         Task<ApiResult<bool>> Delete(Guid id);
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
 
+        Task<ApiResult<bool>> ChangePassword(ChangePasswordViewModel model);
+
+        Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailViewModel request);
+
+        Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel request);
+        Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel request);
 
     }
 }
