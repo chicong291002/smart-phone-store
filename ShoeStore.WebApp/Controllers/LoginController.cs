@@ -65,7 +65,7 @@ namespace SmartPhoneStore.WebApp.Controllers
             {
                 CookieOptions option = new CookieOptions();
                 option.Expires = DateTime.Now.AddMonths(1);
-                Response.Cookies.Append("customerToken", result.ResultObj, option);
+                Response.Cookies.Append("Token", result.ResultObj, option);
             }
 
             var userPrincipal = this.ValidateToken(result.ResultObj);
@@ -125,7 +125,8 @@ namespace SmartPhoneStore.WebApp.Controllers
                 
             var token = result.ResultObj;
             var user = await _userApiClient.GetByUserName(registerRequest.userName);
-            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Login", new { token, email = user.ResultObj.email }, Request.Scheme);
+            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Login", new { token, email = user.ResultObj.email }
+            , Request.Scheme);
             //var message = await MailUtils.MailUtils.SendGmail("congnguyen29102002@gmail.com", user.ResultObj.Email,
             //                                                  "Link xác nhận email", confirmationLink,
             //                                                  "your_email_here", "your_password_here");

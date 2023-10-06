@@ -1,12 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartPhoneStore.Application.Emails
 {
@@ -20,10 +16,6 @@ namespace SmartPhoneStore.Application.Emails
             email.To.Add(MailboxAddress.Parse(to));
             email.Subject = subject;
 
-            // Send text format
-            //email.Body = new TextPart(TextFormat.Plain) { Text = text };
-
-            // Send html format
             email.Body = new TextPart(TextFormat.Html)
             {
                 Text = string.Format(text)

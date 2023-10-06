@@ -47,7 +47,7 @@ namespace SmartPhoneStore.AdminApp.Controllers
             {
                 CookieOptions option = new CookieOptions();
                 option.Expires = DateTime.Now.AddMonths(1);
-                Response.Cookies.Append("customerToken", result.ResultObj, option);
+                Response.Cookies.Append("Token", result.ResultObj, option);
             }
 
             var userPrincipal = this.ValidateToken(result.ResultObj);

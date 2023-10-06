@@ -176,7 +176,7 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
             return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>(result);
         }
 
-        public async Task<ApiResult<bool>> Register(RegisterRequest request)
+        public async Task<ApiResult<string>> Register(RegisterRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -188,10 +188,10 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<ApiSuccessResult<bool>>(result);
+                return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(result);
                 //convert qua Ojbect de return 
             }
-            return JsonConvert.DeserializeObject<ApiErrorResult<bool>>(result);
+            return JsonConvert.DeserializeObject<ApiErrorResult<string>>(result);
         }
 
         public async Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel model)

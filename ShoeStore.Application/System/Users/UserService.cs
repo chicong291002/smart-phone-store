@@ -43,11 +43,11 @@ namespace SmartPhoneStore.Application.System.Users
             // Trả về một SignInResult, tham số cuối là IsPersistent kiểu bool
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             //lockOutOnfaiture : khi lockout nhieu qua thi khoa account
-            
-/*            if (!result.Succeeded)
-            {
-                return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
-            }*/
+
+            /*            if (!result.Succeeded)
+                        {
+                            return new ApiErrorResult<string>(new string("Mật khẩu không đúng"));
+                        }*/
 
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -131,18 +131,26 @@ namespace SmartPhoneStore.Application.System.Users
             return new ApiSuccessResult<PagedResult<UserViewModel>>(pageResult);
         }
 
-        public async Task<ApiResult<bool>> Register(RegisterRequest request)
+        public async Task<ApiResult<string>> Register(RegisterRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.userName);
 
             if (user != null)
             {
-                return new ApiErrorResult<bool>("Tài khoản đã tồn tại ");
+                return new ApiErrorResult<string>("Tài khoản đã tồn tại ");
             }
 
             if (await _userManager.FindByEmailAsync(request.email) != null)
             {
-                return new ApiErrorResult<bool>("Email đã tồn tại");
+                return new ApiErrorResult<string>("Email đã tồn tại");
+            }
+
+            var usersList = await _userManager.Users.ToListAsync();
+            var userPhoneNumber = usersList.FirstOrDefault(x => x.PhoneNumber == request.phoneNumber);
+
+            if (userPhoneNumber != null)
+            {
+                return new ApiErrorResult<string>("Email đã tồn tại");
             }
 
             user = new AppUser()
@@ -157,9 +165,10 @@ namespace SmartPhoneStore.Application.System.Users
             var result = await _userManager.CreateAsync(user, request.passWord);
             if (result.Succeeded)
             {
-                return new ApiSuccessResult<bool>();
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                return new ApiSuccessResult<string>(token);
             }
-            return new ApiErrorResult<bool>("Đăng ký không thành công");
+            return new ApiErrorResult<string>("Đăng ký không thành công");    
         }
 
         public async Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request)
@@ -215,7 +224,7 @@ namespace SmartPhoneStore.Application.System.Users
             {
                 if (await _userManager.IsInRoleAsync(user, role) == false)
                 {
-                    await _userManager.AddToRoleAsync(user, role); 
+                    await _userManager.AddToRoleAsync(user, role);
                 }
             }
             return new ApiSuccessResult<bool>();
@@ -223,7 +232,7 @@ namespace SmartPhoneStore.Application.System.Users
 
         public async Task<ApiResult<UserViewModel>> GetByUserName(string userName)
         {
-            var user = await _userManager.FindByIdAsync(userName);
+            var user = await _userManager.FindByNameAsync(userName);    
             if (user == null) return new ApiErrorResult<UserViewModel>("User không tồn tại");
 
             var roles = await _userManager.GetRolesAsync(user);

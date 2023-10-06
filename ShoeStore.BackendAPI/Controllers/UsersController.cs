@@ -71,7 +71,7 @@ namespace ShoeStore.BackendAPI.Controllers
             return Ok(result);
         }
 
-        //https://localhost:7204/api/paging?pageIndex=1&pageSize=10&keyword=""
+        //https://localhost:7204/api/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllUsersPaging([FromQuery] GetUserPagingRequest request)
         {
@@ -80,6 +80,7 @@ namespace ShoeStore.BackendAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(Guid id)
         {
             var users = await _userService.GetById(id);
@@ -87,9 +88,14 @@ namespace ShoeStore.BackendAPI.Controllers
         }
 
         [HttpGet("getByUserName/{userName}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetByUserName(string userName)
         {
             var users = await _userService.GetByUserName(userName);
+            if (!users.IsSuccessed)
+            {
+                return BadRequest(users);
+            }
             return Ok(users);
         }
 
