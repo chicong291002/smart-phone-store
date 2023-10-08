@@ -35,7 +35,7 @@ namespace SmartPhoneStore.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public  IActionResult Login()
         {
             return View();
         }

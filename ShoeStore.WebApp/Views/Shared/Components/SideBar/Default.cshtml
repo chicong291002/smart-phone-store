@@ -1,6 +1,10 @@
-﻿@model List<SmartPhoneStore.ViewModels.Catalog.Categories.CategoryViewModel>
-
-<div id="sidebar" class="span3">
+﻿@using System.Globalization;
+@model List<SmartPhoneStore.ViewModels.Catalog.Categories.CategoryViewModel>
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+@*<div id="sidebar" class="span3">
     <div class="well well-small"><a id="myCart" href="">Danh mục</a></div>
     <ul id="sideManu" class="nav nav-tabs nav-stacked">
         @{
@@ -24,10 +28,10 @@
             }
             else
             {
-                <li><a href="/categories/@parent.Id">@parent.Name</a></li>
+                <li><a href="/@culture/@_loc["categoryUrl"]/@parent.Id">@parent.Name</a></li>
             }
         }
 
     </ul>
     <br />
-</div>
+</div>*@
