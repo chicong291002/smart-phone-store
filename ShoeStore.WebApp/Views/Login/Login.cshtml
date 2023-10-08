@@ -1,6 +1,8 @@
 ﻿@model SmartPhoneStore.ViewModels.System.Users.LoginRequest
 @{
     ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture.Name;
 }
 
 <style>
@@ -8,6 +10,11 @@
     /******************************************
 35. Login page
 ******************************************/
+
+    .main-container {
+        margin-top: 40px; /* Adjust the margin value as needed */
+    }
+
     .account-login {
         display: inline-block;
         width: 100%;
@@ -100,11 +107,31 @@
         margin-top: 12px;
     }
 </style>
+
+<!-- BREADCRUMB -->
+<div id="breadcrumb" class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb-tree">
+                    <li><a href="/">Trang chủ</a></li>
+                    <li class="active">Đăng nhập</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /BREADCRUMB -->
+
 <section class="main-container col1-layout">
     <div class="main container">
         <div class="page-content">
             <div class="account-login">
-                <form action="Login/Login" method="post" class="box-authentication">
+                <form action="/@culture/Login/Login" method="post" class="box-authentication">
                     <h4>Đăng nhập</h4>
                     <p class="before-login-text">Chào mừng quay trở lại! Hãy đăng nhập vào tài khoản của bạn</p>
                     <div>
@@ -128,7 +155,7 @@
                 <div class="box-authentication">
                     <h4>Đăng ký</h4>
                     <p>Tạo tài khoản của riêng bạn</p>
-                    <form action="/Login/Register" method="get">
+                    <form action="/@culture/Login/Register" method="get">
                         <button class="button"><i class="fa fa-user-o"></i>&nbsp; Đăng ký</button>
                     </form>
                     <div class="register-benefits">

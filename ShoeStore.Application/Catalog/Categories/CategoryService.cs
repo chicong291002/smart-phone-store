@@ -87,7 +87,6 @@ namespace SmartPhoneStore.Application.Catalog.Categories
         public async Task<PagedResult<CategoryViewModel>> GetAllCategoryPaging(GetProductPagingRequest request)
         {
             var query = from c in _context.Categories
-                       
                         select new { c };
 
             if (!string.IsNullOrEmpty(request.Keyword))

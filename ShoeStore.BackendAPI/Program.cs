@@ -58,7 +58,7 @@ builder.Services.AddControllers().AddFluentValidation(
 //dang ky tat ca Validator cung cai asssembly (cung cai DOE) cung vs thang Application 
 builder.Services.AddSwaggerGen(c =>
  {
-     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger Shoe Store", Version = "v1" });
+     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger SmartPhoneStore", Version = "v1" });
 
      //khi gọi Swagger truyền một Header tên là : Bearer
      c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -107,6 +107,7 @@ builder.Services.AddAuthentication(opt =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters()
     {
+        
         ValidateIssuer = true,
         ValidIssuer = issuer,
         ValidateAudience = true,

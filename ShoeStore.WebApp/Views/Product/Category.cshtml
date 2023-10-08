@@ -1,8 +1,14 @@
-﻿@model ProductCategoryViewModel
+﻿@using System.Globalization;
+@model ProductCategoryViewModel
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @{
-    ViewData["Title"] = "Category";
+    ViewData["Title"] = Model.Category.Name + (Model.Products.PageIndex == 1 ? "" : " - " + _loc["Page"] + " " + Model.Products.PageIndex);
+    ViewData["Description"] = Model.Category.Name + (Model.Products.PageIndex == 1 ? "" : " - " + _loc["Page"] + " " + Model.Products.PageIndex);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var culture = CultureInfo.CurrentCulture;
 }
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 
 <div class="span9">
     <ul class="breadcrumb">
