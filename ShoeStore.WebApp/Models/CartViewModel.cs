@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SmartPhoneStore.ViewModels.Sales;
+using System.Collections.Generic;
 
 namespace SmartPhoneStore.WebApp.Models
 {

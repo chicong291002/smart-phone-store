@@ -21,11 +21,11 @@ namespace SmartPhoneStore.WebApp.Controllers
     public class LoginController : Controller
     {
         private readonly IUserApiClient _userApiClient;
-        private readonly IOrderApiClient _orderApiClient;
+        private readonly ICouponApiClient _orderApiClient;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public LoginController(IUserApiClient userApiClient, IOrderApiClient orderApiClient,
+        public LoginController(IUserApiClient userApiClient, ICouponApiClient orderApiClient,
             IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _userApiClient = userApiClient;
@@ -35,7 +35,7 @@ namespace SmartPhoneStore.WebApp.Controllers
         }
 
         [HttpGet]
-        public  IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             return View();
         }

@@ -1,6 +1,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using ShoeStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.AdminApp.ApiIntegration.Categories;
 using SmartPhoneStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.AdminApp.ApiIntegration.Roles;
@@ -33,6 +34,7 @@ builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<IRoleApiClient, RoleApiClient>();
 builder.Services.AddTransient<IProductApiClient,ProductApiClient>();
 builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIROMENT");

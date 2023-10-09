@@ -16,7 +16,7 @@ namespace SmartPhoneStore.Data.EF
             //Configure khi sử dụng Fluent API
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-
+            modelBuilder.ApplyConfiguration(new CouponConfiguration());
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
             modelBuilder.ApplyConfiguration(new CartConfiguration()); 
             modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
@@ -42,6 +42,8 @@ namespace SmartPhoneStore.Data.EF
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Carts> Carts { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Product> Products { get; set; }

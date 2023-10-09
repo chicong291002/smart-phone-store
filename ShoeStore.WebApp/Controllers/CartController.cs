@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SmartPhoneStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.Utilities.Constants;
+using SmartPhoneStore.ViewModels.Sales;
 using SmartPhoneStore.WebApp.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SmartPhoneStore.WebApp.Controllers
@@ -20,6 +23,21 @@ namespace SmartPhoneStore.WebApp.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Checkout()
+        {
+            return View(GetCheckoutViewModel());
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Checkout(CheckoutRequest request)
         {
             return View();
         }
@@ -70,7 +88,6 @@ namespace SmartPhoneStore.WebApp.Controllers
                 var cartItem = new CartItemViewModel()
                 {
                     ProductId = id,
-                    Description = product.Description,
                     Image = product.ThumbnailImage,
                     Name = product.Name,
                     Quantity = quantity,
@@ -124,6 +141,41 @@ namespace SmartPhoneStore.WebApp.Controllers
             HttpContext.Session.SetString(SystemConstants.CartSession, JsonConvert.SerializeObject(currentCart));
 
             return Ok(currentCart);
+        }
+
+        private CheckoutViewModel GetCheckoutViewModel()
+        {
+            var session = HttpContext.Session.GetString(SystemConstants.CartSession);
+
+            //var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var claims = User.Claims.ToList();
+
+            var name = claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName).Value;
+            var email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
+            //var address = claims.FirstOrDefault(x => x.Type == ClaimTypes.StreetAddress).Value;
+            //var phoneNumber = claims.FirstOrDefault(x => x.Type == ClaimTypes.MobilePhone).Value;
+
+            var currentCart = new CartViewModel();
+            currentCart.CartItems = new List<CartItemViewModel>();
+
+            if (session != null)
+            {
+                //currentCart = JsonConvert.DeserializeObject<List<CartItemViewModel>>(session);
+                currentCart = JsonConvert.DeserializeObject<CartViewModel>(session);
+            }
+
+            var checkoutVm = new CheckoutViewModel()
+            {
+                CartItems = currentCart.CartItems,
+                CheckoutModel = new CheckoutRequest(),
+                Name = name.ToString(),
+               // Address = address.ToString(),
+                //PhoneNumber = phoneNumber.ToString(),
+                //Promotion = currentCart.Promotion,
+                //CouponCode = currentCart.CouponCode
+            };
+
+            return checkoutVm;
         }
     }
 }

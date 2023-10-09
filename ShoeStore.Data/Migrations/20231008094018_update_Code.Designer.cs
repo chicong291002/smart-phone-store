@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartPhoneStore.Data.EF;
 
@@ -11,9 +12,11 @@ using SmartPhoneStore.Data.EF;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(SmartPhoneStoreDbContext))]
-    partial class SmartPhoneStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231008094018_update_Code")]
+    partial class update_Code
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
