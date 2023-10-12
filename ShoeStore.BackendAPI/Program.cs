@@ -9,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ShoeStore.Application.Catalog.Orders;
 using SmartPhoneStore.Application.Catalog.Categories;
+using SmartPhoneStore.Application.Catalog.Coupons;
 using SmartPhoneStore.Application.Catalog.Products;
 using SmartPhoneStore.Application.Common;
 using SmartPhoneStore.Application.System.Roles;
@@ -43,6 +45,8 @@ builder.Services.AddTransient<IStorageService, FileStorageService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ISlideService, SlideService>();
+builder.Services.AddTransient<IOrderService, OrderSerivce>();
+builder.Services.AddTransient<ICouponService, CouponService>();
 
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

@@ -42,7 +42,7 @@ namespace ShoeStore.BackendAPI.Controllers
         [HttpPost]
         [Authorize]
         //chap nhan doi tuong form len 
-        public async Task<IActionResult> Create([FromForm] CategoryCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

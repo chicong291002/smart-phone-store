@@ -1,6 +1,7 @@
 ﻿using SmartPhoneStore.ViewModels.Common;
 using SmartPhoneStore.ViewModels.System.Users;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SmartPhoneStore.Application.System.Users
@@ -18,6 +19,7 @@ namespace SmartPhoneStore.Application.System.Users
         Task<ApiResult<UserViewModel>> GetByUserName(string userName);
 
         Task<ApiResult<bool>> Delete(Guid id);
+        Task<List<UserViewModel>> GetAll();
 
         Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
 

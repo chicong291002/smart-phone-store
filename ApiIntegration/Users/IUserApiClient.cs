@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using SmartPhoneStore.ViewModels.Common;
+﻿using SmartPhoneStore.ViewModels.Common;
 using SmartPhoneStore.ViewModels.System.Users;
 
 namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
@@ -27,5 +26,7 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
         Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel model);
 
         Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel model);
+
+        Task<List<UserViewModel>> GetAll();
     }
 }

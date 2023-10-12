@@ -48,10 +48,8 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
 
         public async Task<PagedResult<OrderViewModel>> GetPagings(GetOrderPagingRequest request)
         {
-            var data = await GetAsync<PagedResult<OrderViewModel>>(
-                $"/api/orders/paging?pageIndex={request.PageIndex}" +
+            var data = await GetAsync<PagedResult<OrderViewModel>>($"/api/Orders/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}");
-
             return data;
         }
 
@@ -59,7 +57,6 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
         {
             var data = await GetAsync<OrderByUserViewModel>(
                 $"/api/orders/userOrders/{id}");
-
             return data;
         }
 
@@ -73,10 +70,7 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
 
         public async Task<bool> UpdateOrderStatus(int id)
         {
-            var sessions = _httpContextAccessor
-                             .HttpContext
-                             .Session
-                             .GetString(SystemConstants.AppSettings.Token);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);

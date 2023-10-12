@@ -24,10 +24,10 @@ namespace SmartPhoneStore.WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var slides = await _slideApiClient.GetAllSlides();
+            //var slides = await _slideApiClient.GetAllSlides();
             var viewModel = new HomeViewModel
             {
-                Slides = slides,
+                //Slides = slides,
                 FeaturedProducts = await _productApiClient.GetFeaturedProducts(SystemConstants.ProductSettings.NumberOfFeaturedProducts),
                 LatestProducts = await _productApiClient.GetLatestProducts(SystemConstants.ProductSettings.NumberOfLatestProducts)
             };

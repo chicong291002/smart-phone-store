@@ -6,6 +6,7 @@ using SmartPhoneStore.Data.Entities;
 using SmartPhoneStore.ViewModels.Common;
 using SmartPhoneStore.ViewModels.System.Users;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -301,6 +302,22 @@ namespace SmartPhoneStore.Application.System.Users
                 return new ApiErrorResult<bool>($"Không tìm thấy người dùng có email {request.Email}");
             var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
             return new ApiSuccessResult<bool>();
+        }
+
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            var query = from c in _userManager.Users
+                        select new { c };
+
+            return await query.Select(x => new UserViewModel()
+            {
+                Id = x.c.Id,
+                Name = x.c.Name,
+                userName = x.c.UserName,
+                phoneNumber = x.c.PhoneNumber,
+                email = x.c.Email,
+                Address = x.c.Address
+            }).ToListAsync();
         }
     }
 }

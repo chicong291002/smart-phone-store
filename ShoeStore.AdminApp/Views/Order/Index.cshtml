@@ -29,16 +29,14 @@
     <div class="card mb-12">
         <div class="card-header">
             <div class="row">
-                <div class="col-md-7 col-xs-12">
-                </div>
-                <div class="col-md-5 col-xs-12">
+                <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" asp-controller="Order" method="get">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 @*name: là tên tham số*@
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
                                 <button type="button" onclick="window.location.href='/Order/Index'" class="btn btn-secondary">Đặt lại</button>
                             </div>
@@ -125,12 +123,12 @@
                                     @if (item.Status == (OrderStatus)1)
                                     {
                                         <button class="btn btn-success btn-update-status" data-id="@item.Id">@Html.ActionLink("Duyệt đơn", "UpdateOrderStatus", new { orderId = item.Id })</button>
-                                        <button class="btn btn-danger btn-cancel" data-id="@item.Id">Hủy đơn</button>
+                                        <button class="btn btn-danger btn-cancel" data-id="@item.Id">@Html.ActionLink("Hủy đơn", "CancelOrderStatus", new { orderId = item.Id })</button>
                                     }
                                     else if (item.Status == (OrderStatus)2)
                                     {
                                         <button class="btn btn-success btn-update-status" data-id="@item.Id">@Html.ActionLink("Giao hàng", "UpdateOrderStatus", new { orderId = item.Id })</button>
-                                        <button class="btn btn-danger btn-cancel" data-id="@item.Id">Hủy đơn</button>
+                                        <button class="btn btn-danger btn-cancel" data-id="@item.Id">@Html.ActionLink("Hủy đơn", "CancelOrderStatus", new { orderId = item.Id })</button>
                                     }
                                     else if (item.Status == (OrderStatus)3)
                                     {
@@ -146,7 +144,7 @@
                 </table>
             </div>
             @*truyền Model vào hàm InvokeAsync của class PagerViewComponent để phân trang *@
-            @await Component.InvokeAsync("Pager", Model)
+    @*        @await Component.InvokeAsync("Pager", Model)*@
         </div>
     </div>
 </div>

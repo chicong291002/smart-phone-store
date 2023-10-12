@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿    using Microsoft.AspNetCore.Mvc;
 using ShoeStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.ViewModels.Catalog.Orders;
@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace SmartPhoneStore.AdminApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class OrderController : Controller
     {
         private readonly IOrderApiClient _orderApiClient;
@@ -91,4 +89,3 @@ namespace SmartPhoneStore.AdminApp.Controllers
         }
     }
 }
-*/

@@ -11,10 +11,6 @@
             url: "/" + culture + '/Cart/GetListItems',
             success: function (res) {
                 $('#lbl_number_of_items_header').text(res.cartItems.length);
-            },
-
-            error: function (err) {
-                console.log(err);
             }
         });
     }
@@ -22,7 +18,7 @@
     function registerEvents() {
         // Chức năng thêm vào giỏ hàng
         $('body').on('click', '.add-to-cart-btn', function (e) {
-            e.preventDefault(); // line này để khi bấm ok (alert) thì không bị nhảy lên top website 
+            e.preventDefault(); // line này để khi bấm ok (alert) thì không bị nhảy lên top website
 
             const culture = $('#hidCulture').val();
             const id = $(this).data('id');

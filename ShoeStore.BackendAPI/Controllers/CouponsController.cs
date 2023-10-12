@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartPhoneStore.Application.Catalog.Coupons;
+using SmartPhoneStore.ViewModels.Catalog.Coupons;
 using SmartPhoneStore.ViewModels.Catalog.Products;
 using System.Threading.Tasks;
 
-/*namespace SmartPhoneStore.BackendAPI.Controllers
+namespace SmartPhoneStore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,8 +13,7 @@ using System.Threading.Tasks;
     {
         private readonly ICouponService _couponService;
 
-        public CouponsController(
-            ICouponService couponService)
+        public CouponsController(ICouponService couponService)
         {
             _couponService = couponService;
         }
@@ -87,4 +87,4 @@ using System.Threading.Tasks;
             return Ok();
         }
     }
-}*/
+}
