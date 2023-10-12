@@ -89,7 +89,7 @@
                         + "<td>" + item.name + "</td>"
                         + "<td class=\"availability in-stock text-center\"><span class=\"label\">In stock</span></td>"
                         + "<td>" + numberWithCommas(item.price) + " <span>&#8363;</span>" + "</td>"
-                        + "<td><div class=\"input-append\"><input disabled class=\"span1\" style=\"max-width: 34px\" placeholder=\"1\" id=\"" + item.productId + "\" value=\"" + item.quantity + "\" size=\"16\" type=\"text\">"
+                        + "<td><div class=\"input-append\"><input disabled class=\"span1\" style=\"max-width: 34px\" placeholder=\"1\" id=\"txt_quantity_" + item.productId + "\" value=\"" + item.quantity + "\" size=\"16\" type=\"text\">"
                         + "<button class=\"btn-minus\" data-id=\"" + item.productId + "\" type =\"button\"> <i class=\"fa fa-minus\"></i></button>"
                         + "<button class=\"btn-plus\" data-id=\"" + item.productId + "\" type=\"button\"><i class=\"fa fa-plus\"></i></button>"
                         + "</div>"
@@ -107,16 +107,16 @@
                 $('#lbl_number_of_items').text(cartItemsList.length);
                 $('#lbl_total').text(numberWithCommas(total));
 
-                /*   if (promotion !== 0) {
-                       var discountAmount = total - (total * ((100 - promotion) / 100));
-                       $('#discount_amount_row').show();
-                       $('#total_discounted_row').show();
-                       $('#lbl_discount_amount').text(numberWithCommas(discountAmount));
-                       $('#lbl_total_discounted').text(numberWithCommas(total * ((100 - promotion) / 100)));
-                   } else {
-                       $('#discount_amount_row').hide();
-                       $('#total_discounted_row').hide();
-                   }*/
+                if (promotion !== 0) {
+                    var discountAmount = total - (total * ((100 - promotion) / 100));
+                    $('#discount_amount_row').show();
+                    $('#total_discounted_row').show();
+                    $('#lbl_discount_amount').text(numberWithCommas(discountAmount));
+                    $('#lbl_total_discounted').text(numberWithCommas(total * ((100 - promotion) / 100)));
+                } else {
+                    $('#discount_amount_row').hide();
+                    $('#total_discounted_row').hide();
+                }
             }
         });
     }

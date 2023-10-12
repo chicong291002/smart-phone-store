@@ -53,6 +53,13 @@ namespace ShoeStore.BackendAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getAllUser")]
+        public async Task<IActionResult> GetAll()
+        {
+            var allUser = await _userService.GetAll();
+            return Ok(allUser);
+        }
+
         //Put : https://localhost:7204/api/Users/id
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)

@@ -21,6 +21,23 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<List<UserViewModel>> GetAll()
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync($"/api/users/getAllUser");
+
+            var body = await response.Content.ReadAsStringAsync();
+
+            var users = JsonConvert.DeserializeObject<List<UserViewModel>>(body);
+
+            return users;
+        }
+
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
