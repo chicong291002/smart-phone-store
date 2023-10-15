@@ -24,7 +24,7 @@ namespace SmartPhoneStore.Application.Emails
             // send email
             using var smtp = new SmtpClient();
             smtp.Connect("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-            smtp.Authenticate("congnguyen29102002@gmail.com", "");
+            smtp.Authenticate("congkhpro291002@gmail.com", "hdveqwayykesubuy");
 
             try
             {

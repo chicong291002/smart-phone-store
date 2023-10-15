@@ -14,19 +14,13 @@ namespace SmartPhoneStore.Data.Configurations
 
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            builder.Property(x => x.ShipEmail).IsRequired().IsUnicode(false).HasMaxLength(50);
-
-            builder.Property(x => x.ShipAddress).IsRequired().HasMaxLength(200);
-
-
-            builder.Property(x => x.ShipName).IsRequired().HasMaxLength(200);
-
-
-            builder.Property(x => x.ShipPhoneNumber).IsRequired().HasMaxLength(200);
-
             builder.Property(x => x.OrderDate);
 
+            builder.Property(x => x.CouponId);
+
             builder.HasOne(x => x.AppUser).WithMany(x => x.Orders).HasForeignKey(x => x.UserId);
+
+            builder.HasOne(x => x.Coupon).WithMany(x => x.Orders).HasForeignKey(x => x.CouponId);
         }
     }
 }

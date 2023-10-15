@@ -44,7 +44,7 @@ namespace ShoeStore.BackendAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.Register(request);
+            var result = await _userService.Register(request);  
             if (!result.IsSuccessed)
             {
                 return BadRequest(result);

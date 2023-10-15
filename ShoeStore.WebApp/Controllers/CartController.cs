@@ -5,8 +5,6 @@ using Newtonsoft.Json;
 using ShoeStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.AdminApp.ApiIntegration.Products;
 using SmartPhoneStore.AdminApp.ApiIntegration.Users;
-using SmartPhoneStore.Application.Emails;
-using SmartPhoneStore.Data.Enums;
 using SmartPhoneStore.Utilities.Constants;
 using SmartPhoneStore.ViewModels.Catalog.Orders;
 using SmartPhoneStore.ViewModels.Sales;
@@ -40,8 +38,14 @@ namespace SmartPhoneStore.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult Checkout()
+        {
+            return View(GetCheckoutViewModel());
+        }
 
-        [HttpPost]
+        [HttpPost("checkout")]
         [Authorize]
         //[Consumes("multipart/form-data")]
         public async Task<IActionResult> Checkout(CheckoutViewModel request)
@@ -72,6 +76,7 @@ namespace SmartPhoneStore.WebApp.Controllers
             // Tìm Guid của người mua để gán vào order
             var claims = User.Claims.ToList();
             var userId = claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            //var userId = "96A8DC33-0DBF-4725-6EFB-08DBB0215135";
             var users = await _userApiClient.GetAll();
             var x = users.FirstOrDefault(x => x.Id.ToString() == userId);
 
@@ -112,8 +117,7 @@ namespace SmartPhoneStore.WebApp.Controllers
             {
                 // mail admin when have new email
                 var email1 = new Application.Emails.EmailService();
-                email1.Send("hytranluan@gmail.com", "hytranluan@gmail.com",
-                    "ĐƠN HÀNG MỚI", $"Mã đơn hàng là <strong>{result}</strong>, nhấn vào <a href='" + "https://localhost:5002/Order/Detail?orderId=" + result + "'>đây</a> để đến trang quản lý đơn hàng này.");
+                email1.Send("congkhpro291002@gmail.com", "congkhpro291002@gmail.com","ĐƠN HÀNG MỚI", $"Mã đơn hàng là <strong>{result}</strong>, nhấn vào <a href='" + "https://localhost:7205/Order/Detail?orderId=" + result + "'>đây</a> để đến trang quản lý đơn hàng này.");
 
                 var orderSummaryHtml = "<table border='1' style='border-collapse:collapse'>"
                         + "<thead>"
@@ -185,7 +189,7 @@ namespace SmartPhoneStore.WebApp.Controllers
 
                 var userMail = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
                 var email2 = new Application.Emails.EmailService();
-                email2.Send("hytranluan@gmail.com", userMail,
+                email2.Send("congkhpro291002@gmail.com", userMail,
                                 "ĐẶT HÀNG THÀNH CÔNG",
                                 templateHtml
                                 + orderSummaryHtml
@@ -284,7 +288,7 @@ namespace SmartPhoneStore.WebApp.Controllers
                 //Amount = Convert.ToInt64(TempData["TotalAmount"]),
                 Amount = price,
                 Currency = "VND",
-                Description = "Đặt điện thoại tại Electro",
+                Description = "Đặt điện thoại tại SmartPhone",
                 Source = stripeToken,
                 Shipping = shipping,
                 ReceiptEmail = stripeEmail,
@@ -342,8 +346,8 @@ namespace SmartPhoneStore.WebApp.Controllers
             {
                 // mail admin when have new email
                 var email1 = new Application.Emails.EmailService();
-                email1.Send("hytranluan@gmail.com", "hytranluan@gmail.com",
-                    "ĐƠN HÀNG MỚI", $"Mã đơn hàng là <strong>{result}</strong>, nhấn vào <a href='" + "https://localhost:5002/Order/Detail?orderId=" + result + "'>đây</a> để đến trang quản lý đơn hàng này.");
+                email1.Send("congkhpro291002@gmail.com", "congkhpro291002@gmail.com",
+                    "ĐƠN HÀNG MỚI", $"Mã đơn hàng là <strong>{result}</strong>, nhấn vào <a href='" + "https://localhost:7024/Order/Detail?orderId=" + result + "'>đây</a> để đến trang quản lý đơn hàng này.");
 
                 var orderSummaryHtml = "<table border='1' style='border-collapse:collapse'>"
                         + "<thead>"
@@ -547,16 +551,17 @@ namespace SmartPhoneStore.WebApp.Controllers
         {
             var session = HttpContext.Session.GetString(SystemConstants.CartSession);
 
-            var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-            //var claims = User.Claims.ToList();
+            var currentCart = new CartViewModel();
+            currentCart.CartItems = new List<CartItemViewModel>();
+            //List<CartItemViewModel> currentCart = new List<CartItemViewModel>();    
+
+            //var claims = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
+            var claims = User.Claims.ToList();
 
             var name = claims.FirstOrDefault(x => x.Type == ClaimTypes.GivenName).Value;
             var email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
             var address = claims.FirstOrDefault(x => x.Type == ClaimTypes.StreetAddress).Value;
             var phoneNumber = claims.FirstOrDefault(x => x.Type == ClaimTypes.MobilePhone).Value;
-
-            var currentCart = new CartViewModel();
-            currentCart.CartItems = new List<CartItemViewModel>();
 
             if (session != null)
             {
@@ -567,12 +572,12 @@ namespace SmartPhoneStore.WebApp.Controllers
             var checkoutVm = new CheckoutViewModel()
             {
                 CartItems = currentCart.CartItems,
-                CheckoutModel = new CheckoutRequest(),
                 Name = name.ToString(),
                 Address = address.ToString(),
                 PhoneNumber = phoneNumber.ToString(),
-                //Promotion = currentCart.Promotion,
-                //CouponCode = currentCart.CouponCode
+                Promotion = currentCart.Promotion,
+                CouponCode = currentCart.CouponCode,
+                CheckoutModel = new CheckoutRequest()
             };
 
             return checkoutVm;

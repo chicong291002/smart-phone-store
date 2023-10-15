@@ -1,5 +1,6 @@
-﻿ @using SmartPhoneStore.ViewModels.Common;
-@model PagedResult<SmartPhoneStore.ViewModels.Catalog.Products.ProductViewModel>
+﻿@using SmartPhoneStore.ViewModels.Catalog.Coupons;
+﻿@using SmartPhoneStore.ViewModels.Common;
+@model PagedResult<CouponViewModel>
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @{
@@ -15,7 +16,7 @@
             <div class="col-md-12">
                 <ul class="breadcrumb-tree">
                     <li><a href="/">Trang chủ</a></li>
-                    <li>Thương hiệu</li>
+                    <li>Khuyến mãi</li>
                 </ul>
             </div>
         </div>
@@ -30,68 +31,34 @@
         <div class="row">
             <div class="col-main col-sm-12 col-xs-12">
                 <div class="shop-inner">
-
-                    @if (Model.Items.Count <= 0)
+                    @foreach (var coupon in Model.Items)
                     {
-                        <p>Thương hiệu này hiện chưa có sản phẩm nào.</p>
-                    }
-                    else
-                    {
-                        <form asp-action="ViewByCategory" asp-controller="Home" method="get">
-                            <div class="toolbar column">
-                                <div class="sorter">
-                                    <label>Sắp xếp:</label>
-                                    <select name="sortOrder" onchange="this.form.submit()">
-                                        <option>Tất cả </option>
-                                        @foreach (var option in ViewBag.SortOption)
-                                        {
-                                            <option>@option</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                        @foreach (var product in Model.Items)
+                        if (coupon.Count > 0)
                         {
-                            var url = $"/{culture}/{_loc["productUrl"]}/{product.Id}";
                             <div class="product-grid-area">
                                 <ul class="products-grid">
                                     <li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
                                         <div class="product-item">
                                             <div class="item-inner">
                                                 <div class="product-thumbnail">
-                                                    @if (product.Stock <= 0)
-                                                    {
-                                                        <div class="icon-new-label new-right">Hết hàng</div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="icon-hot-label new-right">Mới</div>
-                                                    }
-
                                                     <div class="pr-img-area">
-                                                        <a title="@product.Name" href="@url">
-                                                            <figure> <img class="first-img" src="@(Configuration["BaseAddress"] + product.ThumbnailImage)" alt="HTML template"> <img class="hover-img" src="@(Configuration["BaseAddress"] + product.ProductImage)" alt="HTML template"></figure>
+                                                        <a title="@coupon.Describe" asp-action="Detail" asp-controller="Coupon" asp-route-couponId="@coupon.Id">
+                                                            <figure><img class="first-img" src="https://image.freepik.com/free-vector/mega-sale-banner_23-2147987220.jpg" alt="HTML template"></figure>
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="item-info">
                                                     <div class="info-inner">
-                                                        <div class="item-title"> <a title="@product.Name" href="@url">@product.Name </a> </div>
+                                                        <div class="item-title">
+                                                            <a title="@coupon.Describe" asp-action="Detail" asp-controller="Coupon" asp-route-couponId="@coupon.Id">
+                                                                @Html.Raw(coupon.Describe)
+                                                            </a>
+                                                        </div>
+                                                        <span style="background-color:#FE316C;" class="badge badge-pill badge-success">Khuyến mãi</span>
                                                         <div class="item-content">
                                                             <div class="item-price">
-                                                                <div class="price-box"> <span class="regular-price"> <span class="price">@product.Price.ToString("N0") <span>&#8363;</span></span> </span> </div>
+                                                                <div class="price-box"> <span class="regular-price"> Còn lại: <span style="color:#EF7E16;font-weight:bold">@coupon.Count lần</span>   </span> </div>
                                                             </div>
-                                                            @if (product.Stock <= 0)
-                                                            {
-
-                                                            }
-                                                            else
-                                                            {
-                                                                <div class="pro-action">
-                                                                    <button type="button" class="add-to-cart add-to-cart-btn" data-id="@product.Id"><span> Thêm vào giỏ hàng</span> </button>
-                                                                </div>
-                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,16 +69,18 @@
                             </div>
 
                         }
-                        <div class="pagination-area ">
-                            @await Component.InvokeAsync("Pager", Model)
-                        </div>
                     }
+                    <div class="pagination-area ">
+                        @await Component.InvokeAsync("Pager", Model)
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Main Container End -->
+
+
 <style>
     .page-title h1, .page-title h2 {
         font-size: 18px;
@@ -783,4 +752,3 @@
         display: inline
     }
 </style>
-

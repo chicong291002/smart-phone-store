@@ -8,7 +8,7 @@
         const culture = $('#hidCulture').val();
         $.ajax({  // xử lý khi click thêm Product vào Cart
             type: "GET",
-            url: "/" + culture + '/Cart/GetListItems',
+            url: '/Cart/GetListItems',
             success: function (res) {
                 $('#lbl_number_of_items_header').text(res.cartItems.length);
             }
@@ -25,7 +25,7 @@
 
             $.ajax({  // xử lý khi click thêm Product vào Cart
                 type: "POST",
-                url: '/' + culture + '/Cart/AddToCart',
+                url: '/Cart/AddToCart',
                 data: {
                     id: id,
                     languageId: culture

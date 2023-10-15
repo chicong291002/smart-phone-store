@@ -39,7 +39,7 @@
         const culture = $('#hidCulture').val();
         $.ajax({  // xử lý khi click thêm Product vào Cart
             type: "POST",
-            url: '/' + culture + '/Cart/UpdateCart',
+            url: '/Cart/UpdateCart',
             data: {
                 id: id,
                 quantity: quantity
@@ -68,7 +68,7 @@
         const culture = $('#hidCulture').val();
         $.ajax({  // xử lý khi click thêm Product vào Cart
             type: "GET",
-            url: "/" + culture + '/Cart/GetListItems',
+            url: '/Cart/GetListItems',
             success: function (res) {
                 var cartItemsList = res.cartItems;
                 var promotion = res.promotion;
@@ -125,7 +125,7 @@
         const culture = $('#hidCulture').val();
         $.ajax({
             type: "POST",
-            url: "/" + culture + "/Coupon/ApplyCoupon",
+            url: "/Coupon/ApplyCoupon",
             data: { code: code },
             success: function (res) {
                 if (res === 0) {

@@ -16,6 +16,9 @@ using SmartPhoneStore.WebApp.LocalizationResources;
 using SmartPhoneStore.ViewModels.System.Users.CheckUserValidator;
 using Microsoft.AspNetCore.Localization;
 using System.Globalization;
+using SmartPhoneStore.WebApp.Models;
+using Stripe;
+using Westwind.AspNetCore.Markdown;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +79,13 @@ builder.Services.AddTransient<ICategoryApiClient, CategoryApiClient>();
 builder.Services.AddTransient<IUserApiClient, UserApiClient>();
 builder.Services.AddTransient<ICouponApiClient, CouponApiClient>();
 builder.Services.AddTransient<IOrderApiClient, OrderApiClient>();
+builder.Services.AddMarkdown();
+builder.Services.AddMvc()
+     // have to let MVC know we have a controller
+     .AddApplicationPart(typeof(MarkdownPageProcessorMiddleware).Assembly);
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+StripeConfiguration.ApiKey = "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";
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -86,6 +96,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+// This is your real test secret API key.
+app.UseHttpsRedirection();
+app.UseMarkdown();
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -93,6 +108,7 @@ app.UseAuthentication();
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
+app.UseRequestLocalization();
 
 app.MapControllerRoute(
     name: "Product Category",

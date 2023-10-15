@@ -7,6 +7,15 @@
 @{
     ViewData["Title"] = "Checkout";
 }
+
+@section scripts{
+    <script src="/js/cart.js"></script>
+    <script>
+        var cartController = new CartController();
+        cartController.initialize(); 
+    </script>
+}
+
 <!-- BREADCRUMB -->
 <div id="breadcrumb" class="section">
     <!-- container -->
@@ -88,7 +97,7 @@
                             <div>
                                 Hoặc
                             </div>
-                            <form asp-action="Processing" asp-controller="Cart" method="post">
+                            <form asp-action="Processing" asp-controller="Cart" method="POST">
                                 <input type="hidden" asp-for="CheckoutModel.PaymentMethod" value="@PaymentMethod.CreditCard" />
                                 <input type="hidden" id="txt_name_cc" asp-for="CheckoutModel.Name" value="@Model.Name">
                                 <input type="hidden" id="txt_address_cc" asp-for="CheckoutModel.Address" value="@Model.Address">
@@ -107,7 +116,7 @@
                             </form>
                         </div>
 
-                        <form asp-action="Checkout" asp-controller="Cart" method="post">
+                        <form asp-action="Checkout" asp-controller="Cart" method="POST">
                             <input type="hidden" asp-for="CheckoutModel.PaymentMethod" value="@PaymentMethod.COD" />
                             <h4 class="checkout-sep">3. Thông tin giao hàng</h4>
                             <div class="box-border">

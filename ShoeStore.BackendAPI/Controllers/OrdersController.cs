@@ -12,7 +12,7 @@ namespace ShoeStore.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+        
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -21,7 +21,7 @@ namespace ShoeStore.BackendAPI.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost]
+        [HttpPost("CreateOrder")]
         [Authorize]
         public IActionResult CreateOrder([FromBody] CheckoutRequest request)
         {
@@ -31,7 +31,6 @@ namespace ShoeStore.BackendAPI.Controllers
             }
 
             var result = _orderService.Create(request);
-
             return Ok(result);
         }
 
