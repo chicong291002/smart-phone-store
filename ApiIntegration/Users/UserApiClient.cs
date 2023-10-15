@@ -201,7 +201,7 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Users
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.PostAsync($"/api/users/register", httpContent);
+            var response = await client.PostAsync($"/api/users/Register", httpContent);
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {

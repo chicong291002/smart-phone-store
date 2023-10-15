@@ -127,12 +127,9 @@ namespace SmartPhoneStore.WebApp.Controllers
             var user = await _userApiClient.GetByUserName(registerRequest.userName);
             var confirmationLink = Url.Action(nameof(ConfirmEmail), "Login", new { token, email = user.ResultObj.email }
             , Request.Scheme);
-            //var message = await MailUtils.MailUtils.SendGmail("congnguyen29102002@gmail.com", user.ResultObj.Email,
-            //                                                  "Link xác nhận email", confirmationLink,
-            //                                                  "your_email_here", "your_password_here");
 
             var email = new Application.Emails.EmailService();
-            email.Send("congnguyen29102002@gmail.com", user.ResultObj.email, "XÁC NHẬN TÀI KHOẢN", confirmationLink);
+            email.Send("congkhpro291002@gmail.com", user.ResultObj.email, "XÁC NHẬN TÀI KHOẢN", confirmationLink);
             return RedirectToAction(nameof(SuccessRegistration));
         }
 
@@ -173,9 +170,6 @@ namespace SmartPhoneStore.WebApp.Controllers
             var token = await _userApiClient.ForgotPassword(request);
             var passwordResetLink = Url.Action(nameof(ResetPassword), "Login",
                                     new { email = request.Email, token = token.ResultObj }, Request.Scheme);
-            //var message = await MailUtils.MailUtils.SendGmail("congnguyen29102002@gmail.com", request.Email,
-            //                                            "Link khôi phục mật khẩu", passwordResetLink,
-            //                                            "your_email_here", "your_password_here");
 
             var email = new Application.Emails.EmailService();
             email.Send("congnguyen29102002@gmail.com", request.Email, "Link khôi phục mật khẩu", passwordResetLink);

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmartPhoneStore.Data.Entities;
 using SmartPhoneStore.Data.Enums;
+using System.Data;
 
 namespace SmartPhoneStore.Data.Extentions
 {
@@ -72,6 +73,7 @@ namespace SmartPhoneStore.Data.Extentions
                 Name = "Chi Cong",
                 Address = "Ca Mau"
             });
+
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
             {

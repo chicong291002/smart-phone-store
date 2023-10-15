@@ -14,6 +14,7 @@ using SmartPhoneStore.Application.Catalog.Categories;
 using SmartPhoneStore.Application.Catalog.Coupons;
 using SmartPhoneStore.Application.Catalog.Products;
 using SmartPhoneStore.Application.Common;
+using SmartPhoneStore.Application.Emails;
 using SmartPhoneStore.Application.System.Roles;
 using SmartPhoneStore.Application.System.Users;
 using SmartPhoneStore.Application.Utilities.Slides;
@@ -47,6 +48,7 @@ builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<ISlideService, SlideService>();
 builder.Services.AddTransient<IOrderService, OrderSerivce>();
 builder.Services.AddTransient<ICouponService, CouponService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
 builder.Services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

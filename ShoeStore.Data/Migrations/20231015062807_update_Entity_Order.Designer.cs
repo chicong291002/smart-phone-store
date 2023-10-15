@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartPhoneStore.Data.EF;
 
@@ -11,9 +12,11 @@ using SmartPhoneStore.Data.EF;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(SmartPhoneStoreDbContext))]
-    partial class SmartPhoneStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231015062807_update_Entity_Order")]
+    partial class update_Entity_Order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,14 +249,14 @@ namespace ShoeStore.Data.Migrations
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
                             Address = "Ca Mau",
-                            ConcurrencyStamp = "760f7f3f-1dbb-464a-bce5-f75eeda4bfe8",
+                            ConcurrencyStamp = "6e41b276-d182-406a-9ca5-1c8523b3298f",
                             Email = "congkhpro291002@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Chi Cong",
                             NormalizedEmail = "congkhpro291002@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEChbpuT16GtRzldLOKnuvZRVIfkYjrCWf071dw7uB9jsdfszZXzDwrs4zvRlHX0JKQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHrNmJnEtO1fYPz9iNJuXiqMQJnAL8gb+sn6DWvB5zVGnip2XloQuavIg2EcfjYiBw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -386,13 +389,19 @@ namespace ShoeStore.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShipAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ShipName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ShipPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -477,7 +486,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 0,
-                            DateCreated = new DateTime(2023, 10, 15, 13, 38, 27, 870, DateTimeKind.Local).AddTicks(3549),
+                            DateCreated = new DateTime(2023, 10, 15, 13, 28, 7, 569, DateTimeKind.Local).AddTicks(9069),
                             Description = "So Good",
                             Name = "Test",
                             OriginalPrice = 100000m,
@@ -488,7 +497,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 0,
-                            DateCreated = new DateTime(2023, 10, 15, 13, 38, 27, 870, DateTimeKind.Local).AddTicks(3562),
+                            DateCreated = new DateTime(2023, 10, 15, 13, 28, 7, 569, DateTimeKind.Local).AddTicks(9085),
                             Description = "So Good 2",
                             Name = "Test 2",
                             OriginalPrice = 200000m,

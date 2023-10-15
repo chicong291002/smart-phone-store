@@ -28,17 +28,13 @@ namespace ShoeStore.AdminApp.ApiIntegration.Products
 
         public async Task<string> CreateOrder(CheckoutRequest request)
         {
-            var sessions = _httpContextAccessor
-                            .HttpContext
-                            .Session
-                            .GetString(SystemConstants.AppSettings.Token);
-
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"/api/orders/createOrder", httpContent);
+            var response = await client.PostAsync($"/api/Orders/CreateOrder", httpContent);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsStringAsync();

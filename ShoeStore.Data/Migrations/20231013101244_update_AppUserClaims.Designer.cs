@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartPhoneStore.Data.EF;
 
@@ -11,9 +12,11 @@ using SmartPhoneStore.Data.EF;
 namespace ShoeStore.Data.Migrations
 {
     [DbContext(typeof(SmartPhoneStoreDbContext))]
-    partial class SmartPhoneStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231013101244_update_AppUserClaims")]
+    partial class update_AppUserClaims
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,6 +67,15 @@ namespace ShoeStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUserClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "Role",
+                            ClaimValue = "Admin",
+                            UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -246,14 +258,14 @@ namespace ShoeStore.Data.Migrations
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
                             Address = "Ca Mau",
-                            ConcurrencyStamp = "760f7f3f-1dbb-464a-bce5-f75eeda4bfe8",
+                            ConcurrencyStamp = "2181972b-18d9-45d9-bc84-6cfb29624c29",
                             Email = "congkhpro291002@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Chi Cong",
                             NormalizedEmail = "congkhpro291002@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEChbpuT16GtRzldLOKnuvZRVIfkYjrCWf071dw7uB9jsdfszZXzDwrs4zvRlHX0JKQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEoNM7bD3e35PwWNHG/YYmL42STtU4ifOEgIjyTiX88bJ1dfeykgG+VRXaIIiDZc7A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -386,13 +398,25 @@ namespace ShoeStore.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShipAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ShipEmail")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("ShipName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ShipPhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -477,7 +501,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 0,
-                            DateCreated = new DateTime(2023, 10, 15, 13, 38, 27, 870, DateTimeKind.Local).AddTicks(3549),
+                            DateCreated = new DateTime(2023, 10, 13, 17, 12, 44, 185, DateTimeKind.Local).AddTicks(4543),
                             Description = "So Good",
                             Name = "Test",
                             OriginalPrice = 100000m,
@@ -488,7 +512,7 @@ namespace ShoeStore.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 0,
-                            DateCreated = new DateTime(2023, 10, 15, 13, 38, 27, 870, DateTimeKind.Local).AddTicks(3562),
+                            DateCreated = new DateTime(2023, 10, 13, 17, 12, 44, 185, DateTimeKind.Local).AddTicks(4559),
                             Description = "So Good 2",
                             Name = "Test 2",
                             OriginalPrice = 200000m,
