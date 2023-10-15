@@ -1,0 +1,34 @@
+﻿using SmartPhoneStore.ViewModels.Common;
+using SmartPhoneStore.ViewModels.System.Users;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace SmartPhoneStore.Application.System.Users
+{
+    public interface IUserService
+    {
+        Task<ApiResult<string>> Authenticate(LoginRequest request);
+        Task<ApiResult<string>> Register(RegisterRequest request);
+
+        Task<ApiResult<bool>> Update(Guid id,UserUpdateRequest request);
+        Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request);
+
+        Task<ApiResult<UserViewModel>> GetById(Guid id);
+
+        Task<ApiResult<UserViewModel>> GetByUserName(string userName);
+
+        Task<ApiResult<bool>> Delete(Guid id);
+        Task<List<UserViewModel>> GetAll();
+
+        Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
+
+        Task<ApiResult<bool>> ChangePassword(ChangePasswordViewModel model);
+
+        Task<ApiResult<bool>> ConfirmEmail(ConfirmEmailViewModel request);
+
+        Task<ApiResult<string>> ForgotPassword(ForgotPasswordViewModel request);
+        Task<ApiResult<bool>> ResetPassword(ResetPasswordViewModel request);
+
+    }
+}

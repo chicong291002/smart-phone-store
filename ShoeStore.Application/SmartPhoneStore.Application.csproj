@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MailKit" Version="4.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="MimeKit" Version="4.2.0" />
+	<FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShoeStore.Data\SmartPhoneStore.Data.csproj" />
+    <ProjectReference Include="..\ShoeStore.Utilities\SmartPhoneStore.Utilities.csproj" />
+    <ProjectReference Include="..\ShoeStore.ViewModels\SmartPhoneStore.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
