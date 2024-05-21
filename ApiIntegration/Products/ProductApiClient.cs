@@ -91,8 +91,7 @@ namespace SmartPhoneStore.AdminApp.ApiIntegration.Products
         public async Task<PagedResult<ProductViewModel>> GetAllProductsPaging(GetProductPagingRequest request)
         {
             var data = await GetAsync<PagedResult<ProductViewModel>>
-                ($"/api/products/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}" +
-                $"&keyword={request.Keyword}&categoryId={request.CategoryId}");
+                ($"/api/products/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}" + $"&keyword={request.Keyword}&categoryId={request.CategoryId}");
             return data;
         }
 

@@ -65,6 +65,7 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);
 });
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -122,7 +123,7 @@ app.MapControllerRoute(
 
 app.MapControllerRoute(
    name: "Product Details",
-    pattern: "{culture}/products/{id}",
+    pattern: "{culture}/san-pham/{id}",
     new
     {
         controller = "Product",

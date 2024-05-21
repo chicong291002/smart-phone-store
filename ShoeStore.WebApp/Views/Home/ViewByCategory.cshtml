@@ -37,7 +37,7 @@
                     }
                     else
                     {
-                        <form asp-action="ViewByCategory" asp-controller="Home" method="get">
+                        @* <form asp-action="ViewByCategory" asp-controller="Home" method="get">
                             <div class="toolbar column">
                                 <div class="sorter">
                                     <label>Sắp xếp:</label>
@@ -50,7 +50,8 @@
                                     </select>
                                 </div>
                             </div>
-                        </form>
+                        </form> *@
+
                         @foreach (var product in Model.Items)
                         {
                             var url = $"/{culture}/{_loc["productUrl"]}/{product.Id}";
@@ -111,6 +112,8 @@
         </div>
     </div>
 </div>
+
+
 <!-- Main Container End -->
 <style>
     .page-title h1, .page-title h2 {

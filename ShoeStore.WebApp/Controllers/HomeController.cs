@@ -84,14 +84,14 @@ namespace SmartPhoneStore.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ViewByCategory(string sortOrder, int cateId, int pageIndex = 1, int pageSize = 8)
+        public async Task<IActionResult> ViewByCategory(string sortOrder, int categoryId, int pageIndex = 1, int pageSize = 8)
         {
             var request = new GetProductPagingRequest()
             {
+                SortOption = sortOrder,
+                CategoryId = categoryId,
                 PageIndex = pageIndex,
-                PageSize = pageSize,
-                CategoryId = cateId,
-                SortOption = sortOrder
+                PageSize = pageSize
             };
 
             var data = await _productApiClient.GetAllProductsPaging(request);
